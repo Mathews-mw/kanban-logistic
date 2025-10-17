@@ -1,0 +1,282 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  DEFAULT
+  ADMIN
+  MODERATOR
+  CUSTOMER
+}
+
+enum CompanyRole {
+  SUPPLIER // Fornecedor (quem envia tickets)
+  CUSTOMER // Cliente (quem recebe tickets)
+  TRANSPORTER // Transportadora
+}
+
+enum TicketStatus {
+  DRAFT
+  READY
+  SHARED
+  ARCHIVED
+  PENDING_REGISTRATION // VAT do destino ainda não existe na plataforma
+  AVAILABLE // Disponível para o destinatário
+  DOWNLOADED // Já baixado/consumido
+  CANCELED
+}
+
+enum TicketDirection {
+  IN // Entrada
+  OUT // Saída
+}
+
+enum DocType {
+  XML
+  PDF
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String?
+  password  String? // MVP: hash local (trocar por IdP depois)
+  companyId String?   @map("company_id")
+  role      UserRole  @default(DEFAULT)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  company Company? @relation(fields: [companyId], references: [id])
+
+  importJobs ImportJob[]
+
+  @@map("users")
+}
+
+model Otp {
+  id        String   @id @default(cuid())
+  email     String
+  otpHash   String   @map("otp_hash")
+  used      Boolean  @default(false)
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([email, otpHash])
+  @@map("otp")
+}
+
+model Company {
+  id         String        @id @default(cuid())
+  name       String
+  vatNumber  String        @unique @map("vat_number") // identificador universal (Peppol-like)
+  email      String?
+  phone      String?
+  country    String?
+  city       String?
+  postalCode String?       @map("postal_code")
+  address1   String?       @map("address_1")
+  address2   String?       @map("address_2")
+  roles      CompanyRole[] // Uma empresa pode ter múltiplos papéis
+  createdAt  DateTime      @default(now()) @map("created_at")
+  updatedAt  DateTime?     @updatedAt @map("updated_at")
+
+  // Relations
+  users              User[]
+  deliveryPlants     DeliveryPlant[]
+  vehicles           Vehicle[]       @relation("TransporterVehicles")
+  suppliedProducts   Product[]       @relation("SupplierProducts")
+  sentTickets        Ticket[]        @relation("SupplierTickets")
+  customerTickets    Ticket[]        @relation("CustomerTickets")
+  transporterTickets Ticket[]        @relation("TransporterTickets")
+  apiKeys            ApiKey[]
+  importJobs         ImportJob[]
+
+  @@index([name])
+  @@map("companies")
+}
+
+model DeliveryPlant {
+  id         String    @id @default(cuid())
+  name       String
+  country    String?
+  city       String?
+  postalCode String?   @map("postal_code")
+  address1   String?   @map("address_1")
+  address2   String?   @map("address_2")
+  companyId  String    @map("company_id") // cliente “dono” do local
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime? @updatedAt @map("updated_at")
+
+  company Company @relation(fields: [companyId], references: [id])
+
+  tickets Ticket[]
+
+  @@unique([companyId, name]) // <- evita duplicatas por empresa+nome
+  @@index([companyId, name])
+  @@map("delivery_plants")
+}
+
+// Plaat.csv
+model Vehicle {
+  id            String    @id @default(cuid())
+  plateNumber   String    @unique @map("plate_number")
+  vehicleType   String?   @map("vehicle_type")
+  tareWeight    Int?      @map("tare_weight")
+  maxLoadKg     Int?      @map("max_load_kg")
+  transporterId String    @map("transporter_id") // transportadora dona do veículo
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime? @updatedAt @map("updated_at")
+
+  transporter Company @relation("TransporterVehicles", fields: [transporterId], references: [id])
+
+  tickets Ticket[]
+
+  @@map("vehicles")
+}
+
+// Artikel.csv
+model Product {
+  id          String    @id @default(cuid())
+  code        String    @unique
+  description String
+  unit        String? // ex.: "T" (ton), "KG", "M3"
+  density     Float?
+  supplierId  String?   @map("supplier_id") // opcional: quem fornece
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+
+  supplier Company? @relation("SupplierProducts", fields: [supplierId], references: [id])
+
+  tickets Ticket[]
+
+  @@index([description])
+  @@map("products")
+}
+
+// Registro de pesagem + roteamento por VAT
+model Ticket {
+  id              String          @id @default(cuid())
+  number          String          @unique
+  supplierId      String          @map("supplier_id") // quem enviou o ticket (fornecedor)
+  customerId      String          @map("customer_id") // destinatário (cliente)
+  transporterId   String          @map("transporter_id") // transportadora (opcional)
+  vehicleId       String          @map("vehicle_id")
+  deliveryPlantId String          @map("delivery_plant_id") // Werf
+  productId       String          @map("product")
+  externalCode    String?         @map("external_code") // referência do ERP/WB (opcional)
+  direction       TicketDirection
+  status          TicketStatus    @default(DRAFT)
+  // Pesos (kg)
+  grossWeight     Float?          @map("gross_weight_kg")
+  tareWeight      Float?          @map("tare_weight_kg")
+  netWeight       Float?          @map("net_weight_kg") // netWeightKg = bruto - tara (peso líquido)
+  unit            String? // "KG" | "T"
+  notes           String?
+  meta            Json? // Observações / metadados livres (útil para campos extras do CSV)
+  weighedAt       DateTime?       @default(now()) @map("weighed_at") // data/hora da pesagem
+  createdAt       DateTime        @default(now()) @map("created_at")
+  updatedAt       DateTime?       @updatedAt @map("updated_at")
+
+  // Ligações principais (todas via VAT → Company):
+  supplier      Company       @relation("SupplierTickets", fields: [supplierId], references: [id])
+  customer      Company       @relation("CustomerTickets", fields: [customerId], references: [id])
+  transporter   Company       @relation("TransporterTickets", fields: [transporterId], references: [id])
+  vehicle       Vehicle       @relation(fields: [vehicleId], references: [id])
+  deliveryPlant DeliveryPlant @relation(fields: [deliveryPlantId], references: [id])
+  product       Product       @relation(fields: [productId], references: [id])
+
+  documents TicketDocument[] // Documentos (XML/PDF)
+  events    TicketEventLog[]
+
+  @@index([supplierId, createdAt])
+  @@index([customerId, createdAt])
+  @@index([transporterId, createdAt])
+  @@index([deliveryPlantId])
+  @@index([vehicleId])
+  @@index([productId])
+  @@index([status])
+  @@map("tickets")
+}
+
+model TicketDocument {
+  id        String   @id @default(cuid())
+  ticketId  String   @map("ticket_id")
+  type      DocType
+  path      String // ex.: s3://bucket/key.pdf (MVP: local)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  ticket Ticket @relation(fields: [ticketId], references: [id])
+
+  @@index([ticketId, type])
+  @@map("ticket_documents")
+}
+
+model TicketEventLog {
+  id        String   @id @default(cuid())
+  ticketId  String   @map("ticket_id")
+  actorId   String   @map("actor_id")
+  action    String // "STATUS_CHANGE" | "EDIT" | ...
+  from      String?
+  to        String?
+  meta      Json?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  ticket Ticket @relation(fields: [ticketId], references: [id])
+
+  @@index([ticketId])
+  @@map("ticket_event_logs")
+}
+
+/**
+ * Sequência mensal para numeração de ticket (YYYYMM-000001)
+ */
+model TicketSequence {
+  id        String    @id @default(cuid())
+  yearMonth String    @unique @map("year_month") // "202510"
+  counter   Int       @default(0)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  @@map("ticket_sequences")
+}
+
+model ApiKey {
+  id         String    @id @default(cuid())
+  name       String?
+  keyHash    String    @map("key_hash") // NUNCA salvar plaintext — guarde hash
+  companyId  String    @map("company_id")
+  lastUsedAt DateTime? @map("last_used_at")
+  revokedAt  DateTime? @map("revoked_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+
+  company Company @relation(fields: [companyId], references: [id])
+
+  @@index([companyId])
+  @@index([lastUsedAt])
+  @@map("api_keys")
+}
+
+// Controle de importação CSV + mapeamento “Zapier-like”
+model ImportJob {
+  id          String    @id @default(cuid())
+  userId      String?   @map("user_id") // quem disparou a import (opcional)
+  companyId   String?   @map("company_id")
+  entity      String // "Company","Transporter","DeliveryPlant","Vehicle","Product","Ticket"
+  mapping     Json // { "csvHeader": "dbField", ... }
+  source      String? // caminho/identificação do CSV
+  success     Boolean? // resumo rápido
+  stats       Json? // linhas lidas, criadas, atualizadas, erros
+  processedAt DateTime? @map("processed_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  user    User?    @relation(fields: [userId], references: [id])
+  company Company? @relation(fields: [companyId], references: [id])
+
+  @@map("import_jobs")
+}
