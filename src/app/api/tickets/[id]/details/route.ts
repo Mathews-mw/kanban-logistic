@@ -43,12 +43,13 @@ export async function GET(request: NextRequest, { params }: IParamsProps) {
 		});
 
 		if (!client) {
-			return NextResponse.json({ message: 'Client Not Found!' }, { status: 404 });
+			return NextResponse.json({ message: 'Client Not Found!', code: 'RESOURCE_NOT_FOUND_ERROR' }, { status: 404 });
 		}
 
 		return Response.json(client);
 	} catch (error) {
-		console.log('Get client details route error: ', error);
+		console.error('Get client details route error: ', error);
+
 		return new Response(JSON.stringify(error), {
 			status: 400,
 		});

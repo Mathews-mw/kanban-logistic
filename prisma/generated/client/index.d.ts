@@ -2356,7 +2356,7 @@ export namespace Prisma {
   export type UserGroupByOutputType = {
     id: string
     email: string
-    name: string | null
+    name: string
     password: string | null
     companyId: string | null
     role: $Enums.UserRole
@@ -2452,7 +2452,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       email: string
-      name: string | null
+      name: string
       password: string | null
       companyId: string | null
       role: $Enums.UserRole
@@ -9290,6 +9290,8 @@ export namespace Prisma {
     unit: string | null
     notes: string | null
     weighedAt: Date | null
+    shareToken: string | null
+    sharedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -9312,6 +9314,8 @@ export namespace Prisma {
     unit: string | null
     notes: string | null
     weighedAt: Date | null
+    shareToken: string | null
+    sharedAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -9335,6 +9339,8 @@ export namespace Prisma {
     notes: number
     meta: number
     weighedAt: number
+    shareToken: number
+    sharedAt: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -9371,6 +9377,8 @@ export namespace Prisma {
     unit?: true
     notes?: true
     weighedAt?: true
+    shareToken?: true
+    sharedAt?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -9393,6 +9401,8 @@ export namespace Prisma {
     unit?: true
     notes?: true
     weighedAt?: true
+    shareToken?: true
+    sharedAt?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -9416,6 +9426,8 @@ export namespace Prisma {
     notes?: true
     meta?: true
     weighedAt?: true
+    shareToken?: true
+    sharedAt?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -9526,6 +9538,8 @@ export namespace Prisma {
     notes: string | null
     meta: JsonValue | null
     weighedAt: Date | null
+    shareToken: string | null
+    sharedAt: Date | null
     createdAt: Date
     updatedAt: Date | null
     _count: TicketCountAggregateOutputType | null
@@ -9568,6 +9582,8 @@ export namespace Prisma {
     notes?: boolean
     meta?: boolean
     weighedAt?: boolean
+    shareToken?: boolean
+    sharedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     supplier?: boolean | CompanyDefaultArgs<ExtArgs>
@@ -9600,6 +9616,8 @@ export namespace Prisma {
     notes?: boolean
     meta?: boolean
     weighedAt?: boolean
+    shareToken?: boolean
+    sharedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     supplier?: boolean | CompanyDefaultArgs<ExtArgs>
@@ -9629,6 +9647,8 @@ export namespace Prisma {
     notes?: boolean
     meta?: boolean
     weighedAt?: boolean
+    shareToken?: boolean
+    sharedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     supplier?: boolean | CompanyDefaultArgs<ExtArgs>
@@ -9658,11 +9678,13 @@ export namespace Prisma {
     notes?: boolean
     meta?: boolean
     weighedAt?: boolean
+    shareToken?: boolean
+    sharedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TicketOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "number" | "supplierId" | "customerId" | "transporterId" | "vehicleId" | "deliveryPlantId" | "productId" | "externalCode" | "direction" | "status" | "grossWeight" | "tareWeight" | "netWeight" | "unit" | "notes" | "meta" | "weighedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["ticket"]>
+  export type TicketOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "number" | "supplierId" | "customerId" | "transporterId" | "vehicleId" | "deliveryPlantId" | "productId" | "externalCode" | "direction" | "status" | "grossWeight" | "tareWeight" | "netWeight" | "unit" | "notes" | "meta" | "weighedAt" | "shareToken" | "sharedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["ticket"]>
   export type TicketInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     supplier?: boolean | CompanyDefaultArgs<ExtArgs>
     customer?: boolean | CompanyDefaultArgs<ExtArgs>
@@ -9722,6 +9744,8 @@ export namespace Prisma {
       notes: string | null
       meta: Prisma.JsonValue | null
       weighedAt: Date | null
+      shareToken: string | null
+      sharedAt: Date | null
       createdAt: Date
       updatedAt: Date | null
     }, ExtArgs["result"]["ticket"]>
@@ -10173,6 +10197,8 @@ export namespace Prisma {
     readonly notes: FieldRef<"Ticket", 'String'>
     readonly meta: FieldRef<"Ticket", 'Json'>
     readonly weighedAt: FieldRef<"Ticket", 'DateTime'>
+    readonly shareToken: FieldRef<"Ticket", 'String'>
+    readonly sharedAt: FieldRef<"Ticket", 'DateTime'>
     readonly createdAt: FieldRef<"Ticket", 'DateTime'>
     readonly updatedAt: FieldRef<"Ticket", 'DateTime'>
   }
@@ -16184,6 +16210,8 @@ export namespace Prisma {
     notes: 'notes',
     meta: 'meta',
     weighedAt: 'weighedAt',
+    shareToken: 'shareToken',
+    sharedAt: 'sharedAt',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -16465,7 +16493,7 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
-    name?: StringNullableFilter<"User"> | string | null
+    name?: StringFilter<"User"> | string
     password?: StringNullableFilter<"User"> | string | null
     companyId?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
@@ -16478,7 +16506,7 @@ export namespace Prisma {
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
     email?: SortOrder
-    name?: SortOrderInput | SortOrder
+    name?: SortOrder
     password?: SortOrderInput | SortOrder
     companyId?: SortOrderInput | SortOrder
     role?: SortOrder
@@ -16494,7 +16522,7 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    name?: StringNullableFilter<"User"> | string | null
+    name?: StringFilter<"User"> | string
     password?: StringNullableFilter<"User"> | string | null
     companyId?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
@@ -16507,7 +16535,7 @@ export namespace Prisma {
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     email?: SortOrder
-    name?: SortOrderInput | SortOrder
+    name?: SortOrder
     password?: SortOrderInput | SortOrder
     companyId?: SortOrderInput | SortOrder
     role?: SortOrder
@@ -16524,7 +16552,7 @@ export namespace Prisma {
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
-    name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    name?: StringWithAggregatesFilter<"User"> | string
     password?: StringNullableWithAggregatesFilter<"User"> | string | null
     companyId?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
@@ -16965,6 +16993,8 @@ export namespace Prisma {
     notes?: StringNullableFilter<"Ticket"> | string | null
     meta?: JsonNullableFilter<"Ticket">
     weighedAt?: DateTimeNullableFilter<"Ticket"> | Date | string | null
+    shareToken?: StringNullableFilter<"Ticket"> | string | null
+    sharedAt?: DateTimeNullableFilter<"Ticket"> | Date | string | null
     createdAt?: DateTimeFilter<"Ticket"> | Date | string
     updatedAt?: DateTimeNullableFilter<"Ticket"> | Date | string | null
     supplier?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
@@ -16996,6 +17026,8 @@ export namespace Prisma {
     notes?: SortOrderInput | SortOrder
     meta?: SortOrderInput | SortOrder
     weighedAt?: SortOrderInput | SortOrder
+    shareToken?: SortOrderInput | SortOrder
+    sharedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
     supplier?: CompanyOrderByWithRelationInput
@@ -17030,6 +17062,8 @@ export namespace Prisma {
     notes?: StringNullableFilter<"Ticket"> | string | null
     meta?: JsonNullableFilter<"Ticket">
     weighedAt?: DateTimeNullableFilter<"Ticket"> | Date | string | null
+    shareToken?: StringNullableFilter<"Ticket"> | string | null
+    sharedAt?: DateTimeNullableFilter<"Ticket"> | Date | string | null
     createdAt?: DateTimeFilter<"Ticket"> | Date | string
     updatedAt?: DateTimeNullableFilter<"Ticket"> | Date | string | null
     supplier?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
@@ -17061,6 +17095,8 @@ export namespace Prisma {
     notes?: SortOrderInput | SortOrder
     meta?: SortOrderInput | SortOrder
     weighedAt?: SortOrderInput | SortOrder
+    shareToken?: SortOrderInput | SortOrder
+    sharedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
     _count?: TicketCountOrderByAggregateInput
@@ -17092,6 +17128,8 @@ export namespace Prisma {
     notes?: StringNullableWithAggregatesFilter<"Ticket"> | string | null
     meta?: JsonNullableWithAggregatesFilter<"Ticket">
     weighedAt?: DateTimeNullableWithAggregatesFilter<"Ticket"> | Date | string | null
+    shareToken?: StringNullableWithAggregatesFilter<"Ticket"> | string | null
+    sharedAt?: DateTimeNullableWithAggregatesFilter<"Ticket"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Ticket"> | Date | string
     updatedAt?: DateTimeNullableWithAggregatesFilter<"Ticket"> | Date | string | null
   }
@@ -17426,7 +17464,7 @@ export namespace Prisma {
   export type UserCreateInput = {
     id?: string
     email: string
-    name?: string | null
+    name: string
     password?: string | null
     role?: $Enums.UserRole
     createdAt?: Date | string
@@ -17438,7 +17476,7 @@ export namespace Prisma {
   export type UserUncheckedCreateInput = {
     id?: string
     email: string
-    name?: string | null
+    name: string
     password?: string | null
     companyId?: string | null
     role?: $Enums.UserRole
@@ -17450,7 +17488,7 @@ export namespace Prisma {
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17462,7 +17500,7 @@ export namespace Prisma {
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     companyId?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -17474,7 +17512,7 @@ export namespace Prisma {
   export type UserCreateManyInput = {
     id?: string
     email: string
-    name?: string | null
+    name: string
     password?: string | null
     companyId?: string | null
     role?: $Enums.UserRole
@@ -17485,7 +17523,7 @@ export namespace Prisma {
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17495,7 +17533,7 @@ export namespace Prisma {
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     companyId?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -17981,6 +18019,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
     supplier: CompanyCreateNestedOneWithoutSentTicketsInput
@@ -18012,6 +18052,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
     documents?: TicketDocumentUncheckedCreateNestedManyWithoutTicketInput
@@ -18031,6 +18073,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     supplier?: CompanyUpdateOneRequiredWithoutSentTicketsNestedInput
@@ -18062,6 +18106,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documents?: TicketDocumentUncheckedUpdateManyWithoutTicketNestedInput
@@ -18087,6 +18133,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
   }
@@ -18104,6 +18152,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -18127,6 +18177,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -19099,6 +19151,8 @@ export namespace Prisma {
     notes?: SortOrder
     meta?: SortOrder
     weighedAt?: SortOrder
+    shareToken?: SortOrder
+    sharedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -19127,6 +19181,8 @@ export namespace Prisma {
     unit?: SortOrder
     notes?: SortOrder
     weighedAt?: SortOrder
+    shareToken?: SortOrder
+    sharedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -19149,6 +19205,8 @@ export namespace Prisma {
     unit?: SortOrder
     notes?: SortOrder
     weighedAt?: SortOrder
+    shareToken?: SortOrder
+    sharedAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -20919,7 +20977,7 @@ export namespace Prisma {
   export type UserCreateWithoutCompanyInput = {
     id?: string
     email: string
-    name?: string | null
+    name: string
     password?: string | null
     role?: $Enums.UserRole
     createdAt?: Date | string
@@ -20930,7 +20988,7 @@ export namespace Prisma {
   export type UserUncheckedCreateWithoutCompanyInput = {
     id?: string
     email: string
-    name?: string | null
+    name: string
     password?: string | null
     role?: $Enums.UserRole
     createdAt?: Date | string
@@ -21061,6 +21119,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
     customer: CompanyCreateNestedOneWithoutCustomerTicketsInput
@@ -21090,6 +21150,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
     documents?: TicketDocumentUncheckedCreateNestedManyWithoutTicketInput
@@ -21119,6 +21181,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
     supplier: CompanyCreateNestedOneWithoutSentTicketsInput
@@ -21148,6 +21212,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
     documents?: TicketDocumentUncheckedCreateNestedManyWithoutTicketInput
@@ -21177,6 +21243,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
     supplier: CompanyCreateNestedOneWithoutSentTicketsInput
@@ -21206,6 +21274,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
     documents?: TicketDocumentUncheckedCreateNestedManyWithoutTicketInput
@@ -21306,7 +21376,7 @@ export namespace Prisma {
     NOT?: UserScalarWhereInput | UserScalarWhereInput[]
     id?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
-    name?: StringNullableFilter<"User"> | string | null
+    name?: StringFilter<"User"> | string
     password?: StringNullableFilter<"User"> | string | null
     companyId?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
@@ -21444,6 +21514,8 @@ export namespace Prisma {
     notes?: StringNullableFilter<"Ticket"> | string | null
     meta?: JsonNullableFilter<"Ticket">
     weighedAt?: DateTimeNullableFilter<"Ticket"> | Date | string | null
+    shareToken?: StringNullableFilter<"Ticket"> | string | null
+    sharedAt?: DateTimeNullableFilter<"Ticket"> | Date | string | null
     createdAt?: DateTimeFilter<"Ticket"> | Date | string
     updatedAt?: DateTimeNullableFilter<"Ticket"> | Date | string | null
   }
@@ -21591,6 +21663,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
     supplier: CompanyCreateNestedOneWithoutSentTicketsInput
@@ -21620,6 +21694,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
     documents?: TicketDocumentUncheckedCreateNestedManyWithoutTicketInput
@@ -21777,6 +21853,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
     supplier: CompanyCreateNestedOneWithoutSentTicketsInput
@@ -21806,6 +21884,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
     documents?: TicketDocumentUncheckedCreateNestedManyWithoutTicketInput
@@ -21963,6 +22043,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
     supplier: CompanyCreateNestedOneWithoutSentTicketsInput
@@ -21992,6 +22074,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
     documents?: TicketDocumentUncheckedCreateNestedManyWithoutTicketInput
@@ -22731,6 +22815,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
     supplier: CompanyCreateNestedOneWithoutSentTicketsInput
@@ -22761,6 +22847,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
     events?: TicketEventLogUncheckedCreateNestedManyWithoutTicketInput
@@ -22795,6 +22883,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     supplier?: CompanyUpdateOneRequiredWithoutSentTicketsNestedInput
@@ -22825,6 +22915,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     events?: TicketEventLogUncheckedUpdateManyWithoutTicketNestedInput
@@ -22843,6 +22935,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
     supplier: CompanyCreateNestedOneWithoutSentTicketsInput
@@ -22873,6 +22967,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
     documents?: TicketDocumentUncheckedCreateNestedManyWithoutTicketInput
@@ -22907,6 +23003,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     supplier?: CompanyUpdateOneRequiredWithoutSentTicketsNestedInput
@@ -22937,6 +23035,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documents?: TicketDocumentUncheckedUpdateManyWithoutTicketNestedInput
@@ -23057,7 +23157,7 @@ export namespace Prisma {
   export type UserCreateWithoutImportJobsInput = {
     id?: string
     email: string
-    name?: string | null
+    name: string
     password?: string | null
     role?: $Enums.UserRole
     createdAt?: Date | string
@@ -23068,7 +23168,7 @@ export namespace Prisma {
   export type UserUncheckedCreateWithoutImportJobsInput = {
     id?: string
     email: string
-    name?: string | null
+    name: string
     password?: string | null
     companyId?: string | null
     role?: $Enums.UserRole
@@ -23148,7 +23248,7 @@ export namespace Prisma {
   export type UserUpdateWithoutImportJobsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23159,7 +23259,7 @@ export namespace Prisma {
   export type UserUncheckedUpdateWithoutImportJobsInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     companyId?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -23277,7 +23377,7 @@ export namespace Prisma {
   export type UserCreateManyCompanyInput = {
     id?: string
     email: string
-    name?: string | null
+    name: string
     password?: string | null
     role?: $Enums.UserRole
     createdAt?: Date | string
@@ -23334,6 +23434,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
   }
@@ -23356,6 +23458,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
   }
@@ -23378,6 +23482,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
   }
@@ -23406,7 +23512,7 @@ export namespace Prisma {
   export type UserUpdateWithoutCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23417,7 +23523,7 @@ export namespace Prisma {
   export type UserUncheckedUpdateWithoutCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23428,7 +23534,7 @@ export namespace Prisma {
   export type UserUncheckedUpdateManyWithoutCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23550,6 +23656,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     customer?: CompanyUpdateOneRequiredWithoutCustomerTicketsNestedInput
@@ -23579,6 +23687,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documents?: TicketDocumentUncheckedUpdateManyWithoutTicketNestedInput
@@ -23603,6 +23713,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -23620,6 +23732,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     supplier?: CompanyUpdateOneRequiredWithoutSentTicketsNestedInput
@@ -23649,6 +23763,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documents?: TicketDocumentUncheckedUpdateManyWithoutTicketNestedInput
@@ -23673,6 +23789,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -23690,6 +23808,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     supplier?: CompanyUpdateOneRequiredWithoutSentTicketsNestedInput
@@ -23719,6 +23839,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documents?: TicketDocumentUncheckedUpdateManyWithoutTicketNestedInput
@@ -23743,6 +23865,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -23828,6 +23952,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
   }
@@ -23845,6 +23971,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     supplier?: CompanyUpdateOneRequiredWithoutSentTicketsNestedInput
@@ -23874,6 +24002,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documents?: TicketDocumentUncheckedUpdateManyWithoutTicketNestedInput
@@ -23898,6 +24028,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -23920,6 +24052,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
   }
@@ -23937,6 +24071,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     supplier?: CompanyUpdateOneRequiredWithoutSentTicketsNestedInput
@@ -23966,6 +24102,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documents?: TicketDocumentUncheckedUpdateManyWithoutTicketNestedInput
@@ -23990,6 +24128,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -24012,6 +24152,8 @@ export namespace Prisma {
     notes?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: Date | string | null
+    shareToken?: string | null
+    sharedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string | null
   }
@@ -24029,6 +24171,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     supplier?: CompanyUpdateOneRequiredWithoutSentTicketsNestedInput
@@ -24058,6 +24202,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     documents?: TicketDocumentUncheckedUpdateManyWithoutTicketNestedInput
@@ -24082,6 +24228,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     weighedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shareToken?: NullableStringFieldUpdateOperationsInput | string | null
+    sharedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }

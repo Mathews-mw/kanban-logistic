@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from 'motion/react';
 
 import { VerifyOtpTab } from './verify-otp-tab';
 import { RequestOtpTab } from './request-otp-tab';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export default function LoginPage() {
 	const [currentTab, setCurrentTab] = useState<'request-otp' | 'verify-otp'>('request-otp');
@@ -32,11 +34,19 @@ export default function LoginPage() {
 					animate={{ x: 0, opacity: 1 }}
 					exit={{ x: currentTab !== 'verify-otp' ? 100 : 0, opacity: 0 }}
 					transition={{ duration: 0.2, type: 'tween' }}
-					className="flex h-full w-full flex-col items-center justify-center"
+					className="relative flex h-full w-full flex-col items-center justify-center"
 				>
-					{currentTab === 'request-otp' && <RequestOtpTab onTabChange={(tab) => setCurrentTab(tab)} />}
+					<>
+						<div className="absolute top-4 right-4">
+							<Button asChild variant="link" className="text-muted-foreground">
+								<Link href="/">Back to site</Link>
+							</Button>
+						</div>
 
-					{currentTab === 'verify-otp' && <VerifyOtpTab onTabChange={(tab) => setCurrentTab(tab)} />}
+						{currentTab === 'request-otp' && <RequestOtpTab onTabChange={(tab) => setCurrentTab(tab)} />}
+
+						{currentTab === 'verify-otp' && <VerifyOtpTab onTabChange={(tab) => setCurrentTab(tab)} />}
+					</>
 				</motion.div>
 			</AnimatePresence>
 		</div>

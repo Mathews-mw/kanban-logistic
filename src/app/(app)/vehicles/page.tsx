@@ -4,7 +4,7 @@ import z from 'zod';
 import { useQuery } from '@tanstack/react-query';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import { listingVehicles } from '@/_http/requests/vehicles/listing-transporters';
+import { listingVehicles } from '@/_http/requests/vehicles/listing-vehicles';
 
 import { Button } from '@/components/ui/button';
 import { Filters } from './(components)/filters';

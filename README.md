@@ -40,6 +40,16 @@
 - Renderizar informações mockadas.
 - Implementar navegação dinâmica (/tickets/[id]) com useParams().
 
+=> Regras gerais do formulário para criação de Ticket
+
+- Obrigatórios para criar DRAFT: Supplier, Customer, Delivery Plant, Transporter, Vehicle e Product.
+- Validações de coerência (servidor):
+  - Delivery Plant precisa pertencer ao Customer.
+  - Vehicle precisa pertencer à Transporter.
+  - As empresas precisam ter os roles corretos (SUPPLIER/CUSTOMER/TRANSPORTER).
+- Fluxo recomendado: crie como DRAFT, anexe XML/PDF no detalhe do ticket, e então avance o status para READY e SHARED quando estiver completo.
+
+
 4️. Export Report
 - Tela para escolher período (start date / end date) e exportar relatórios.
 - Botões Export e Cancel.

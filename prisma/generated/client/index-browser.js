@@ -210,6 +210,8 @@ exports.Prisma.TicketScalarFieldEnum = {
   notes: 'notes',
   meta: 'meta',
   weighedAt: 'weighedAt',
+  shareToken: 'shareToken',
+  sharedAt: 'sharedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

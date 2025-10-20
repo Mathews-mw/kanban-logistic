@@ -5,6 +5,11 @@ import { env } from '@/env';
 import { authEmitter } from '@/events/auth-events';
 import { ApiExceptionsError } from './error-handler/api-exceptions-error';
 
+interface ApiExceptionsErrorWithExtras extends ApiExceptionsError {
+	response?: Response;
+	payload?: unknown;
+}
+
 export const api = ky.create({
 	prefixUrl: `${env.NEXT_PUBLIC_API_BASE_URL}/api`,
 	credentials: 'include',
@@ -13,19 +18,39 @@ export const api = ky.create({
 		beforeError: [
 			async (error) => {
 				if (error instanceof HTTPError) {
+					const status = error.response?.status ?? 0;
+
+					// tente json; senão, texto; senão, vazio
+					let payload = undefined;
+
 					try {
-						const data = await error.response.clone().json();
-						throw new ApiExceptionsError(data.message ?? 'Request error', data.code ?? 'HTTP_ERROR');
+						payload = await error.response.clone().json();
 					} catch {
-						// fallback se for um 401 sem JSON
-						if (error.response.status === 401) {
-							authEmitter.emit('redirectToLogin');
-						}
-						if (error.response.status === 403) {
-							authEmitter.emit('forbidden');
-						}
+						try {
+							const txt = await error.response.clone().text();
+							payload = txt ? { message: txt } : undefined;
+						} catch {}
 					}
+
+					// eventos de auth (não interrompem a criação do erro)
+					if (status === 401) authEmitter.emit('redirectToLogin');
+					if (status === 403) authEmitter.emit('forbidden');
+
+					// **SEMPRE** retorne ApiExceptionsError
+					const apiErr = new ApiExceptionsError(
+						payload?.message ?? error.message ?? 'Request error',
+						payload?.code ?? 'HTTP_ERROR',
+						status
+					);
+					// útil para debug/telemetria
+
+					(apiErr as ApiExceptionsErrorWithExtras).response = error.response;
+					(apiErr as ApiExceptionsErrorWithExtras).payload = payload;
+
+					// Cast to satisfy ky's BeforeErrorHook expected type
+					return apiErr as unknown as HTTPError;
 				}
+
 				return error;
 			},
 		],

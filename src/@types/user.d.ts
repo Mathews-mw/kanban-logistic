@@ -10,6 +10,7 @@ interface IProfile {
 	createdAt: string;
 	company: {
 		id: string;
+		name: string;
 		vatNumber: string;
 		roles: Array<string>;
 	};

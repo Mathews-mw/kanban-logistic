@@ -17,7 +17,7 @@ export async function auth() {
 	const token = cookies.get(env.AUTH_COOKIE_NAME);
 
 	if (!token) {
-		redirect('/sign-in');
+		redirect('/');
 	}
 
 	try {

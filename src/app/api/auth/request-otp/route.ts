@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { prisma } from '@/lib/prisma';
 import { generateOtp, hashOtp } from '@/utils/otp-utils';
+import { sendOtpEmail } from '@/services/mailer-send/mailer-send-service';
+import { InternalServerError } from '@/_http/errors/internal-server-error';
 
 const bodySchema = z.object({
 	email: z.email(),
@@ -62,7 +64,7 @@ export async function POST(request: NextRequest) {
 		});
 
 		// send email with OTP code
-		// await sendOtpEmail({ to: email, otp, name: user.name });
+		await sendOtpEmail({ to: email, otp, name: user.name });
 
 		return Response.json(
 			{
@@ -72,7 +74,10 @@ export async function POST(request: NextRequest) {
 			{ status: 200 }
 		);
 	} catch (error) {
-		console.log('Request OTP route error: ', error);
-		return NextResponse.json({ message: 'Error during OTP request.' }, { status: 400 });
+		if (error instanceof InternalServerError) {
+			return NextResponse.json({ code: error.code, message: error.message }, { status: error.status });
+		}
+
+		return NextResponse.json({ message: 'Something went wrong... Please, try again later.' }, { status: 500 });
 	}
 }

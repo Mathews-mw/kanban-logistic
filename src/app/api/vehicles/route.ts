@@ -8,6 +8,7 @@ const queryParamsSchema = z.object({
 	page: z.optional(z.coerce.number()).default(1),
 	per_page: z.optional(z.union([z.literal('all'), z.coerce.number()])).default(10),
 	search: z.string().optional().nullish(),
+	transporter_id: z.string().optional().nullish(),
 	order_by: z
 		.optional(z.enum(['asc', 'desc']))
 		.nullish()
@@ -26,22 +27,23 @@ export async function GET(request: NextRequest) {
 
 	const { searchParams } = request.nextUrl;
 
-	const { page, per_page, order_by, search } = queryParamsSchema.parse({
+	const { page, per_page, order_by, search, transporter_id } = queryParamsSchema.parse({
 		page: searchParams.get('page'),
 		per_page: searchParams.get('per_page'),
 		order_by: searchParams.get('order_by'),
 		search: searchParams.get('search'),
+		transporter_id: searchParams.get('transporter_id'),
 	});
 
 	try {
-		let orderByQuery: Prisma.VehicleOrderByWithAggregationInput | undefined = { brand: 'asc' };
+		let orderByQuery: Prisma.VehicleOrderByWithAggregationInput | undefined = { createdAt: 'asc' };
 
 		switch (order_by) {
 			case 'asc':
-				orderByQuery = { model: 'asc' };
+				orderByQuery = { createdAt: 'asc' };
 				break;
 			case 'desc':
-				orderByQuery = { model: 'desc' };
+				orderByQuery = { createdAt: 'desc' };
 				break;
 			default:
 				orderByQuery = undefined;
@@ -49,7 +51,8 @@ export async function GET(request: NextRequest) {
 
 		const query: Prisma.VehicleFindManyArgs = {
 			where: {
-				model: search
+				transporterId: transporter_id ?? undefined,
+				plateNumber: search
 					? {
 							contains: search,
 							mode: 'insensitive',

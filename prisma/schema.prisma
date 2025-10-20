@@ -45,7 +45,7 @@ enum DocType {
 model User {
   id        String    @id @default(cuid())
   email     String    @unique
-  name      String?
+  name      String
   password  String? // MVP: hash local (trocar por IdP depois)
   companyId String?   @map("company_id")
   role      UserRole  @default(DEFAULT)
@@ -180,6 +180,8 @@ model Ticket {
   notes           String?
   meta            Json? // Observações / metadados livres (útil para campos extras do CSV)
   weighedAt       DateTime?       @default(now()) @map("weighed_at") // data/hora da pesagem
+  shareToken      String?         @map("share_token")
+  sharedAt        DateTime?       @map("shared_at")
   createdAt       DateTime        @default(now()) @map("created_at")
   updatedAt       DateTime?       @updatedAt @map("updated_at")
 

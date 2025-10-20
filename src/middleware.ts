@@ -6,7 +6,14 @@ import { signAppJwt, verifyAppJwt } from './auth/jwt';
 const AUTH_COOKIE = env.AUTH_COOKIE_NAME;
 
 // rotas públicas (liberadas sem autenticação)
-const PUBLIC_PATHS = new Set<string>(['/', '/sign-in', '/sign-up', '/api/auth/request-otp', '/api/auth/verify-otp']);
+const PUBLIC_PATHS = new Set<string>([
+	'/',
+	'/sign-in',
+	'/sign-up',
+	'/api/auth/request-otp',
+	'/api/auth/verify-otp',
+	'/api/share/*',
+]);
 
 // prefixos públicos (assets e etc)
 const PUBLIC_PREFIXES = ['/_next', '/favicon.ico', '/assets', '/public'];

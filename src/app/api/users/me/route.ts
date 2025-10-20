@@ -40,6 +40,7 @@ export async function GET(request: NextRequest) {
 			company: user.company
 				? {
 						id: user.company.id,
+						name: user.company.name,
 						vatNumber: user.company.vatNumber,
 						roles: user.company.roles,
 					}

@@ -8,6 +8,8 @@ const code = z
 		z.literal('SAME_USERNAME_ERROR'),
 		z.literal('ROOM_ALREADY_EXISTS'),
 		z.literal('OLD_PASSWORD_NOT_MATCH_ERROR'),
+		z.literal('MISSING_FILES'),
+		z.literal('INVALID_TRANSITION'),
 	])
 	.default('BAD_REQUEST_ERROR');
 
