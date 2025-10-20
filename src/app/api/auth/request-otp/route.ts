@@ -49,22 +49,23 @@ export async function POST(request: NextRequest) {
 
 		const otpExpiresInSeconds = 5 * 60; // 5 min
 
-		const otp = generateOtp();
+		// const otp = generateOtp();
+		const otp = '726428';
 		const otpHash = hashOtp(otp);
 		const expiresAt = new Date(Date.now() + otpExpiresInSeconds * 1000);
 
 		console.log('OTP:', otp);
 
-		await prisma.otp.create({
-			data: {
-				email,
-				otpHash,
-				expiresAt,
-			},
-		});
+		// await prisma.otp.create({
+		// 	data: {
+		// 		email,
+		// 		otpHash,
+		// 		expiresAt,
+		// 	},
+		// });
 
 		// send email with OTP code
-		await sendOtpEmail({ to: email, otp, name: user.name });
+		// await sendOtpEmail({ to: email, otp, name: user.name });
 
 		return Response.json(
 			{
