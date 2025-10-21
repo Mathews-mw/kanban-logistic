@@ -38,18 +38,13 @@ export function Pagination({
 				)}
 
 				<div className="flex items-center gap-2">
-					<Button
-						variant="outline"
-						size={isMobile ? 'sm' : 'default'}
-						onClick={() => onPageChange(1)}
-						disabled={currentPage === 1}
-					>
+					<Button variant="outline" size="sm" onClick={() => onPageChange(1)} disabled={currentPage === 1}>
 						<ChevronsLeft />
 						<span className="sr-only">First</span>
 					</Button>
 					<Button
 						variant="outline"
-						size={isMobile ? 'sm' : 'default'}
+						size="sm"
 						onClick={() => onPageChange(currentPage - 1)}
 						disabled={currentPage === 1}
 					>
@@ -58,7 +53,7 @@ export function Pagination({
 					</Button>
 					<Button
 						variant="outline"
-						size={isMobile ? 'sm' : 'default'}
+						size="sm"
 						onClick={() => onPageChange(currentPage + 1)}
 						disabled={totalPages <= currentPage}
 					>
@@ -67,7 +62,7 @@ export function Pagination({
 					</Button>
 					<Button
 						variant="outline"
-						size={isMobile ? 'sm' : 'default'}
+						size="sm"
 						onClick={() => onPageChange(totalPages)}
 						disabled={totalPages <= currentPage}
 					>

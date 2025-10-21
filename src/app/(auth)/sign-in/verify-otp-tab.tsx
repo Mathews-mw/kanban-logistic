@@ -64,7 +64,7 @@ export function VerifyOtpTab({ onTabChange }: IProps) {
 				<div>
 					<Button size="sm" variant="ghost" disabled={isPending} onClick={handleBackToRequestOtp}>
 						<ArrowLeft />
-						Voltar
+						Back
 					</Button>
 				</div>
 				<CardTitle className="text-center text-lg">Validate security code</CardTitle>

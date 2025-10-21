@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { createContext, useContext } from 'react';
 
 import { IProfile } from '@/@types/user';
-import { getUserProfile } from '@/_http/users/get-user-profile';
+import { getUserProfile } from '@/_http/requests/users/get-user-profile';
 
 interface UserContextType {
 	userProfile?: IProfile;

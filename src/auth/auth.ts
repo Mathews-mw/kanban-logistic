@@ -2,7 +2,7 @@ import { cookies as nextCookies, headers } from 'next/headers';
 
 import { env } from '@/env';
 import { redirect } from 'next/navigation';
-import { getUserProfile } from '@/_http/users/get-user-profile';
+import { getUserProfile } from '@/_http/requests/users/get-user-profile';
 
 export type AuthSession = {
 	userId: string;

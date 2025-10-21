@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { getUserProfile } from '@/_http/users/get-user-profile';
+import { getUserProfile } from '@/_http/requests/users/get-user-profile';
 import { PageTitle } from '@/components/page-title';
 
 async function userProfile() {

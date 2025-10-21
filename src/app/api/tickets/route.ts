@@ -3,6 +3,7 @@ import { NextRequest } from 'next/server';
 
 import { prisma } from '@/lib/prisma';
 import { Prisma } from '@/generated/client';
+import { TicketStatusPresenter } from '@/presenters/ticket-status-presenter';
 
 const queryParamsSchema = z.object({
 	page: z.optional(z.coerce.number()).default(1),
@@ -61,7 +62,7 @@ export async function GET(request: NextRequest) {
 		const { page, per_page, order_by, q, status, from, to } = queryParamsSchema.parse({
 			page: searchParams.get('page') ?? 1,
 			per_page: searchParams.get('per_page') ?? 10,
-			order_by: searchParams.get('order_by'),
+			order_by: searchParams.get('order_by') ?? 'desc',
 			q: searchParams.get('q'),
 			status: searchParams.get('status'),
 			from: searchParams.get('from'),
@@ -125,6 +126,7 @@ export async function GET(request: NextRequest) {
 				{ number: { contains: q } },
 				{ vehicle: { plateNumber: { contains: q, mode: 'insensitive' } } },
 				{ product: { code: { contains: q, mode: 'insensitive' } } },
+				{ product: { description: { contains: q, mode: 'insensitive' } } },
 			];
 		}
 
@@ -169,9 +171,16 @@ export async function GET(request: NextRequest) {
 			total_occurrences: count,
 		};
 
+		const ticketsResponse = tickets.map((ticket) => {
+			return {
+				...ticket,
+				statusText: TicketStatusPresenter.toHTTP(ticket.status),
+			};
+		});
+
 		return Response.json({
 			pagination,
-			tickets,
+			tickets: ticketsResponse,
 		});
 	} catch (error) {
 		console.error('Listing tickets route error: ', error);
