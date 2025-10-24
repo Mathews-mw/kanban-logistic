@@ -103,7 +103,7 @@ export async function middleware(request: NextRequest) {
 
 		if (payload.sub) requestHeaders.set('x-user-id', String(payload.sub));
 		if (payload.email) requestHeaders.set('x-user-email', String(payload.email));
-		if (payload.companyId) requestHeaders.set('x-company-id', String(payload.companyId));
+		if (payload.activeCompanyId) requestHeaders.set('x-active-company-id', String(payload.activeCompanyId));
 		if (Array.isArray(payload.roles)) requestHeaders.set('x-user-roles', payload.roles.join(','));
 
 		const response = NextResponse.next({ request: { headers: requestHeaders } });

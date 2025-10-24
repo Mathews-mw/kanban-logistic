@@ -42,8 +42,9 @@ export async function GET(request: NextRequest) {
 	}
 
 	const userId = request.headers.get('x-user-id');
-	const companyId = request.headers.get('x-company-id');
+	const companyId = request.headers.get('x-active-company-id');
 	const rolesHeader = request.headers.get('x-user-roles') || '';
+
 	const roles = rolesHeader
 		.split(',')
 		.map((s) => s.trim())

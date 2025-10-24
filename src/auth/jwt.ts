@@ -7,7 +7,7 @@ const ALGORITHM = 'HS256';
 export type AppJwtPayload = JWTPayload & {
 	sub: string; // userId
 	email: string;
-	companyId?: string;
+	activeCompanyId?: string;
 	roles?: string[];
 };
 

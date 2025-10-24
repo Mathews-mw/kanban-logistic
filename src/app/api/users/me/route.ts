@@ -22,7 +22,18 @@ export async function GET(request: NextRequest) {
 		const user = await prisma.user.findUnique({
 			where: { id: userId },
 			include: {
-				company: true,
+				defaultCompany: true,
+				memberships: {
+					select: {
+						id: true,
+						companyId: true,
+						company: {
+							select: {
+								name: true,
+							},
+						},
+					},
+				},
 			},
 		});
 
@@ -30,21 +41,41 @@ export async function GET(request: NextRequest) {
 			return Response.json({ code: 'RESOURCE_NOT_FOUND_ERROR', message: 'User not found.' }, { status: 404 });
 		}
 
+		let defaultCompany = user.defaultCompany;
+
+		if (!user.defaultCompany) {
+			const userCompanyMemberships = await prisma.userCompanyMembership.findMany({
+				where: {
+					userId: user.id,
+				},
+				include: { company: true },
+			});
+
+			defaultCompany = userCompanyMemberships[0].company;
+		}
+
 		const userResponse = {
 			id: user.id,
 			name: user.name,
 			email: user.email,
-			companyId: user.companyId,
+			defaultCompanyId: defaultCompany?.id,
 			role: user.role,
 			createdAt: user.createdAt,
-			company: user.company
+			activeCompany: user.defaultCompany
 				? {
-						id: user.company.id,
-						name: user.company.name,
-						vatNumber: user.company.vatNumber,
-						roles: user.company.roles,
+						id: user.defaultCompany.id,
+						name: user.defaultCompany.name,
+						vatNumber: user.defaultCompany.vatNumber,
+						roles: user.defaultCompany.roles,
 					}
 				: null,
+			memberships: user.memberships.map((membership) => {
+				return {
+					id: membership.id,
+					companyId: membership.companyId,
+					companyName: membership.company.name,
+				};
+			}),
 		};
 
 		return Response.json({

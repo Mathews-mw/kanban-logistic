@@ -10,7 +10,7 @@ export function BackButton() {
 	const router = useRouter();
 
 	return (
-		<Button onClick={() => router.back()} variant="outline" className="bg-card">
+		<Button onClick={() => router.back()} variant="secondary">
 			<ArrowLeft />
 			Back
 		</Button>

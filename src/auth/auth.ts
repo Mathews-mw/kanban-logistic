@@ -46,7 +46,7 @@ export async function getAuthFromHeaders(): Promise<AuthSession> {
 
 	if (!userId || !email) return null;
 
-	const companyId = h.get('x-company-id');
+	const companyId = h.get('x-active-company-id');
 
 	const roles = (h.get('x-user-roles') || '')
 		.split(',')

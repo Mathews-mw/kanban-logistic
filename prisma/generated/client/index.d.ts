@@ -29,6 +29,11 @@ export type Otp = $Result.DefaultSelection<Prisma.$OtpPayload>
  */
 export type Company = $Result.DefaultSelection<Prisma.$CompanyPayload>
 /**
+ * Model UserCompanyMembership
+ * 
+ */
+export type UserCompanyMembership = $Result.DefaultSelection<Prisma.$UserCompanyMembershipPayload>
+/**
  * Model DeliveryPlant
  * 
  */
@@ -92,10 +97,22 @@ export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 export const CompanyRole: {
   SUPPLIER: 'SUPPLIER',
   CUSTOMER: 'CUSTOMER',
-  TRANSPORTER: 'TRANSPORTER'
+  TRANSPORTER: 'TRANSPORTER',
+  VIEWER: 'VIEWER'
 };
 
 export type CompanyRole = (typeof CompanyRole)[keyof typeof CompanyRole]
+
+
+export const MembershipRole: {
+  ADMIN: 'ADMIN',
+  SUPPLIER: 'SUPPLIER',
+  CUSTOMER: 'CUSTOMER',
+  TRANSPORTER: 'TRANSPORTER',
+  VIEWER: 'VIEWER'
+};
+
+export type MembershipRole = (typeof MembershipRole)[keyof typeof MembershipRole]
 
 
 export const TicketStatus: {
@@ -136,6 +153,10 @@ export const UserRole: typeof $Enums.UserRole
 export type CompanyRole = $Enums.CompanyRole
 
 export const CompanyRole: typeof $Enums.CompanyRole
+
+export type MembershipRole = $Enums.MembershipRole
+
+export const MembershipRole: typeof $Enums.MembershipRole
 
 export type TicketStatus = $Enums.TicketStatus
 
@@ -296,6 +317,16 @@ export class PrismaClient<
     * ```
     */
   get company(): Prisma.CompanyDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userCompanyMembership`: Exposes CRUD operations for the **UserCompanyMembership** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserCompanyMemberships
+    * const userCompanyMemberships = await prisma.userCompanyMembership.findMany()
+    * ```
+    */
+  get userCompanyMembership(): Prisma.UserCompanyMembershipDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.deliveryPlant`: Exposes CRUD operations for the **DeliveryPlant** model.
@@ -829,6 +860,7 @@ export namespace Prisma {
     User: 'User',
     Otp: 'Otp',
     Company: 'Company',
+    UserCompanyMembership: 'UserCompanyMembership',
     DeliveryPlant: 'DeliveryPlant',
     Vehicle: 'Vehicle',
     Product: 'Product',
@@ -856,7 +888,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "otp" | "company" | "deliveryPlant" | "vehicle" | "product" | "ticket" | "ticketDocument" | "ticketEventLog" | "ticketSequence" | "apiKey" | "importJob"
+      modelProps: "user" | "otp" | "company" | "userCompanyMembership" | "deliveryPlant" | "vehicle" | "product" | "ticket" | "ticketDocument" | "ticketEventLog" | "ticketSequence" | "apiKey" | "importJob"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1079,6 +1111,80 @@ export namespace Prisma {
           count: {
             args: Prisma.CompanyCountArgs<ExtArgs>
             result: $Utils.Optional<CompanyCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserCompanyMembership: {
+        payload: Prisma.$UserCompanyMembershipPayload<ExtArgs>
+        fields: Prisma.UserCompanyMembershipFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserCompanyMembershipFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCompanyMembershipPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserCompanyMembershipFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCompanyMembershipPayload>
+          }
+          findFirst: {
+            args: Prisma.UserCompanyMembershipFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCompanyMembershipPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserCompanyMembershipFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCompanyMembershipPayload>
+          }
+          findMany: {
+            args: Prisma.UserCompanyMembershipFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCompanyMembershipPayload>[]
+          }
+          create: {
+            args: Prisma.UserCompanyMembershipCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCompanyMembershipPayload>
+          }
+          createMany: {
+            args: Prisma.UserCompanyMembershipCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserCompanyMembershipCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCompanyMembershipPayload>[]
+          }
+          delete: {
+            args: Prisma.UserCompanyMembershipDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCompanyMembershipPayload>
+          }
+          update: {
+            args: Prisma.UserCompanyMembershipUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCompanyMembershipPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserCompanyMembershipDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserCompanyMembershipUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserCompanyMembershipUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCompanyMembershipPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserCompanyMembershipUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserCompanyMembershipPayload>
+          }
+          aggregate: {
+            args: Prisma.UserCompanyMembershipAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserCompanyMembership>
+          }
+          groupBy: {
+            args: Prisma.UserCompanyMembershipGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserCompanyMembershipGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserCompanyMembershipCountArgs<ExtArgs>
+            result: $Utils.Optional<UserCompanyMembershipCountAggregateOutputType> | number
           }
         }
       }
@@ -1847,6 +1953,7 @@ export namespace Prisma {
     user?: UserOmit
     otp?: OtpOmit
     company?: CompanyOmit
+    userCompanyMembership?: UserCompanyMembershipOmit
     deliveryPlant?: DeliveryPlantOmit
     vehicle?: VehicleOmit
     product?: ProductOmit
@@ -1936,11 +2043,15 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
+    memberships: number
     importJobs: number
+    ticketEvents: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    memberships?: boolean | UserCountOutputTypeCountMembershipsArgs
     importJobs?: boolean | UserCountOutputTypeCountImportJobsArgs
+    ticketEvents?: boolean | UserCountOutputTypeCountTicketEventsArgs
   }
 
   // Custom InputTypes
@@ -1957,8 +2068,22 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
+  export type UserCountOutputTypeCountMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserCompanyMembershipWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
   export type UserCountOutputTypeCountImportJobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ImportJobWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTicketEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TicketEventLogWhereInput
   }
 
 
@@ -1967,7 +2092,8 @@ export namespace Prisma {
    */
 
   export type CompanyCountOutputType = {
-    users: number
+    memberships: number
+    DefaultCompany: number
     deliveryPlants: number
     vehicles: number
     suppliedProducts: number
@@ -1979,7 +2105,8 @@ export namespace Prisma {
   }
 
   export type CompanyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    users?: boolean | CompanyCountOutputTypeCountUsersArgs
+    memberships?: boolean | CompanyCountOutputTypeCountMembershipsArgs
+    DefaultCompany?: boolean | CompanyCountOutputTypeCountDefaultCompanyArgs
     deliveryPlants?: boolean | CompanyCountOutputTypeCountDeliveryPlantsArgs
     vehicles?: boolean | CompanyCountOutputTypeCountVehiclesArgs
     suppliedProducts?: boolean | CompanyCountOutputTypeCountSuppliedProductsArgs
@@ -2004,7 +2131,14 @@ export namespace Prisma {
   /**
    * CompanyCountOutputType without action
    */
-  export type CompanyCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CompanyCountOutputTypeCountMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserCompanyMembershipWhereInput
+  }
+
+  /**
+   * CompanyCountOutputType without action
+   */
+  export type CompanyCountOutputTypeCountDefaultCompanyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserWhereInput
   }
 
@@ -2217,8 +2351,9 @@ export namespace Prisma {
     email: string | null
     name: string | null
     password: string | null
-    companyId: string | null
+    defaultCompanyId: string | null
     role: $Enums.UserRole | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2228,8 +2363,9 @@ export namespace Prisma {
     email: string | null
     name: string | null
     password: string | null
-    companyId: string | null
+    defaultCompanyId: string | null
     role: $Enums.UserRole | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2239,8 +2375,9 @@ export namespace Prisma {
     email: number
     name: number
     password: number
-    companyId: number
+    defaultCompanyId: number
     role: number
+    isActive: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2252,8 +2389,9 @@ export namespace Prisma {
     email?: true
     name?: true
     password?: true
-    companyId?: true
+    defaultCompanyId?: true
     role?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2263,8 +2401,9 @@ export namespace Prisma {
     email?: true
     name?: true
     password?: true
-    companyId?: true
+    defaultCompanyId?: true
     role?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2274,8 +2413,9 @@ export namespace Prisma {
     email?: true
     name?: true
     password?: true
-    companyId?: true
+    defaultCompanyId?: true
     role?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2358,8 +2498,9 @@ export namespace Prisma {
     email: string
     name: string
     password: string | null
-    companyId: string | null
+    defaultCompanyId: string | null
     role: $Enums.UserRole
+    isActive: boolean
     createdAt: Date
     updatedAt: Date | null
     _count: UserCountAggregateOutputType | null
@@ -2386,12 +2527,15 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     password?: boolean
-    companyId?: boolean
+    defaultCompanyId?: boolean
     role?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    company?: boolean | User$companyArgs<ExtArgs>
+    defaultCompany?: boolean | User$defaultCompanyArgs<ExtArgs>
+    memberships?: boolean | User$membershipsArgs<ExtArgs>
     importJobs?: boolean | User$importJobsArgs<ExtArgs>
+    ticketEvents?: boolean | User$ticketEventsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2400,11 +2544,12 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     password?: boolean
-    companyId?: boolean
+    defaultCompanyId?: boolean
     role?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    company?: boolean | User$companyArgs<ExtArgs>
+    defaultCompany?: boolean | User$defaultCompanyArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2412,11 +2557,12 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     password?: boolean
-    companyId?: boolean
+    defaultCompanyId?: boolean
     role?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    company?: boolean | User$companyArgs<ExtArgs>
+    defaultCompany?: boolean | User$defaultCompanyArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -2424,38 +2570,44 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     password?: boolean
-    companyId?: boolean
+    defaultCompanyId?: boolean
     role?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "password" | "companyId" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "password" | "defaultCompanyId" | "role" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    company?: boolean | User$companyArgs<ExtArgs>
+    defaultCompany?: boolean | User$defaultCompanyArgs<ExtArgs>
+    memberships?: boolean | User$membershipsArgs<ExtArgs>
     importJobs?: boolean | User$importJobsArgs<ExtArgs>
+    ticketEvents?: boolean | User$ticketEventsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    company?: boolean | User$companyArgs<ExtArgs>
+    defaultCompany?: boolean | User$defaultCompanyArgs<ExtArgs>
   }
   export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    company?: boolean | User$companyArgs<ExtArgs>
+    defaultCompany?: boolean | User$defaultCompanyArgs<ExtArgs>
   }
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      company: Prisma.$CompanyPayload<ExtArgs> | null
+      defaultCompany: Prisma.$CompanyPayload<ExtArgs> | null
+      memberships: Prisma.$UserCompanyMembershipPayload<ExtArgs>[]
       importJobs: Prisma.$ImportJobPayload<ExtArgs>[]
+      ticketEvents: Prisma.$TicketEventLogPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       email: string
       name: string
       password: string | null
-      companyId: string | null
+      defaultCompanyId: string | null
       role: $Enums.UserRole
+      isActive: boolean
       createdAt: Date
       updatedAt: Date | null
     }, ExtArgs["result"]["user"]>
@@ -2852,8 +3004,10 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    company<T extends User$companyArgs<ExtArgs> = {}>(args?: Subset<T, User$companyArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    defaultCompany<T extends User$defaultCompanyArgs<ExtArgs> = {}>(args?: Subset<T, User$defaultCompanyArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    memberships<T extends User$membershipsArgs<ExtArgs> = {}>(args?: Subset<T, User$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserCompanyMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     importJobs<T extends User$importJobsArgs<ExtArgs> = {}>(args?: Subset<T, User$importJobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ticketEvents<T extends User$ticketEventsArgs<ExtArgs> = {}>(args?: Subset<T, User$ticketEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TicketEventLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2887,8 +3041,9 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
-    readonly companyId: FieldRef<"User", 'String'>
+    readonly defaultCompanyId: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'UserRole'>
+    readonly isActive: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -3287,9 +3442,9 @@ export namespace Prisma {
   }
 
   /**
-   * User.company
+   * User.defaultCompany
    */
-  export type User$companyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$defaultCompanyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Company
      */
@@ -3303,6 +3458,30 @@ export namespace Prisma {
      */
     include?: CompanyInclude<ExtArgs> | null
     where?: CompanyWhereInput
+  }
+
+  /**
+   * User.memberships
+   */
+  export type User$membershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompanyMembership
+     */
+    select?: UserCompanyMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompanyMembership
+     */
+    omit?: UserCompanyMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyMembershipInclude<ExtArgs> | null
+    where?: UserCompanyMembershipWhereInput
+    orderBy?: UserCompanyMembershipOrderByWithRelationInput | UserCompanyMembershipOrderByWithRelationInput[]
+    cursor?: UserCompanyMembershipWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserCompanyMembershipScalarFieldEnum | UserCompanyMembershipScalarFieldEnum[]
   }
 
   /**
@@ -3327,6 +3506,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ImportJobScalarFieldEnum | ImportJobScalarFieldEnum[]
+  }
+
+  /**
+   * User.ticketEvents
+   */
+  export type User$ticketEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TicketEventLog
+     */
+    select?: TicketEventLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TicketEventLog
+     */
+    omit?: TicketEventLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketEventLogInclude<ExtArgs> | null
+    where?: TicketEventLogWhereInput
+    orderBy?: TicketEventLogOrderByWithRelationInput | TicketEventLogOrderByWithRelationInput[]
+    cursor?: TicketEventLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TicketEventLogScalarFieldEnum | TicketEventLogScalarFieldEnum[]
   }
 
   /**
@@ -4377,6 +4580,7 @@ export namespace Prisma {
     postalCode: string | null
     address1: string | null
     address2: string | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4392,6 +4596,7 @@ export namespace Prisma {
     postalCode: string | null
     address1: string | null
     address2: string | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -4408,6 +4613,7 @@ export namespace Prisma {
     address1: number
     address2: number
     roles: number
+    isActive: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -4425,6 +4631,7 @@ export namespace Prisma {
     postalCode?: true
     address1?: true
     address2?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4440,6 +4647,7 @@ export namespace Prisma {
     postalCode?: true
     address1?: true
     address2?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -4456,6 +4664,7 @@ export namespace Prisma {
     address1?: true
     address2?: true
     roles?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -4545,6 +4754,7 @@ export namespace Prisma {
     address1: string | null
     address2: string | null
     roles: $Enums.CompanyRole[]
+    isActive: boolean
     createdAt: Date
     updatedAt: Date | null
     _count: CompanyCountAggregateOutputType | null
@@ -4578,9 +4788,11 @@ export namespace Prisma {
     address1?: boolean
     address2?: boolean
     roles?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    users?: boolean | Company$usersArgs<ExtArgs>
+    memberships?: boolean | Company$membershipsArgs<ExtArgs>
+    DefaultCompany?: boolean | Company$DefaultCompanyArgs<ExtArgs>
     deliveryPlants?: boolean | Company$deliveryPlantsArgs<ExtArgs>
     vehicles?: boolean | Company$vehiclesArgs<ExtArgs>
     suppliedProducts?: boolean | Company$suppliedProductsArgs<ExtArgs>
@@ -4604,6 +4816,7 @@ export namespace Prisma {
     address1?: boolean
     address2?: boolean
     roles?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["company"]>
@@ -4620,6 +4833,7 @@ export namespace Prisma {
     address1?: boolean
     address2?: boolean
     roles?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["company"]>
@@ -4636,13 +4850,15 @@ export namespace Prisma {
     address1?: boolean
     address2?: boolean
     roles?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "vatNumber" | "email" | "phone" | "country" | "city" | "postalCode" | "address1" | "address2" | "roles" | "createdAt" | "updatedAt", ExtArgs["result"]["company"]>
+  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "vatNumber" | "email" | "phone" | "country" | "city" | "postalCode" | "address1" | "address2" | "roles" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["company"]>
   export type CompanyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    users?: boolean | Company$usersArgs<ExtArgs>
+    memberships?: boolean | Company$membershipsArgs<ExtArgs>
+    DefaultCompany?: boolean | Company$DefaultCompanyArgs<ExtArgs>
     deliveryPlants?: boolean | Company$deliveryPlantsArgs<ExtArgs>
     vehicles?: boolean | Company$vehiclesArgs<ExtArgs>
     suppliedProducts?: boolean | Company$suppliedProductsArgs<ExtArgs>
@@ -4659,7 +4875,8 @@ export namespace Prisma {
   export type $CompanyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Company"
     objects: {
-      users: Prisma.$UserPayload<ExtArgs>[]
+      memberships: Prisma.$UserCompanyMembershipPayload<ExtArgs>[]
+      DefaultCompany: Prisma.$UserPayload<ExtArgs>[]
       deliveryPlants: Prisma.$DeliveryPlantPayload<ExtArgs>[]
       vehicles: Prisma.$VehiclePayload<ExtArgs>[]
       suppliedProducts: Prisma.$ProductPayload<ExtArgs>[]
@@ -4681,6 +4898,7 @@ export namespace Prisma {
       address1: string | null
       address2: string | null
       roles: $Enums.CompanyRole[]
+      isActive: boolean
       createdAt: Date
       updatedAt: Date | null
     }, ExtArgs["result"]["company"]>
@@ -5077,7 +5295,8 @@ export namespace Prisma {
    */
   export interface Prisma__CompanyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    users<T extends Company$usersArgs<ExtArgs> = {}>(args?: Subset<T, Company$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    memberships<T extends Company$membershipsArgs<ExtArgs> = {}>(args?: Subset<T, Company$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserCompanyMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    DefaultCompany<T extends Company$DefaultCompanyArgs<ExtArgs> = {}>(args?: Subset<T, Company$DefaultCompanyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     deliveryPlants<T extends Company$deliveryPlantsArgs<ExtArgs> = {}>(args?: Subset<T, Company$deliveryPlantsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeliveryPlantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     vehicles<T extends Company$vehiclesArgs<ExtArgs> = {}>(args?: Subset<T, Company$vehiclesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     suppliedProducts<T extends Company$suppliedProductsArgs<ExtArgs> = {}>(args?: Subset<T, Company$suppliedProductsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5126,6 +5345,7 @@ export namespace Prisma {
     readonly address1: FieldRef<"Company", 'String'>
     readonly address2: FieldRef<"Company", 'String'>
     readonly roles: FieldRef<"Company", 'CompanyRole[]'>
+    readonly isActive: FieldRef<"Company", 'Boolean'>
     readonly createdAt: FieldRef<"Company", 'DateTime'>
     readonly updatedAt: FieldRef<"Company", 'DateTime'>
   }
@@ -5516,9 +5736,33 @@ export namespace Prisma {
   }
 
   /**
-   * Company.users
+   * Company.memberships
    */
-  export type Company$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Company$membershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompanyMembership
+     */
+    select?: UserCompanyMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompanyMembership
+     */
+    omit?: UserCompanyMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyMembershipInclude<ExtArgs> | null
+    where?: UserCompanyMembershipWhereInput
+    orderBy?: UserCompanyMembershipOrderByWithRelationInput | UserCompanyMembershipOrderByWithRelationInput[]
+    cursor?: UserCompanyMembershipWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserCompanyMembershipScalarFieldEnum | UserCompanyMembershipScalarFieldEnum[]
+  }
+
+  /**
+   * Company.DefaultCompany
+   */
+  export type Company$DefaultCompanyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the User
      */
@@ -5747,6 +5991,1081 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: CompanyInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserCompanyMembership
+   */
+
+  export type AggregateUserCompanyMembership = {
+    _count: UserCompanyMembershipCountAggregateOutputType | null
+    _min: UserCompanyMembershipMinAggregateOutputType | null
+    _max: UserCompanyMembershipMaxAggregateOutputType | null
+  }
+
+  export type UserCompanyMembershipMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    companyId: string | null
+    isActive: boolean | null
+    createdAt: Date | null
+  }
+
+  export type UserCompanyMembershipMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    companyId: string | null
+    isActive: boolean | null
+    createdAt: Date | null
+  }
+
+  export type UserCompanyMembershipCountAggregateOutputType = {
+    id: number
+    userId: number
+    companyId: number
+    roles: number
+    isActive: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type UserCompanyMembershipMinAggregateInputType = {
+    id?: true
+    userId?: true
+    companyId?: true
+    isActive?: true
+    createdAt?: true
+  }
+
+  export type UserCompanyMembershipMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    companyId?: true
+    isActive?: true
+    createdAt?: true
+  }
+
+  export type UserCompanyMembershipCountAggregateInputType = {
+    id?: true
+    userId?: true
+    companyId?: true
+    roles?: true
+    isActive?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type UserCompanyMembershipAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserCompanyMembership to aggregate.
+     */
+    where?: UserCompanyMembershipWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserCompanyMemberships to fetch.
+     */
+    orderBy?: UserCompanyMembershipOrderByWithRelationInput | UserCompanyMembershipOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserCompanyMembershipWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserCompanyMemberships from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserCompanyMemberships.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserCompanyMemberships
+    **/
+    _count?: true | UserCompanyMembershipCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserCompanyMembershipMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserCompanyMembershipMaxAggregateInputType
+  }
+
+  export type GetUserCompanyMembershipAggregateType<T extends UserCompanyMembershipAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserCompanyMembership]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserCompanyMembership[P]>
+      : GetScalarType<T[P], AggregateUserCompanyMembership[P]>
+  }
+
+
+
+
+  export type UserCompanyMembershipGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserCompanyMembershipWhereInput
+    orderBy?: UserCompanyMembershipOrderByWithAggregationInput | UserCompanyMembershipOrderByWithAggregationInput[]
+    by: UserCompanyMembershipScalarFieldEnum[] | UserCompanyMembershipScalarFieldEnum
+    having?: UserCompanyMembershipScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserCompanyMembershipCountAggregateInputType | true
+    _min?: UserCompanyMembershipMinAggregateInputType
+    _max?: UserCompanyMembershipMaxAggregateInputType
+  }
+
+  export type UserCompanyMembershipGroupByOutputType = {
+    id: string
+    userId: string
+    companyId: string
+    roles: $Enums.MembershipRole[]
+    isActive: boolean
+    createdAt: Date
+    _count: UserCompanyMembershipCountAggregateOutputType | null
+    _min: UserCompanyMembershipMinAggregateOutputType | null
+    _max: UserCompanyMembershipMaxAggregateOutputType | null
+  }
+
+  type GetUserCompanyMembershipGroupByPayload<T extends UserCompanyMembershipGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserCompanyMembershipGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserCompanyMembershipGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserCompanyMembershipGroupByOutputType[P]>
+            : GetScalarType<T[P], UserCompanyMembershipGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserCompanyMembershipSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    companyId?: boolean
+    roles?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userCompanyMembership"]>
+
+  export type UserCompanyMembershipSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    companyId?: boolean
+    roles?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userCompanyMembership"]>
+
+  export type UserCompanyMembershipSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    companyId?: boolean
+    roles?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userCompanyMembership"]>
+
+  export type UserCompanyMembershipSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    companyId?: boolean
+    roles?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+  }
+
+  export type UserCompanyMembershipOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "companyId" | "roles" | "isActive" | "createdAt", ExtArgs["result"]["userCompanyMembership"]>
+  export type UserCompanyMembershipInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+  }
+  export type UserCompanyMembershipIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+  }
+  export type UserCompanyMembershipIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
+  }
+
+  export type $UserCompanyMembershipPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserCompanyMembership"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      company: Prisma.$CompanyPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      companyId: string
+      roles: $Enums.MembershipRole[]
+      isActive: boolean
+      createdAt: Date
+    }, ExtArgs["result"]["userCompanyMembership"]>
+    composites: {}
+  }
+
+  type UserCompanyMembershipGetPayload<S extends boolean | null | undefined | UserCompanyMembershipDefaultArgs> = $Result.GetResult<Prisma.$UserCompanyMembershipPayload, S>
+
+  type UserCompanyMembershipCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserCompanyMembershipFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserCompanyMembershipCountAggregateInputType | true
+    }
+
+  export interface UserCompanyMembershipDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserCompanyMembership'], meta: { name: 'UserCompanyMembership' } }
+    /**
+     * Find zero or one UserCompanyMembership that matches the filter.
+     * @param {UserCompanyMembershipFindUniqueArgs} args - Arguments to find a UserCompanyMembership
+     * @example
+     * // Get one UserCompanyMembership
+     * const userCompanyMembership = await prisma.userCompanyMembership.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserCompanyMembershipFindUniqueArgs>(args: SelectSubset<T, UserCompanyMembershipFindUniqueArgs<ExtArgs>>): Prisma__UserCompanyMembershipClient<$Result.GetResult<Prisma.$UserCompanyMembershipPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserCompanyMembership that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserCompanyMembershipFindUniqueOrThrowArgs} args - Arguments to find a UserCompanyMembership
+     * @example
+     * // Get one UserCompanyMembership
+     * const userCompanyMembership = await prisma.userCompanyMembership.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserCompanyMembershipFindUniqueOrThrowArgs>(args: SelectSubset<T, UserCompanyMembershipFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserCompanyMembershipClient<$Result.GetResult<Prisma.$UserCompanyMembershipPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserCompanyMembership that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCompanyMembershipFindFirstArgs} args - Arguments to find a UserCompanyMembership
+     * @example
+     * // Get one UserCompanyMembership
+     * const userCompanyMembership = await prisma.userCompanyMembership.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserCompanyMembershipFindFirstArgs>(args?: SelectSubset<T, UserCompanyMembershipFindFirstArgs<ExtArgs>>): Prisma__UserCompanyMembershipClient<$Result.GetResult<Prisma.$UserCompanyMembershipPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserCompanyMembership that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCompanyMembershipFindFirstOrThrowArgs} args - Arguments to find a UserCompanyMembership
+     * @example
+     * // Get one UserCompanyMembership
+     * const userCompanyMembership = await prisma.userCompanyMembership.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserCompanyMembershipFindFirstOrThrowArgs>(args?: SelectSubset<T, UserCompanyMembershipFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserCompanyMembershipClient<$Result.GetResult<Prisma.$UserCompanyMembershipPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserCompanyMemberships that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCompanyMembershipFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserCompanyMemberships
+     * const userCompanyMemberships = await prisma.userCompanyMembership.findMany()
+     * 
+     * // Get first 10 UserCompanyMemberships
+     * const userCompanyMemberships = await prisma.userCompanyMembership.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userCompanyMembershipWithIdOnly = await prisma.userCompanyMembership.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserCompanyMembershipFindManyArgs>(args?: SelectSubset<T, UserCompanyMembershipFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserCompanyMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserCompanyMembership.
+     * @param {UserCompanyMembershipCreateArgs} args - Arguments to create a UserCompanyMembership.
+     * @example
+     * // Create one UserCompanyMembership
+     * const UserCompanyMembership = await prisma.userCompanyMembership.create({
+     *   data: {
+     *     // ... data to create a UserCompanyMembership
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserCompanyMembershipCreateArgs>(args: SelectSubset<T, UserCompanyMembershipCreateArgs<ExtArgs>>): Prisma__UserCompanyMembershipClient<$Result.GetResult<Prisma.$UserCompanyMembershipPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserCompanyMemberships.
+     * @param {UserCompanyMembershipCreateManyArgs} args - Arguments to create many UserCompanyMemberships.
+     * @example
+     * // Create many UserCompanyMemberships
+     * const userCompanyMembership = await prisma.userCompanyMembership.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserCompanyMembershipCreateManyArgs>(args?: SelectSubset<T, UserCompanyMembershipCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserCompanyMemberships and returns the data saved in the database.
+     * @param {UserCompanyMembershipCreateManyAndReturnArgs} args - Arguments to create many UserCompanyMemberships.
+     * @example
+     * // Create many UserCompanyMemberships
+     * const userCompanyMembership = await prisma.userCompanyMembership.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserCompanyMemberships and only return the `id`
+     * const userCompanyMembershipWithIdOnly = await prisma.userCompanyMembership.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserCompanyMembershipCreateManyAndReturnArgs>(args?: SelectSubset<T, UserCompanyMembershipCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserCompanyMembershipPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserCompanyMembership.
+     * @param {UserCompanyMembershipDeleteArgs} args - Arguments to delete one UserCompanyMembership.
+     * @example
+     * // Delete one UserCompanyMembership
+     * const UserCompanyMembership = await prisma.userCompanyMembership.delete({
+     *   where: {
+     *     // ... filter to delete one UserCompanyMembership
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserCompanyMembershipDeleteArgs>(args: SelectSubset<T, UserCompanyMembershipDeleteArgs<ExtArgs>>): Prisma__UserCompanyMembershipClient<$Result.GetResult<Prisma.$UserCompanyMembershipPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserCompanyMembership.
+     * @param {UserCompanyMembershipUpdateArgs} args - Arguments to update one UserCompanyMembership.
+     * @example
+     * // Update one UserCompanyMembership
+     * const userCompanyMembership = await prisma.userCompanyMembership.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserCompanyMembershipUpdateArgs>(args: SelectSubset<T, UserCompanyMembershipUpdateArgs<ExtArgs>>): Prisma__UserCompanyMembershipClient<$Result.GetResult<Prisma.$UserCompanyMembershipPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserCompanyMemberships.
+     * @param {UserCompanyMembershipDeleteManyArgs} args - Arguments to filter UserCompanyMemberships to delete.
+     * @example
+     * // Delete a few UserCompanyMemberships
+     * const { count } = await prisma.userCompanyMembership.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserCompanyMembershipDeleteManyArgs>(args?: SelectSubset<T, UserCompanyMembershipDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserCompanyMemberships.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCompanyMembershipUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserCompanyMemberships
+     * const userCompanyMembership = await prisma.userCompanyMembership.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserCompanyMembershipUpdateManyArgs>(args: SelectSubset<T, UserCompanyMembershipUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserCompanyMemberships and returns the data updated in the database.
+     * @param {UserCompanyMembershipUpdateManyAndReturnArgs} args - Arguments to update many UserCompanyMemberships.
+     * @example
+     * // Update many UserCompanyMemberships
+     * const userCompanyMembership = await prisma.userCompanyMembership.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserCompanyMemberships and only return the `id`
+     * const userCompanyMembershipWithIdOnly = await prisma.userCompanyMembership.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserCompanyMembershipUpdateManyAndReturnArgs>(args: SelectSubset<T, UserCompanyMembershipUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserCompanyMembershipPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserCompanyMembership.
+     * @param {UserCompanyMembershipUpsertArgs} args - Arguments to update or create a UserCompanyMembership.
+     * @example
+     * // Update or create a UserCompanyMembership
+     * const userCompanyMembership = await prisma.userCompanyMembership.upsert({
+     *   create: {
+     *     // ... data to create a UserCompanyMembership
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserCompanyMembership we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserCompanyMembershipUpsertArgs>(args: SelectSubset<T, UserCompanyMembershipUpsertArgs<ExtArgs>>): Prisma__UserCompanyMembershipClient<$Result.GetResult<Prisma.$UserCompanyMembershipPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserCompanyMemberships.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCompanyMembershipCountArgs} args - Arguments to filter UserCompanyMemberships to count.
+     * @example
+     * // Count the number of UserCompanyMemberships
+     * const count = await prisma.userCompanyMembership.count({
+     *   where: {
+     *     // ... the filter for the UserCompanyMemberships we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserCompanyMembershipCountArgs>(
+      args?: Subset<T, UserCompanyMembershipCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserCompanyMembershipCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserCompanyMembership.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCompanyMembershipAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserCompanyMembershipAggregateArgs>(args: Subset<T, UserCompanyMembershipAggregateArgs>): Prisma.PrismaPromise<GetUserCompanyMembershipAggregateType<T>>
+
+    /**
+     * Group by UserCompanyMembership.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCompanyMembershipGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserCompanyMembershipGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserCompanyMembershipGroupByArgs['orderBy'] }
+        : { orderBy?: UserCompanyMembershipGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserCompanyMembershipGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserCompanyMembershipGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserCompanyMembership model
+   */
+  readonly fields: UserCompanyMembershipFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserCompanyMembership.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserCompanyMembershipClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    company<T extends CompanyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CompanyDefaultArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserCompanyMembership model
+   */
+  interface UserCompanyMembershipFieldRefs {
+    readonly id: FieldRef<"UserCompanyMembership", 'String'>
+    readonly userId: FieldRef<"UserCompanyMembership", 'String'>
+    readonly companyId: FieldRef<"UserCompanyMembership", 'String'>
+    readonly roles: FieldRef<"UserCompanyMembership", 'MembershipRole[]'>
+    readonly isActive: FieldRef<"UserCompanyMembership", 'Boolean'>
+    readonly createdAt: FieldRef<"UserCompanyMembership", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserCompanyMembership findUnique
+   */
+  export type UserCompanyMembershipFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompanyMembership
+     */
+    select?: UserCompanyMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompanyMembership
+     */
+    omit?: UserCompanyMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyMembershipInclude<ExtArgs> | null
+    /**
+     * Filter, which UserCompanyMembership to fetch.
+     */
+    where: UserCompanyMembershipWhereUniqueInput
+  }
+
+  /**
+   * UserCompanyMembership findUniqueOrThrow
+   */
+  export type UserCompanyMembershipFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompanyMembership
+     */
+    select?: UserCompanyMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompanyMembership
+     */
+    omit?: UserCompanyMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyMembershipInclude<ExtArgs> | null
+    /**
+     * Filter, which UserCompanyMembership to fetch.
+     */
+    where: UserCompanyMembershipWhereUniqueInput
+  }
+
+  /**
+   * UserCompanyMembership findFirst
+   */
+  export type UserCompanyMembershipFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompanyMembership
+     */
+    select?: UserCompanyMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompanyMembership
+     */
+    omit?: UserCompanyMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyMembershipInclude<ExtArgs> | null
+    /**
+     * Filter, which UserCompanyMembership to fetch.
+     */
+    where?: UserCompanyMembershipWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserCompanyMemberships to fetch.
+     */
+    orderBy?: UserCompanyMembershipOrderByWithRelationInput | UserCompanyMembershipOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserCompanyMemberships.
+     */
+    cursor?: UserCompanyMembershipWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserCompanyMemberships from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserCompanyMemberships.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserCompanyMemberships.
+     */
+    distinct?: UserCompanyMembershipScalarFieldEnum | UserCompanyMembershipScalarFieldEnum[]
+  }
+
+  /**
+   * UserCompanyMembership findFirstOrThrow
+   */
+  export type UserCompanyMembershipFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompanyMembership
+     */
+    select?: UserCompanyMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompanyMembership
+     */
+    omit?: UserCompanyMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyMembershipInclude<ExtArgs> | null
+    /**
+     * Filter, which UserCompanyMembership to fetch.
+     */
+    where?: UserCompanyMembershipWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserCompanyMemberships to fetch.
+     */
+    orderBy?: UserCompanyMembershipOrderByWithRelationInput | UserCompanyMembershipOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserCompanyMemberships.
+     */
+    cursor?: UserCompanyMembershipWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserCompanyMemberships from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserCompanyMemberships.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserCompanyMemberships.
+     */
+    distinct?: UserCompanyMembershipScalarFieldEnum | UserCompanyMembershipScalarFieldEnum[]
+  }
+
+  /**
+   * UserCompanyMembership findMany
+   */
+  export type UserCompanyMembershipFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompanyMembership
+     */
+    select?: UserCompanyMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompanyMembership
+     */
+    omit?: UserCompanyMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyMembershipInclude<ExtArgs> | null
+    /**
+     * Filter, which UserCompanyMemberships to fetch.
+     */
+    where?: UserCompanyMembershipWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserCompanyMemberships to fetch.
+     */
+    orderBy?: UserCompanyMembershipOrderByWithRelationInput | UserCompanyMembershipOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserCompanyMemberships.
+     */
+    cursor?: UserCompanyMembershipWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserCompanyMemberships from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserCompanyMemberships.
+     */
+    skip?: number
+    distinct?: UserCompanyMembershipScalarFieldEnum | UserCompanyMembershipScalarFieldEnum[]
+  }
+
+  /**
+   * UserCompanyMembership create
+   */
+  export type UserCompanyMembershipCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompanyMembership
+     */
+    select?: UserCompanyMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompanyMembership
+     */
+    omit?: UserCompanyMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyMembershipInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserCompanyMembership.
+     */
+    data: XOR<UserCompanyMembershipCreateInput, UserCompanyMembershipUncheckedCreateInput>
+  }
+
+  /**
+   * UserCompanyMembership createMany
+   */
+  export type UserCompanyMembershipCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserCompanyMemberships.
+     */
+    data: UserCompanyMembershipCreateManyInput | UserCompanyMembershipCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserCompanyMembership createManyAndReturn
+   */
+  export type UserCompanyMembershipCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompanyMembership
+     */
+    select?: UserCompanyMembershipSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompanyMembership
+     */
+    omit?: UserCompanyMembershipOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserCompanyMemberships.
+     */
+    data: UserCompanyMembershipCreateManyInput | UserCompanyMembershipCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyMembershipIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserCompanyMembership update
+   */
+  export type UserCompanyMembershipUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompanyMembership
+     */
+    select?: UserCompanyMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompanyMembership
+     */
+    omit?: UserCompanyMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyMembershipInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserCompanyMembership.
+     */
+    data: XOR<UserCompanyMembershipUpdateInput, UserCompanyMembershipUncheckedUpdateInput>
+    /**
+     * Choose, which UserCompanyMembership to update.
+     */
+    where: UserCompanyMembershipWhereUniqueInput
+  }
+
+  /**
+   * UserCompanyMembership updateMany
+   */
+  export type UserCompanyMembershipUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserCompanyMemberships.
+     */
+    data: XOR<UserCompanyMembershipUpdateManyMutationInput, UserCompanyMembershipUncheckedUpdateManyInput>
+    /**
+     * Filter which UserCompanyMemberships to update
+     */
+    where?: UserCompanyMembershipWhereInput
+    /**
+     * Limit how many UserCompanyMemberships to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserCompanyMembership updateManyAndReturn
+   */
+  export type UserCompanyMembershipUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompanyMembership
+     */
+    select?: UserCompanyMembershipSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompanyMembership
+     */
+    omit?: UserCompanyMembershipOmit<ExtArgs> | null
+    /**
+     * The data used to update UserCompanyMemberships.
+     */
+    data: XOR<UserCompanyMembershipUpdateManyMutationInput, UserCompanyMembershipUncheckedUpdateManyInput>
+    /**
+     * Filter which UserCompanyMemberships to update
+     */
+    where?: UserCompanyMembershipWhereInput
+    /**
+     * Limit how many UserCompanyMemberships to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyMembershipIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserCompanyMembership upsert
+   */
+  export type UserCompanyMembershipUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompanyMembership
+     */
+    select?: UserCompanyMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompanyMembership
+     */
+    omit?: UserCompanyMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyMembershipInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserCompanyMembership to update in case it exists.
+     */
+    where: UserCompanyMembershipWhereUniqueInput
+    /**
+     * In case the UserCompanyMembership found by the `where` argument doesn't exist, create a new UserCompanyMembership with this data.
+     */
+    create: XOR<UserCompanyMembershipCreateInput, UserCompanyMembershipUncheckedCreateInput>
+    /**
+     * In case the UserCompanyMembership was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserCompanyMembershipUpdateInput, UserCompanyMembershipUncheckedUpdateInput>
+  }
+
+  /**
+   * UserCompanyMembership delete
+   */
+  export type UserCompanyMembershipDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompanyMembership
+     */
+    select?: UserCompanyMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompanyMembership
+     */
+    omit?: UserCompanyMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyMembershipInclude<ExtArgs> | null
+    /**
+     * Filter which UserCompanyMembership to delete.
+     */
+    where: UserCompanyMembershipWhereUniqueInput
+  }
+
+  /**
+   * UserCompanyMembership deleteMany
+   */
+  export type UserCompanyMembershipDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserCompanyMemberships to delete
+     */
+    where?: UserCompanyMembershipWhereInput
+    /**
+     * Limit how many UserCompanyMemberships to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserCompanyMembership without action
+   */
+  export type UserCompanyMembershipDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCompanyMembership
+     */
+    select?: UserCompanyMembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserCompanyMembership
+     */
+    omit?: UserCompanyMembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserCompanyMembershipInclude<ExtArgs> | null
   }
 
 
@@ -11906,6 +13225,7 @@ export namespace Prisma {
     meta?: boolean
     createdAt?: boolean
     ticket?: boolean | TicketDefaultArgs<ExtArgs>
+    actor?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["ticketEventLog"]>
 
   export type TicketEventLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -11918,6 +13238,7 @@ export namespace Prisma {
     meta?: boolean
     createdAt?: boolean
     ticket?: boolean | TicketDefaultArgs<ExtArgs>
+    actor?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["ticketEventLog"]>
 
   export type TicketEventLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -11930,6 +13251,7 @@ export namespace Prisma {
     meta?: boolean
     createdAt?: boolean
     ticket?: boolean | TicketDefaultArgs<ExtArgs>
+    actor?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["ticketEventLog"]>
 
   export type TicketEventLogSelectScalar = {
@@ -11946,18 +13268,22 @@ export namespace Prisma {
   export type TicketEventLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ticketId" | "actorId" | "action" | "from" | "to" | "meta" | "createdAt", ExtArgs["result"]["ticketEventLog"]>
   export type TicketEventLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     ticket?: boolean | TicketDefaultArgs<ExtArgs>
+    actor?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type TicketEventLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     ticket?: boolean | TicketDefaultArgs<ExtArgs>
+    actor?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type TicketEventLogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     ticket?: boolean | TicketDefaultArgs<ExtArgs>
+    actor?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $TicketEventLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "TicketEventLog"
     objects: {
       ticket: Prisma.$TicketPayload<ExtArgs>
+      actor: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -12363,6 +13689,7 @@ export namespace Prisma {
   export interface Prisma__TicketEventLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     ticket<T extends TicketDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TicketDefaultArgs<ExtArgs>>): Prisma__TicketClient<$Result.GetResult<Prisma.$TicketPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    actor<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -16107,8 +17434,9 @@ export namespace Prisma {
     email: 'email',
     name: 'name',
     password: 'password',
-    companyId: 'companyId',
+    defaultCompanyId: 'defaultCompanyId',
     role: 'role',
+    isActive: 'isActive',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -16140,11 +17468,24 @@ export namespace Prisma {
     address1: 'address1',
     address2: 'address2',
     roles: 'roles',
+    isActive: 'isActive',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
   export type CompanyScalarFieldEnum = (typeof CompanyScalarFieldEnum)[keyof typeof CompanyScalarFieldEnum]
+
+
+  export const UserCompanyMembershipScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    companyId: 'companyId',
+    roles: 'roles',
+    isActive: 'isActive',
+    createdAt: 'createdAt'
+  };
+
+  export type UserCompanyMembershipScalarFieldEnum = (typeof UserCompanyMembershipScalarFieldEnum)[keyof typeof UserCompanyMembershipScalarFieldEnum]
 
 
   export const DeliveryPlantScalarFieldEnum: {
@@ -16366,6 +17707,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -16380,13 +17728,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
    * Reference to a field of type 'CompanyRole[]'
    */
   export type ListEnumCompanyRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CompanyRole[]'>
@@ -16397,6 +17738,20 @@ export namespace Prisma {
    * Reference to a field of type 'CompanyRole'
    */
   export type EnumCompanyRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CompanyRole'>
+    
+
+
+  /**
+   * Reference to a field of type 'MembershipRole[]'
+   */
+  export type ListEnumMembershipRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MembershipRole[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'MembershipRole'
+   */
+  export type EnumMembershipRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MembershipRole'>
     
 
 
@@ -16495,12 +17850,15 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     name?: StringFilter<"User"> | string
     password?: StringNullableFilter<"User"> | string | null
-    companyId?: StringNullableFilter<"User"> | string | null
+    defaultCompanyId?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
+    isActive?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
-    company?: XOR<CompanyNullableScalarRelationFilter, CompanyWhereInput> | null
+    defaultCompany?: XOR<CompanyNullableScalarRelationFilter, CompanyWhereInput> | null
+    memberships?: UserCompanyMembershipListRelationFilter
     importJobs?: ImportJobListRelationFilter
+    ticketEvents?: TicketEventLogListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -16508,12 +17866,15 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     password?: SortOrderInput | SortOrder
-    companyId?: SortOrderInput | SortOrder
+    defaultCompanyId?: SortOrderInput | SortOrder
     role?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
-    company?: CompanyOrderByWithRelationInput
+    defaultCompany?: CompanyOrderByWithRelationInput
+    memberships?: UserCompanyMembershipOrderByRelationAggregateInput
     importJobs?: ImportJobOrderByRelationAggregateInput
+    ticketEvents?: TicketEventLogOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -16524,12 +17885,15 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringFilter<"User"> | string
     password?: StringNullableFilter<"User"> | string | null
-    companyId?: StringNullableFilter<"User"> | string | null
+    defaultCompanyId?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
+    isActive?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
-    company?: XOR<CompanyNullableScalarRelationFilter, CompanyWhereInput> | null
+    defaultCompany?: XOR<CompanyNullableScalarRelationFilter, CompanyWhereInput> | null
+    memberships?: UserCompanyMembershipListRelationFilter
     importJobs?: ImportJobListRelationFilter
+    ticketEvents?: TicketEventLogListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -16537,8 +17901,9 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     password?: SortOrderInput | SortOrder
-    companyId?: SortOrderInput | SortOrder
+    defaultCompanyId?: SortOrderInput | SortOrder
     role?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -16554,8 +17919,9 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     name?: StringWithAggregatesFilter<"User"> | string
     password?: StringNullableWithAggregatesFilter<"User"> | string | null
-    companyId?: StringNullableWithAggregatesFilter<"User"> | string | null
+    defaultCompanyId?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
+    isActive?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   }
@@ -16633,9 +17999,11 @@ export namespace Prisma {
     address1?: StringNullableFilter<"Company"> | string | null
     address2?: StringNullableFilter<"Company"> | string | null
     roles?: EnumCompanyRoleNullableListFilter<"Company">
+    isActive?: BoolFilter<"Company"> | boolean
     createdAt?: DateTimeFilter<"Company"> | Date | string
     updatedAt?: DateTimeNullableFilter<"Company"> | Date | string | null
-    users?: UserListRelationFilter
+    memberships?: UserCompanyMembershipListRelationFilter
+    DefaultCompany?: UserListRelationFilter
     deliveryPlants?: DeliveryPlantListRelationFilter
     vehicles?: VehicleListRelationFilter
     suppliedProducts?: ProductListRelationFilter
@@ -16658,9 +18026,11 @@ export namespace Prisma {
     address1?: SortOrderInput | SortOrder
     address2?: SortOrderInput | SortOrder
     roles?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
-    users?: UserOrderByRelationAggregateInput
+    memberships?: UserCompanyMembershipOrderByRelationAggregateInput
+    DefaultCompany?: UserOrderByRelationAggregateInput
     deliveryPlants?: DeliveryPlantOrderByRelationAggregateInput
     vehicles?: VehicleOrderByRelationAggregateInput
     suppliedProducts?: ProductOrderByRelationAggregateInput
@@ -16686,9 +18056,11 @@ export namespace Prisma {
     address1?: StringNullableFilter<"Company"> | string | null
     address2?: StringNullableFilter<"Company"> | string | null
     roles?: EnumCompanyRoleNullableListFilter<"Company">
+    isActive?: BoolFilter<"Company"> | boolean
     createdAt?: DateTimeFilter<"Company"> | Date | string
     updatedAt?: DateTimeNullableFilter<"Company"> | Date | string | null
-    users?: UserListRelationFilter
+    memberships?: UserCompanyMembershipListRelationFilter
+    DefaultCompany?: UserListRelationFilter
     deliveryPlants?: DeliveryPlantListRelationFilter
     vehicles?: VehicleListRelationFilter
     suppliedProducts?: ProductListRelationFilter
@@ -16711,6 +18083,7 @@ export namespace Prisma {
     address1?: SortOrderInput | SortOrder
     address2?: SortOrderInput | SortOrder
     roles?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
     _count?: CompanyCountOrderByAggregateInput
@@ -16733,8 +18106,73 @@ export namespace Prisma {
     address1?: StringNullableWithAggregatesFilter<"Company"> | string | null
     address2?: StringNullableWithAggregatesFilter<"Company"> | string | null
     roles?: EnumCompanyRoleNullableListFilter<"Company">
+    isActive?: BoolWithAggregatesFilter<"Company"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Company"> | Date | string
     updatedAt?: DateTimeNullableWithAggregatesFilter<"Company"> | Date | string | null
+  }
+
+  export type UserCompanyMembershipWhereInput = {
+    AND?: UserCompanyMembershipWhereInput | UserCompanyMembershipWhereInput[]
+    OR?: UserCompanyMembershipWhereInput[]
+    NOT?: UserCompanyMembershipWhereInput | UserCompanyMembershipWhereInput[]
+    id?: StringFilter<"UserCompanyMembership"> | string
+    userId?: StringFilter<"UserCompanyMembership"> | string
+    companyId?: StringFilter<"UserCompanyMembership"> | string
+    roles?: EnumMembershipRoleNullableListFilter<"UserCompanyMembership">
+    isActive?: BoolFilter<"UserCompanyMembership"> | boolean
+    createdAt?: DateTimeFilter<"UserCompanyMembership"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
+  }
+
+  export type UserCompanyMembershipOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    companyId?: SortOrder
+    roles?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    company?: CompanyOrderByWithRelationInput
+  }
+
+  export type UserCompanyMembershipWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_companyId?: UserCompanyMembershipUserIdCompanyIdCompoundUniqueInput
+    AND?: UserCompanyMembershipWhereInput | UserCompanyMembershipWhereInput[]
+    OR?: UserCompanyMembershipWhereInput[]
+    NOT?: UserCompanyMembershipWhereInput | UserCompanyMembershipWhereInput[]
+    userId?: StringFilter<"UserCompanyMembership"> | string
+    companyId?: StringFilter<"UserCompanyMembership"> | string
+    roles?: EnumMembershipRoleNullableListFilter<"UserCompanyMembership">
+    isActive?: BoolFilter<"UserCompanyMembership"> | boolean
+    createdAt?: DateTimeFilter<"UserCompanyMembership"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
+  }, "id" | "userId_companyId">
+
+  export type UserCompanyMembershipOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    companyId?: SortOrder
+    roles?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    _count?: UserCompanyMembershipCountOrderByAggregateInput
+    _max?: UserCompanyMembershipMaxOrderByAggregateInput
+    _min?: UserCompanyMembershipMinOrderByAggregateInput
+  }
+
+  export type UserCompanyMembershipScalarWhereWithAggregatesInput = {
+    AND?: UserCompanyMembershipScalarWhereWithAggregatesInput | UserCompanyMembershipScalarWhereWithAggregatesInput[]
+    OR?: UserCompanyMembershipScalarWhereWithAggregatesInput[]
+    NOT?: UserCompanyMembershipScalarWhereWithAggregatesInput | UserCompanyMembershipScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserCompanyMembership"> | string
+    userId?: StringWithAggregatesFilter<"UserCompanyMembership"> | string
+    companyId?: StringWithAggregatesFilter<"UserCompanyMembership"> | string
+    roles?: EnumMembershipRoleNullableListFilter<"UserCompanyMembership">
+    isActive?: BoolWithAggregatesFilter<"UserCompanyMembership"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"UserCompanyMembership"> | Date | string
   }
 
   export type DeliveryPlantWhereInput = {
@@ -17202,6 +18640,7 @@ export namespace Prisma {
     meta?: JsonNullableFilter<"TicketEventLog">
     createdAt?: DateTimeFilter<"TicketEventLog"> | Date | string
     ticket?: XOR<TicketScalarRelationFilter, TicketWhereInput>
+    actor?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type TicketEventLogOrderByWithRelationInput = {
@@ -17214,6 +18653,7 @@ export namespace Prisma {
     meta?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     ticket?: TicketOrderByWithRelationInput
+    actor?: UserOrderByWithRelationInput
   }
 
   export type TicketEventLogWhereUniqueInput = Prisma.AtLeast<{
@@ -17229,6 +18669,7 @@ export namespace Prisma {
     meta?: JsonNullableFilter<"TicketEventLog">
     createdAt?: DateTimeFilter<"TicketEventLog"> | Date | string
     ticket?: XOR<TicketScalarRelationFilter, TicketWhereInput>
+    actor?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type TicketEventLogOrderByWithAggregationInput = {
@@ -17467,10 +18908,13 @@ export namespace Prisma {
     name: string
     password?: string | null
     role?: $Enums.UserRole
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    company?: CompanyCreateNestedOneWithoutUsersInput
+    defaultCompany?: CompanyCreateNestedOneWithoutDefaultCompanyInput
+    memberships?: UserCompanyMembershipCreateNestedManyWithoutUserInput
     importJobs?: ImportJobCreateNestedManyWithoutUserInput
+    ticketEvents?: TicketEventLogCreateNestedManyWithoutActorInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -17478,11 +18922,14 @@ export namespace Prisma {
     email: string
     name: string
     password?: string | null
-    companyId?: string | null
+    defaultCompanyId?: string | null
     role?: $Enums.UserRole
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    memberships?: UserCompanyMembershipUncheckedCreateNestedManyWithoutUserInput
     importJobs?: ImportJobUncheckedCreateNestedManyWithoutUserInput
+    ticketEvents?: TicketEventLogUncheckedCreateNestedManyWithoutActorInput
   }
 
   export type UserUpdateInput = {
@@ -17491,10 +18938,13 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    company?: CompanyUpdateOneWithoutUsersNestedInput
+    defaultCompany?: CompanyUpdateOneWithoutDefaultCompanyNestedInput
+    memberships?: UserCompanyMembershipUpdateManyWithoutUserNestedInput
     importJobs?: ImportJobUpdateManyWithoutUserNestedInput
+    ticketEvents?: TicketEventLogUpdateManyWithoutActorNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -17502,11 +18952,14 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
-    companyId?: NullableStringFieldUpdateOperationsInput | string | null
+    defaultCompanyId?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    memberships?: UserCompanyMembershipUncheckedUpdateManyWithoutUserNestedInput
     importJobs?: ImportJobUncheckedUpdateManyWithoutUserNestedInput
+    ticketEvents?: TicketEventLogUncheckedUpdateManyWithoutActorNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -17514,8 +18967,9 @@ export namespace Prisma {
     email: string
     name: string
     password?: string | null
-    companyId?: string | null
+    defaultCompanyId?: string | null
     role?: $Enums.UserRole
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
   }
@@ -17526,6 +18980,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -17535,8 +18990,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
-    companyId?: NullableStringFieldUpdateOperationsInput | string | null
+    defaultCompanyId?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -17616,9 +19072,11 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    users?: UserCreateNestedManyWithoutCompanyInput
+    memberships?: UserCompanyMembershipCreateNestedManyWithoutCompanyInput
+    DefaultCompany?: UserCreateNestedManyWithoutDefaultCompanyInput
     deliveryPlants?: DeliveryPlantCreateNestedManyWithoutCompanyInput
     vehicles?: VehicleCreateNestedManyWithoutTransporterInput
     suppliedProducts?: ProductCreateNestedManyWithoutSupplierInput
@@ -17641,9 +19099,11 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    users?: UserUncheckedCreateNestedManyWithoutCompanyInput
+    memberships?: UserCompanyMembershipUncheckedCreateNestedManyWithoutCompanyInput
+    DefaultCompany?: UserUncheckedCreateNestedManyWithoutDefaultCompanyInput
     deliveryPlants?: DeliveryPlantUncheckedCreateNestedManyWithoutCompanyInput
     vehicles?: VehicleUncheckedCreateNestedManyWithoutTransporterInput
     suppliedProducts?: ProductUncheckedCreateNestedManyWithoutSupplierInput
@@ -17666,9 +19126,11 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users?: UserUpdateManyWithoutCompanyNestedInput
+    memberships?: UserCompanyMembershipUpdateManyWithoutCompanyNestedInput
+    DefaultCompany?: UserUpdateManyWithoutDefaultCompanyNestedInput
     deliveryPlants?: DeliveryPlantUpdateManyWithoutCompanyNestedInput
     vehicles?: VehicleUpdateManyWithoutTransporterNestedInput
     suppliedProducts?: ProductUpdateManyWithoutSupplierNestedInput
@@ -17691,9 +19153,11 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users?: UserUncheckedUpdateManyWithoutCompanyNestedInput
+    memberships?: UserCompanyMembershipUncheckedUpdateManyWithoutCompanyNestedInput
+    DefaultCompany?: UserUncheckedUpdateManyWithoutDefaultCompanyNestedInput
     deliveryPlants?: DeliveryPlantUncheckedUpdateManyWithoutCompanyNestedInput
     vehicles?: VehicleUncheckedUpdateManyWithoutTransporterNestedInput
     suppliedProducts?: ProductUncheckedUpdateManyWithoutSupplierNestedInput
@@ -17716,6 +19180,7 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
   }
@@ -17732,6 +19197,7 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -17748,8 +19214,70 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type UserCompanyMembershipCreateInput = {
+    id?: string
+    roles?: UserCompanyMembershipCreaterolesInput | $Enums.MembershipRole[]
+    isActive?: boolean
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutMembershipsInput
+    company: CompanyCreateNestedOneWithoutMembershipsInput
+  }
+
+  export type UserCompanyMembershipUncheckedCreateInput = {
+    id?: string
+    userId: string
+    companyId: string
+    roles?: UserCompanyMembershipCreaterolesInput | $Enums.MembershipRole[]
+    isActive?: boolean
+    createdAt?: Date | string
+  }
+
+  export type UserCompanyMembershipUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roles?: UserCompanyMembershipUpdaterolesInput | $Enums.MembershipRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutMembershipsNestedInput
+    company?: CompanyUpdateOneRequiredWithoutMembershipsNestedInput
+  }
+
+  export type UserCompanyMembershipUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    roles?: UserCompanyMembershipUpdaterolesInput | $Enums.MembershipRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCompanyMembershipCreateManyInput = {
+    id?: string
+    userId: string
+    companyId: string
+    roles?: UserCompanyMembershipCreaterolesInput | $Enums.MembershipRole[]
+    isActive?: boolean
+    createdAt?: Date | string
+  }
+
+  export type UserCompanyMembershipUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roles?: UserCompanyMembershipUpdaterolesInput | $Enums.MembershipRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCompanyMembershipUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    roles?: UserCompanyMembershipUpdaterolesInput | $Enums.MembershipRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DeliveryPlantCreateInput = {
@@ -18240,13 +19768,13 @@ export namespace Prisma {
 
   export type TicketEventLogCreateInput = {
     id?: string
-    actorId: string
     action: string
     from?: string | null
     to?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     ticket: TicketCreateNestedOneWithoutEventsInput
+    actor: UserCreateNestedOneWithoutTicketEventsInput
   }
 
   export type TicketEventLogUncheckedCreateInput = {
@@ -18262,13 +19790,13 @@ export namespace Prisma {
 
   export type TicketEventLogUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    actorId?: StringFieldUpdateOperationsInput | string
     action?: StringFieldUpdateOperationsInput | string
     from?: NullableStringFieldUpdateOperationsInput | string | null
     to?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     ticket?: TicketUpdateOneRequiredWithoutEventsNestedInput
+    actor?: UserUpdateOneRequiredWithoutTicketEventsNestedInput
   }
 
   export type TicketEventLogUncheckedUpdateInput = {
@@ -18295,7 +19823,6 @@ export namespace Prisma {
 
   export type TicketEventLogUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    actorId?: StringFieldUpdateOperationsInput | string
     action?: StringFieldUpdateOperationsInput | string
     from?: NullableStringFieldUpdateOperationsInput | string | null
     to?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18565,6 +20092,11 @@ export namespace Prisma {
     not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -18592,10 +20124,22 @@ export namespace Prisma {
     isNot?: CompanyWhereInput | null
   }
 
+  export type UserCompanyMembershipListRelationFilter = {
+    every?: UserCompanyMembershipWhereInput
+    some?: UserCompanyMembershipWhereInput
+    none?: UserCompanyMembershipWhereInput
+  }
+
   export type ImportJobListRelationFilter = {
     every?: ImportJobWhereInput
     some?: ImportJobWhereInput
     none?: ImportJobWhereInput
+  }
+
+  export type TicketEventLogListRelationFilter = {
+    every?: TicketEventLogWhereInput
+    some?: TicketEventLogWhereInput
+    none?: TicketEventLogWhereInput
   }
 
   export type SortOrderInput = {
@@ -18603,7 +20147,15 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
+  export type UserCompanyMembershipOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type ImportJobOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TicketEventLogOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -18612,8 +20164,9 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     password?: SortOrder
-    companyId?: SortOrder
+    defaultCompanyId?: SortOrder
     role?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -18623,8 +20176,9 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     password?: SortOrder
-    companyId?: SortOrder
+    defaultCompanyId?: SortOrder
     role?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -18634,8 +20188,9 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     password?: SortOrder
-    companyId?: SortOrder
+    defaultCompanyId?: SortOrder
     role?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -18686,6 +20241,14 @@ export namespace Prisma {
     _max?: NestedEnumUserRoleFilter<$PrismaModel>
   }
 
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -18712,11 +20275,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type OtpEmailOtpHashCompoundUniqueInput = {
@@ -18749,14 +20307,6 @@ export namespace Prisma {
     used?: SortOrder
     expiresAt?: SortOrder
     createdAt?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type EnumCompanyRoleNullableListFilter<$PrismaModel = never> = {
@@ -18839,6 +20389,7 @@ export namespace Prisma {
     address1?: SortOrder
     address2?: SortOrder
     roles?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -18854,6 +20405,7 @@ export namespace Prisma {
     postalCode?: SortOrder
     address1?: SortOrder
     address2?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -18869,13 +20421,57 @@ export namespace Prisma {
     postalCode?: SortOrder
     address1?: SortOrder
     address2?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type EnumMembershipRoleNullableListFilter<$PrismaModel = never> = {
+    equals?: $Enums.MembershipRole[] | ListEnumMembershipRoleFieldRefInput<$PrismaModel> | null
+    has?: $Enums.MembershipRole | EnumMembershipRoleFieldRefInput<$PrismaModel> | null
+    hasEvery?: $Enums.MembershipRole[] | ListEnumMembershipRoleFieldRefInput<$PrismaModel>
+    hasSome?: $Enums.MembershipRole[] | ListEnumMembershipRoleFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
   }
 
   export type CompanyScalarRelationFilter = {
     is?: CompanyWhereInput
     isNot?: CompanyWhereInput
+  }
+
+  export type UserCompanyMembershipUserIdCompanyIdCompoundUniqueInput = {
+    userId: string
+    companyId: string
+  }
+
+  export type UserCompanyMembershipCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    companyId?: SortOrder
+    roles?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type UserCompanyMembershipMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    companyId?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type UserCompanyMembershipMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    companyId?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type DeliveryPlantCompanyIdNameCompoundUniqueInput = {
@@ -19118,17 +20714,7 @@ export namespace Prisma {
     none?: TicketDocumentWhereInput
   }
 
-  export type TicketEventLogListRelationFilter = {
-    every?: TicketEventLogWhereInput
-    some?: TicketEventLogWhereInput
-    none?: TicketEventLogWhereInput
-  }
-
   export type TicketDocumentOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type TicketEventLogOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -19531,10 +21117,17 @@ export namespace Prisma {
     _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
-  export type CompanyCreateNestedOneWithoutUsersInput = {
-    create?: XOR<CompanyCreateWithoutUsersInput, CompanyUncheckedCreateWithoutUsersInput>
-    connectOrCreate?: CompanyCreateOrConnectWithoutUsersInput
+  export type CompanyCreateNestedOneWithoutDefaultCompanyInput = {
+    create?: XOR<CompanyCreateWithoutDefaultCompanyInput, CompanyUncheckedCreateWithoutDefaultCompanyInput>
+    connectOrCreate?: CompanyCreateOrConnectWithoutDefaultCompanyInput
     connect?: CompanyWhereUniqueInput
+  }
+
+  export type UserCompanyMembershipCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserCompanyMembershipCreateWithoutUserInput, UserCompanyMembershipUncheckedCreateWithoutUserInput> | UserCompanyMembershipCreateWithoutUserInput[] | UserCompanyMembershipUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserCompanyMembershipCreateOrConnectWithoutUserInput | UserCompanyMembershipCreateOrConnectWithoutUserInput[]
+    createMany?: UserCompanyMembershipCreateManyUserInputEnvelope
+    connect?: UserCompanyMembershipWhereUniqueInput | UserCompanyMembershipWhereUniqueInput[]
   }
 
   export type ImportJobCreateNestedManyWithoutUserInput = {
@@ -19544,11 +21137,32 @@ export namespace Prisma {
     connect?: ImportJobWhereUniqueInput | ImportJobWhereUniqueInput[]
   }
 
+  export type TicketEventLogCreateNestedManyWithoutActorInput = {
+    create?: XOR<TicketEventLogCreateWithoutActorInput, TicketEventLogUncheckedCreateWithoutActorInput> | TicketEventLogCreateWithoutActorInput[] | TicketEventLogUncheckedCreateWithoutActorInput[]
+    connectOrCreate?: TicketEventLogCreateOrConnectWithoutActorInput | TicketEventLogCreateOrConnectWithoutActorInput[]
+    createMany?: TicketEventLogCreateManyActorInputEnvelope
+    connect?: TicketEventLogWhereUniqueInput | TicketEventLogWhereUniqueInput[]
+  }
+
+  export type UserCompanyMembershipUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserCompanyMembershipCreateWithoutUserInput, UserCompanyMembershipUncheckedCreateWithoutUserInput> | UserCompanyMembershipCreateWithoutUserInput[] | UserCompanyMembershipUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserCompanyMembershipCreateOrConnectWithoutUserInput | UserCompanyMembershipCreateOrConnectWithoutUserInput[]
+    createMany?: UserCompanyMembershipCreateManyUserInputEnvelope
+    connect?: UserCompanyMembershipWhereUniqueInput | UserCompanyMembershipWhereUniqueInput[]
+  }
+
   export type ImportJobUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<ImportJobCreateWithoutUserInput, ImportJobUncheckedCreateWithoutUserInput> | ImportJobCreateWithoutUserInput[] | ImportJobUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ImportJobCreateOrConnectWithoutUserInput | ImportJobCreateOrConnectWithoutUserInput[]
     createMany?: ImportJobCreateManyUserInputEnvelope
     connect?: ImportJobWhereUniqueInput | ImportJobWhereUniqueInput[]
+  }
+
+  export type TicketEventLogUncheckedCreateNestedManyWithoutActorInput = {
+    create?: XOR<TicketEventLogCreateWithoutActorInput, TicketEventLogUncheckedCreateWithoutActorInput> | TicketEventLogCreateWithoutActorInput[] | TicketEventLogUncheckedCreateWithoutActorInput[]
+    connectOrCreate?: TicketEventLogCreateOrConnectWithoutActorInput | TicketEventLogCreateOrConnectWithoutActorInput[]
+    createMany?: TicketEventLogCreateManyActorInputEnvelope
+    connect?: TicketEventLogWhereUniqueInput | TicketEventLogWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -19563,6 +21177,10 @@ export namespace Prisma {
     set?: $Enums.UserRole
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
@@ -19571,14 +21189,28 @@ export namespace Prisma {
     set?: Date | string | null
   }
 
-  export type CompanyUpdateOneWithoutUsersNestedInput = {
-    create?: XOR<CompanyCreateWithoutUsersInput, CompanyUncheckedCreateWithoutUsersInput>
-    connectOrCreate?: CompanyCreateOrConnectWithoutUsersInput
-    upsert?: CompanyUpsertWithoutUsersInput
+  export type CompanyUpdateOneWithoutDefaultCompanyNestedInput = {
+    create?: XOR<CompanyCreateWithoutDefaultCompanyInput, CompanyUncheckedCreateWithoutDefaultCompanyInput>
+    connectOrCreate?: CompanyCreateOrConnectWithoutDefaultCompanyInput
+    upsert?: CompanyUpsertWithoutDefaultCompanyInput
     disconnect?: CompanyWhereInput | boolean
     delete?: CompanyWhereInput | boolean
     connect?: CompanyWhereUniqueInput
-    update?: XOR<XOR<CompanyUpdateToOneWithWhereWithoutUsersInput, CompanyUpdateWithoutUsersInput>, CompanyUncheckedUpdateWithoutUsersInput>
+    update?: XOR<XOR<CompanyUpdateToOneWithWhereWithoutDefaultCompanyInput, CompanyUpdateWithoutDefaultCompanyInput>, CompanyUncheckedUpdateWithoutDefaultCompanyInput>
+  }
+
+  export type UserCompanyMembershipUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserCompanyMembershipCreateWithoutUserInput, UserCompanyMembershipUncheckedCreateWithoutUserInput> | UserCompanyMembershipCreateWithoutUserInput[] | UserCompanyMembershipUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserCompanyMembershipCreateOrConnectWithoutUserInput | UserCompanyMembershipCreateOrConnectWithoutUserInput[]
+    upsert?: UserCompanyMembershipUpsertWithWhereUniqueWithoutUserInput | UserCompanyMembershipUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserCompanyMembershipCreateManyUserInputEnvelope
+    set?: UserCompanyMembershipWhereUniqueInput | UserCompanyMembershipWhereUniqueInput[]
+    disconnect?: UserCompanyMembershipWhereUniqueInput | UserCompanyMembershipWhereUniqueInput[]
+    delete?: UserCompanyMembershipWhereUniqueInput | UserCompanyMembershipWhereUniqueInput[]
+    connect?: UserCompanyMembershipWhereUniqueInput | UserCompanyMembershipWhereUniqueInput[]
+    update?: UserCompanyMembershipUpdateWithWhereUniqueWithoutUserInput | UserCompanyMembershipUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserCompanyMembershipUpdateManyWithWhereWithoutUserInput | UserCompanyMembershipUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserCompanyMembershipScalarWhereInput | UserCompanyMembershipScalarWhereInput[]
   }
 
   export type ImportJobUpdateManyWithoutUserNestedInput = {
@@ -19595,6 +21227,34 @@ export namespace Prisma {
     deleteMany?: ImportJobScalarWhereInput | ImportJobScalarWhereInput[]
   }
 
+  export type TicketEventLogUpdateManyWithoutActorNestedInput = {
+    create?: XOR<TicketEventLogCreateWithoutActorInput, TicketEventLogUncheckedCreateWithoutActorInput> | TicketEventLogCreateWithoutActorInput[] | TicketEventLogUncheckedCreateWithoutActorInput[]
+    connectOrCreate?: TicketEventLogCreateOrConnectWithoutActorInput | TicketEventLogCreateOrConnectWithoutActorInput[]
+    upsert?: TicketEventLogUpsertWithWhereUniqueWithoutActorInput | TicketEventLogUpsertWithWhereUniqueWithoutActorInput[]
+    createMany?: TicketEventLogCreateManyActorInputEnvelope
+    set?: TicketEventLogWhereUniqueInput | TicketEventLogWhereUniqueInput[]
+    disconnect?: TicketEventLogWhereUniqueInput | TicketEventLogWhereUniqueInput[]
+    delete?: TicketEventLogWhereUniqueInput | TicketEventLogWhereUniqueInput[]
+    connect?: TicketEventLogWhereUniqueInput | TicketEventLogWhereUniqueInput[]
+    update?: TicketEventLogUpdateWithWhereUniqueWithoutActorInput | TicketEventLogUpdateWithWhereUniqueWithoutActorInput[]
+    updateMany?: TicketEventLogUpdateManyWithWhereWithoutActorInput | TicketEventLogUpdateManyWithWhereWithoutActorInput[]
+    deleteMany?: TicketEventLogScalarWhereInput | TicketEventLogScalarWhereInput[]
+  }
+
+  export type UserCompanyMembershipUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserCompanyMembershipCreateWithoutUserInput, UserCompanyMembershipUncheckedCreateWithoutUserInput> | UserCompanyMembershipCreateWithoutUserInput[] | UserCompanyMembershipUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserCompanyMembershipCreateOrConnectWithoutUserInput | UserCompanyMembershipCreateOrConnectWithoutUserInput[]
+    upsert?: UserCompanyMembershipUpsertWithWhereUniqueWithoutUserInput | UserCompanyMembershipUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserCompanyMembershipCreateManyUserInputEnvelope
+    set?: UserCompanyMembershipWhereUniqueInput | UserCompanyMembershipWhereUniqueInput[]
+    disconnect?: UserCompanyMembershipWhereUniqueInput | UserCompanyMembershipWhereUniqueInput[]
+    delete?: UserCompanyMembershipWhereUniqueInput | UserCompanyMembershipWhereUniqueInput[]
+    connect?: UserCompanyMembershipWhereUniqueInput | UserCompanyMembershipWhereUniqueInput[]
+    update?: UserCompanyMembershipUpdateWithWhereUniqueWithoutUserInput | UserCompanyMembershipUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserCompanyMembershipUpdateManyWithWhereWithoutUserInput | UserCompanyMembershipUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserCompanyMembershipScalarWhereInput | UserCompanyMembershipScalarWhereInput[]
+  }
+
   export type ImportJobUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<ImportJobCreateWithoutUserInput, ImportJobUncheckedCreateWithoutUserInput> | ImportJobCreateWithoutUserInput[] | ImportJobUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ImportJobCreateOrConnectWithoutUserInput | ImportJobCreateOrConnectWithoutUserInput[]
@@ -19609,18 +21269,35 @@ export namespace Prisma {
     deleteMany?: ImportJobScalarWhereInput | ImportJobScalarWhereInput[]
   }
 
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
+  export type TicketEventLogUncheckedUpdateManyWithoutActorNestedInput = {
+    create?: XOR<TicketEventLogCreateWithoutActorInput, TicketEventLogUncheckedCreateWithoutActorInput> | TicketEventLogCreateWithoutActorInput[] | TicketEventLogUncheckedCreateWithoutActorInput[]
+    connectOrCreate?: TicketEventLogCreateOrConnectWithoutActorInput | TicketEventLogCreateOrConnectWithoutActorInput[]
+    upsert?: TicketEventLogUpsertWithWhereUniqueWithoutActorInput | TicketEventLogUpsertWithWhereUniqueWithoutActorInput[]
+    createMany?: TicketEventLogCreateManyActorInputEnvelope
+    set?: TicketEventLogWhereUniqueInput | TicketEventLogWhereUniqueInput[]
+    disconnect?: TicketEventLogWhereUniqueInput | TicketEventLogWhereUniqueInput[]
+    delete?: TicketEventLogWhereUniqueInput | TicketEventLogWhereUniqueInput[]
+    connect?: TicketEventLogWhereUniqueInput | TicketEventLogWhereUniqueInput[]
+    update?: TicketEventLogUpdateWithWhereUniqueWithoutActorInput | TicketEventLogUpdateWithWhereUniqueWithoutActorInput[]
+    updateMany?: TicketEventLogUpdateManyWithWhereWithoutActorInput | TicketEventLogUpdateManyWithWhereWithoutActorInput[]
+    deleteMany?: TicketEventLogScalarWhereInput | TicketEventLogScalarWhereInput[]
   }
 
   export type CompanyCreaterolesInput = {
     set: $Enums.CompanyRole[]
   }
 
-  export type UserCreateNestedManyWithoutCompanyInput = {
-    create?: XOR<UserCreateWithoutCompanyInput, UserUncheckedCreateWithoutCompanyInput> | UserCreateWithoutCompanyInput[] | UserUncheckedCreateWithoutCompanyInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutCompanyInput | UserCreateOrConnectWithoutCompanyInput[]
-    createMany?: UserCreateManyCompanyInputEnvelope
+  export type UserCompanyMembershipCreateNestedManyWithoutCompanyInput = {
+    create?: XOR<UserCompanyMembershipCreateWithoutCompanyInput, UserCompanyMembershipUncheckedCreateWithoutCompanyInput> | UserCompanyMembershipCreateWithoutCompanyInput[] | UserCompanyMembershipUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: UserCompanyMembershipCreateOrConnectWithoutCompanyInput | UserCompanyMembershipCreateOrConnectWithoutCompanyInput[]
+    createMany?: UserCompanyMembershipCreateManyCompanyInputEnvelope
+    connect?: UserCompanyMembershipWhereUniqueInput | UserCompanyMembershipWhereUniqueInput[]
+  }
+
+  export type UserCreateNestedManyWithoutDefaultCompanyInput = {
+    create?: XOR<UserCreateWithoutDefaultCompanyInput, UserUncheckedCreateWithoutDefaultCompanyInput> | UserCreateWithoutDefaultCompanyInput[] | UserUncheckedCreateWithoutDefaultCompanyInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutDefaultCompanyInput | UserCreateOrConnectWithoutDefaultCompanyInput[]
+    createMany?: UserCreateManyDefaultCompanyInputEnvelope
     connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
   }
 
@@ -19680,10 +21357,17 @@ export namespace Prisma {
     connect?: ImportJobWhereUniqueInput | ImportJobWhereUniqueInput[]
   }
 
-  export type UserUncheckedCreateNestedManyWithoutCompanyInput = {
-    create?: XOR<UserCreateWithoutCompanyInput, UserUncheckedCreateWithoutCompanyInput> | UserCreateWithoutCompanyInput[] | UserUncheckedCreateWithoutCompanyInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutCompanyInput | UserCreateOrConnectWithoutCompanyInput[]
-    createMany?: UserCreateManyCompanyInputEnvelope
+  export type UserCompanyMembershipUncheckedCreateNestedManyWithoutCompanyInput = {
+    create?: XOR<UserCompanyMembershipCreateWithoutCompanyInput, UserCompanyMembershipUncheckedCreateWithoutCompanyInput> | UserCompanyMembershipCreateWithoutCompanyInput[] | UserCompanyMembershipUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: UserCompanyMembershipCreateOrConnectWithoutCompanyInput | UserCompanyMembershipCreateOrConnectWithoutCompanyInput[]
+    createMany?: UserCompanyMembershipCreateManyCompanyInputEnvelope
+    connect?: UserCompanyMembershipWhereUniqueInput | UserCompanyMembershipWhereUniqueInput[]
+  }
+
+  export type UserUncheckedCreateNestedManyWithoutDefaultCompanyInput = {
+    create?: XOR<UserCreateWithoutDefaultCompanyInput, UserUncheckedCreateWithoutDefaultCompanyInput> | UserCreateWithoutDefaultCompanyInput[] | UserUncheckedCreateWithoutDefaultCompanyInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutDefaultCompanyInput | UserCreateOrConnectWithoutDefaultCompanyInput[]
+    createMany?: UserCreateManyDefaultCompanyInputEnvelope
     connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
   }
 
@@ -19748,17 +21432,31 @@ export namespace Prisma {
     push?: $Enums.CompanyRole | $Enums.CompanyRole[]
   }
 
-  export type UserUpdateManyWithoutCompanyNestedInput = {
-    create?: XOR<UserCreateWithoutCompanyInput, UserUncheckedCreateWithoutCompanyInput> | UserCreateWithoutCompanyInput[] | UserUncheckedCreateWithoutCompanyInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutCompanyInput | UserCreateOrConnectWithoutCompanyInput[]
-    upsert?: UserUpsertWithWhereUniqueWithoutCompanyInput | UserUpsertWithWhereUniqueWithoutCompanyInput[]
-    createMany?: UserCreateManyCompanyInputEnvelope
+  export type UserCompanyMembershipUpdateManyWithoutCompanyNestedInput = {
+    create?: XOR<UserCompanyMembershipCreateWithoutCompanyInput, UserCompanyMembershipUncheckedCreateWithoutCompanyInput> | UserCompanyMembershipCreateWithoutCompanyInput[] | UserCompanyMembershipUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: UserCompanyMembershipCreateOrConnectWithoutCompanyInput | UserCompanyMembershipCreateOrConnectWithoutCompanyInput[]
+    upsert?: UserCompanyMembershipUpsertWithWhereUniqueWithoutCompanyInput | UserCompanyMembershipUpsertWithWhereUniqueWithoutCompanyInput[]
+    createMany?: UserCompanyMembershipCreateManyCompanyInputEnvelope
+    set?: UserCompanyMembershipWhereUniqueInput | UserCompanyMembershipWhereUniqueInput[]
+    disconnect?: UserCompanyMembershipWhereUniqueInput | UserCompanyMembershipWhereUniqueInput[]
+    delete?: UserCompanyMembershipWhereUniqueInput | UserCompanyMembershipWhereUniqueInput[]
+    connect?: UserCompanyMembershipWhereUniqueInput | UserCompanyMembershipWhereUniqueInput[]
+    update?: UserCompanyMembershipUpdateWithWhereUniqueWithoutCompanyInput | UserCompanyMembershipUpdateWithWhereUniqueWithoutCompanyInput[]
+    updateMany?: UserCompanyMembershipUpdateManyWithWhereWithoutCompanyInput | UserCompanyMembershipUpdateManyWithWhereWithoutCompanyInput[]
+    deleteMany?: UserCompanyMembershipScalarWhereInput | UserCompanyMembershipScalarWhereInput[]
+  }
+
+  export type UserUpdateManyWithoutDefaultCompanyNestedInput = {
+    create?: XOR<UserCreateWithoutDefaultCompanyInput, UserUncheckedCreateWithoutDefaultCompanyInput> | UserCreateWithoutDefaultCompanyInput[] | UserUncheckedCreateWithoutDefaultCompanyInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutDefaultCompanyInput | UserCreateOrConnectWithoutDefaultCompanyInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutDefaultCompanyInput | UserUpsertWithWhereUniqueWithoutDefaultCompanyInput[]
+    createMany?: UserCreateManyDefaultCompanyInputEnvelope
     set?: UserWhereUniqueInput | UserWhereUniqueInput[]
     disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
     delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
     connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    update?: UserUpdateWithWhereUniqueWithoutCompanyInput | UserUpdateWithWhereUniqueWithoutCompanyInput[]
-    updateMany?: UserUpdateManyWithWhereWithoutCompanyInput | UserUpdateManyWithWhereWithoutCompanyInput[]
+    update?: UserUpdateWithWhereUniqueWithoutDefaultCompanyInput | UserUpdateWithWhereUniqueWithoutDefaultCompanyInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutDefaultCompanyInput | UserUpdateManyWithWhereWithoutDefaultCompanyInput[]
     deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
@@ -19874,17 +21572,31 @@ export namespace Prisma {
     deleteMany?: ImportJobScalarWhereInput | ImportJobScalarWhereInput[]
   }
 
-  export type UserUncheckedUpdateManyWithoutCompanyNestedInput = {
-    create?: XOR<UserCreateWithoutCompanyInput, UserUncheckedCreateWithoutCompanyInput> | UserCreateWithoutCompanyInput[] | UserUncheckedCreateWithoutCompanyInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutCompanyInput | UserCreateOrConnectWithoutCompanyInput[]
-    upsert?: UserUpsertWithWhereUniqueWithoutCompanyInput | UserUpsertWithWhereUniqueWithoutCompanyInput[]
-    createMany?: UserCreateManyCompanyInputEnvelope
+  export type UserCompanyMembershipUncheckedUpdateManyWithoutCompanyNestedInput = {
+    create?: XOR<UserCompanyMembershipCreateWithoutCompanyInput, UserCompanyMembershipUncheckedCreateWithoutCompanyInput> | UserCompanyMembershipCreateWithoutCompanyInput[] | UserCompanyMembershipUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: UserCompanyMembershipCreateOrConnectWithoutCompanyInput | UserCompanyMembershipCreateOrConnectWithoutCompanyInput[]
+    upsert?: UserCompanyMembershipUpsertWithWhereUniqueWithoutCompanyInput | UserCompanyMembershipUpsertWithWhereUniqueWithoutCompanyInput[]
+    createMany?: UserCompanyMembershipCreateManyCompanyInputEnvelope
+    set?: UserCompanyMembershipWhereUniqueInput | UserCompanyMembershipWhereUniqueInput[]
+    disconnect?: UserCompanyMembershipWhereUniqueInput | UserCompanyMembershipWhereUniqueInput[]
+    delete?: UserCompanyMembershipWhereUniqueInput | UserCompanyMembershipWhereUniqueInput[]
+    connect?: UserCompanyMembershipWhereUniqueInput | UserCompanyMembershipWhereUniqueInput[]
+    update?: UserCompanyMembershipUpdateWithWhereUniqueWithoutCompanyInput | UserCompanyMembershipUpdateWithWhereUniqueWithoutCompanyInput[]
+    updateMany?: UserCompanyMembershipUpdateManyWithWhereWithoutCompanyInput | UserCompanyMembershipUpdateManyWithWhereWithoutCompanyInput[]
+    deleteMany?: UserCompanyMembershipScalarWhereInput | UserCompanyMembershipScalarWhereInput[]
+  }
+
+  export type UserUncheckedUpdateManyWithoutDefaultCompanyNestedInput = {
+    create?: XOR<UserCreateWithoutDefaultCompanyInput, UserUncheckedCreateWithoutDefaultCompanyInput> | UserCreateWithoutDefaultCompanyInput[] | UserUncheckedCreateWithoutDefaultCompanyInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutDefaultCompanyInput | UserCreateOrConnectWithoutDefaultCompanyInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutDefaultCompanyInput | UserUpsertWithWhereUniqueWithoutDefaultCompanyInput[]
+    createMany?: UserCreateManyDefaultCompanyInputEnvelope
     set?: UserWhereUniqueInput | UserWhereUniqueInput[]
     disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
     delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
     connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    update?: UserUpdateWithWhereUniqueWithoutCompanyInput | UserUpdateWithWhereUniqueWithoutCompanyInput[]
-    updateMany?: UserUpdateManyWithWhereWithoutCompanyInput | UserUpdateManyWithWhereWithoutCompanyInput[]
+    update?: UserUpdateWithWhereUniqueWithoutDefaultCompanyInput | UserUpdateWithWhereUniqueWithoutDefaultCompanyInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutDefaultCompanyInput | UserUpdateManyWithWhereWithoutDefaultCompanyInput[]
     deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
@@ -19998,6 +21710,43 @@ export namespace Prisma {
     update?: ImportJobUpdateWithWhereUniqueWithoutCompanyInput | ImportJobUpdateWithWhereUniqueWithoutCompanyInput[]
     updateMany?: ImportJobUpdateManyWithWhereWithoutCompanyInput | ImportJobUpdateManyWithWhereWithoutCompanyInput[]
     deleteMany?: ImportJobScalarWhereInput | ImportJobScalarWhereInput[]
+  }
+
+  export type UserCompanyMembershipCreaterolesInput = {
+    set: $Enums.MembershipRole[]
+  }
+
+  export type UserCreateNestedOneWithoutMembershipsInput = {
+    create?: XOR<UserCreateWithoutMembershipsInput, UserUncheckedCreateWithoutMembershipsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMembershipsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type CompanyCreateNestedOneWithoutMembershipsInput = {
+    create?: XOR<CompanyCreateWithoutMembershipsInput, CompanyUncheckedCreateWithoutMembershipsInput>
+    connectOrCreate?: CompanyCreateOrConnectWithoutMembershipsInput
+    connect?: CompanyWhereUniqueInput
+  }
+
+  export type UserCompanyMembershipUpdaterolesInput = {
+    set?: $Enums.MembershipRole[]
+    push?: $Enums.MembershipRole | $Enums.MembershipRole[]
+  }
+
+  export type UserUpdateOneRequiredWithoutMembershipsNestedInput = {
+    create?: XOR<UserCreateWithoutMembershipsInput, UserUncheckedCreateWithoutMembershipsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMembershipsInput
+    upsert?: UserUpsertWithoutMembershipsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMembershipsInput, UserUpdateWithoutMembershipsInput>, UserUncheckedUpdateWithoutMembershipsInput>
+  }
+
+  export type CompanyUpdateOneRequiredWithoutMembershipsNestedInput = {
+    create?: XOR<CompanyCreateWithoutMembershipsInput, CompanyUncheckedCreateWithoutMembershipsInput>
+    connectOrCreate?: CompanyCreateOrConnectWithoutMembershipsInput
+    upsert?: CompanyUpsertWithoutMembershipsInput
+    connect?: CompanyWhereUniqueInput
+    update?: XOR<XOR<CompanyUpdateToOneWithWhereWithoutMembershipsInput, CompanyUpdateWithoutMembershipsInput>, CompanyUncheckedUpdateWithoutMembershipsInput>
   }
 
   export type CompanyCreateNestedOneWithoutDeliveryPlantsInput = {
@@ -20386,12 +22135,26 @@ export namespace Prisma {
     connect?: TicketWhereUniqueInput
   }
 
+  export type UserCreateNestedOneWithoutTicketEventsInput = {
+    create?: XOR<UserCreateWithoutTicketEventsInput, UserUncheckedCreateWithoutTicketEventsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTicketEventsInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type TicketUpdateOneRequiredWithoutEventsNestedInput = {
     create?: XOR<TicketCreateWithoutEventsInput, TicketUncheckedCreateWithoutEventsInput>
     connectOrCreate?: TicketCreateOrConnectWithoutEventsInput
     upsert?: TicketUpsertWithoutEventsInput
     connect?: TicketWhereUniqueInput
     update?: XOR<XOR<TicketUpdateToOneWithWhereWithoutEventsInput, TicketUpdateWithoutEventsInput>, TicketUncheckedUpdateWithoutEventsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutTicketEventsNestedInput = {
+    create?: XOR<UserCreateWithoutTicketEventsInput, UserUncheckedCreateWithoutTicketEventsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTicketEventsInput
+    upsert?: UserUpsertWithoutTicketEventsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTicketEventsInput, UserUpdateWithoutTicketEventsInput>, UserUncheckedUpdateWithoutTicketEventsInput>
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -20487,6 +22250,11 @@ export namespace Prisma {
     not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -20575,6 +22343,14 @@ export namespace Prisma {
     _max?: NestedEnumUserRoleFilter<$PrismaModel>
   }
 
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -20601,19 +22377,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -20796,7 +22559,7 @@ export namespace Prisma {
     _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
-  export type CompanyCreateWithoutUsersInput = {
+  export type CompanyCreateWithoutDefaultCompanyInput = {
     id?: string
     name: string
     vatNumber: string
@@ -20808,8 +22571,10 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    memberships?: UserCompanyMembershipCreateNestedManyWithoutCompanyInput
     deliveryPlants?: DeliveryPlantCreateNestedManyWithoutCompanyInput
     vehicles?: VehicleCreateNestedManyWithoutTransporterInput
     suppliedProducts?: ProductCreateNestedManyWithoutSupplierInput
@@ -20820,7 +22585,7 @@ export namespace Prisma {
     importJobs?: ImportJobCreateNestedManyWithoutCompanyInput
   }
 
-  export type CompanyUncheckedCreateWithoutUsersInput = {
+  export type CompanyUncheckedCreateWithoutDefaultCompanyInput = {
     id?: string
     name: string
     vatNumber: string
@@ -20832,8 +22597,10 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    memberships?: UserCompanyMembershipUncheckedCreateNestedManyWithoutCompanyInput
     deliveryPlants?: DeliveryPlantUncheckedCreateNestedManyWithoutCompanyInput
     vehicles?: VehicleUncheckedCreateNestedManyWithoutTransporterInput
     suppliedProducts?: ProductUncheckedCreateNestedManyWithoutSupplierInput
@@ -20844,9 +22611,35 @@ export namespace Prisma {
     importJobs?: ImportJobUncheckedCreateNestedManyWithoutCompanyInput
   }
 
-  export type CompanyCreateOrConnectWithoutUsersInput = {
+  export type CompanyCreateOrConnectWithoutDefaultCompanyInput = {
     where: CompanyWhereUniqueInput
-    create: XOR<CompanyCreateWithoutUsersInput, CompanyUncheckedCreateWithoutUsersInput>
+    create: XOR<CompanyCreateWithoutDefaultCompanyInput, CompanyUncheckedCreateWithoutDefaultCompanyInput>
+  }
+
+  export type UserCompanyMembershipCreateWithoutUserInput = {
+    id?: string
+    roles?: UserCompanyMembershipCreaterolesInput | $Enums.MembershipRole[]
+    isActive?: boolean
+    createdAt?: Date | string
+    company: CompanyCreateNestedOneWithoutMembershipsInput
+  }
+
+  export type UserCompanyMembershipUncheckedCreateWithoutUserInput = {
+    id?: string
+    companyId: string
+    roles?: UserCompanyMembershipCreaterolesInput | $Enums.MembershipRole[]
+    isActive?: boolean
+    createdAt?: Date | string
+  }
+
+  export type UserCompanyMembershipCreateOrConnectWithoutUserInput = {
+    where: UserCompanyMembershipWhereUniqueInput
+    create: XOR<UserCompanyMembershipCreateWithoutUserInput, UserCompanyMembershipUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserCompanyMembershipCreateManyUserInputEnvelope = {
+    data: UserCompanyMembershipCreateManyUserInput | UserCompanyMembershipCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
   export type ImportJobCreateWithoutUserInput = {
@@ -20883,18 +22676,48 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type CompanyUpsertWithoutUsersInput = {
-    update: XOR<CompanyUpdateWithoutUsersInput, CompanyUncheckedUpdateWithoutUsersInput>
-    create: XOR<CompanyCreateWithoutUsersInput, CompanyUncheckedCreateWithoutUsersInput>
+  export type TicketEventLogCreateWithoutActorInput = {
+    id?: string
+    action: string
+    from?: string | null
+    to?: string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    ticket: TicketCreateNestedOneWithoutEventsInput
+  }
+
+  export type TicketEventLogUncheckedCreateWithoutActorInput = {
+    id?: string
+    ticketId: string
+    action: string
+    from?: string | null
+    to?: string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type TicketEventLogCreateOrConnectWithoutActorInput = {
+    where: TicketEventLogWhereUniqueInput
+    create: XOR<TicketEventLogCreateWithoutActorInput, TicketEventLogUncheckedCreateWithoutActorInput>
+  }
+
+  export type TicketEventLogCreateManyActorInputEnvelope = {
+    data: TicketEventLogCreateManyActorInput | TicketEventLogCreateManyActorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CompanyUpsertWithoutDefaultCompanyInput = {
+    update: XOR<CompanyUpdateWithoutDefaultCompanyInput, CompanyUncheckedUpdateWithoutDefaultCompanyInput>
+    create: XOR<CompanyCreateWithoutDefaultCompanyInput, CompanyUncheckedCreateWithoutDefaultCompanyInput>
     where?: CompanyWhereInput
   }
 
-  export type CompanyUpdateToOneWithWhereWithoutUsersInput = {
+  export type CompanyUpdateToOneWithWhereWithoutDefaultCompanyInput = {
     where?: CompanyWhereInput
-    data: XOR<CompanyUpdateWithoutUsersInput, CompanyUncheckedUpdateWithoutUsersInput>
+    data: XOR<CompanyUpdateWithoutDefaultCompanyInput, CompanyUncheckedUpdateWithoutDefaultCompanyInput>
   }
 
-  export type CompanyUpdateWithoutUsersInput = {
+  export type CompanyUpdateWithoutDefaultCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     vatNumber?: StringFieldUpdateOperationsInput | string
@@ -20906,8 +22729,10 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    memberships?: UserCompanyMembershipUpdateManyWithoutCompanyNestedInput
     deliveryPlants?: DeliveryPlantUpdateManyWithoutCompanyNestedInput
     vehicles?: VehicleUpdateManyWithoutTransporterNestedInput
     suppliedProducts?: ProductUpdateManyWithoutSupplierNestedInput
@@ -20918,7 +22743,7 @@ export namespace Prisma {
     importJobs?: ImportJobUpdateManyWithoutCompanyNestedInput
   }
 
-  export type CompanyUncheckedUpdateWithoutUsersInput = {
+  export type CompanyUncheckedUpdateWithoutDefaultCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     vatNumber?: StringFieldUpdateOperationsInput | string
@@ -20930,8 +22755,10 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    memberships?: UserCompanyMembershipUncheckedUpdateManyWithoutCompanyNestedInput
     deliveryPlants?: DeliveryPlantUncheckedUpdateManyWithoutCompanyNestedInput
     vehicles?: VehicleUncheckedUpdateManyWithoutTransporterNestedInput
     suppliedProducts?: ProductUncheckedUpdateManyWithoutSupplierNestedInput
@@ -20940,6 +22767,34 @@ export namespace Prisma {
     transporterTickets?: TicketUncheckedUpdateManyWithoutTransporterNestedInput
     apiKeys?: ApiKeyUncheckedUpdateManyWithoutCompanyNestedInput
     importJobs?: ImportJobUncheckedUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type UserCompanyMembershipUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserCompanyMembershipWhereUniqueInput
+    update: XOR<UserCompanyMembershipUpdateWithoutUserInput, UserCompanyMembershipUncheckedUpdateWithoutUserInput>
+    create: XOR<UserCompanyMembershipCreateWithoutUserInput, UserCompanyMembershipUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserCompanyMembershipUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserCompanyMembershipWhereUniqueInput
+    data: XOR<UserCompanyMembershipUpdateWithoutUserInput, UserCompanyMembershipUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserCompanyMembershipUpdateManyWithWhereWithoutUserInput = {
+    where: UserCompanyMembershipScalarWhereInput
+    data: XOR<UserCompanyMembershipUpdateManyMutationInput, UserCompanyMembershipUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserCompanyMembershipScalarWhereInput = {
+    AND?: UserCompanyMembershipScalarWhereInput | UserCompanyMembershipScalarWhereInput[]
+    OR?: UserCompanyMembershipScalarWhereInput[]
+    NOT?: UserCompanyMembershipScalarWhereInput | UserCompanyMembershipScalarWhereInput[]
+    id?: StringFilter<"UserCompanyMembership"> | string
+    userId?: StringFilter<"UserCompanyMembership"> | string
+    companyId?: StringFilter<"UserCompanyMembership"> | string
+    roles?: EnumMembershipRoleNullableListFilter<"UserCompanyMembership">
+    isActive?: BoolFilter<"UserCompanyMembership"> | boolean
+    createdAt?: DateTimeFilter<"UserCompanyMembership"> | Date | string
   }
 
   export type ImportJobUpsertWithWhereUniqueWithoutUserInput = {
@@ -20974,35 +22829,97 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"ImportJob"> | Date | string
   }
 
-  export type UserCreateWithoutCompanyInput = {
+  export type TicketEventLogUpsertWithWhereUniqueWithoutActorInput = {
+    where: TicketEventLogWhereUniqueInput
+    update: XOR<TicketEventLogUpdateWithoutActorInput, TicketEventLogUncheckedUpdateWithoutActorInput>
+    create: XOR<TicketEventLogCreateWithoutActorInput, TicketEventLogUncheckedCreateWithoutActorInput>
+  }
+
+  export type TicketEventLogUpdateWithWhereUniqueWithoutActorInput = {
+    where: TicketEventLogWhereUniqueInput
+    data: XOR<TicketEventLogUpdateWithoutActorInput, TicketEventLogUncheckedUpdateWithoutActorInput>
+  }
+
+  export type TicketEventLogUpdateManyWithWhereWithoutActorInput = {
+    where: TicketEventLogScalarWhereInput
+    data: XOR<TicketEventLogUpdateManyMutationInput, TicketEventLogUncheckedUpdateManyWithoutActorInput>
+  }
+
+  export type TicketEventLogScalarWhereInput = {
+    AND?: TicketEventLogScalarWhereInput | TicketEventLogScalarWhereInput[]
+    OR?: TicketEventLogScalarWhereInput[]
+    NOT?: TicketEventLogScalarWhereInput | TicketEventLogScalarWhereInput[]
+    id?: StringFilter<"TicketEventLog"> | string
+    ticketId?: StringFilter<"TicketEventLog"> | string
+    actorId?: StringFilter<"TicketEventLog"> | string
+    action?: StringFilter<"TicketEventLog"> | string
+    from?: StringNullableFilter<"TicketEventLog"> | string | null
+    to?: StringNullableFilter<"TicketEventLog"> | string | null
+    meta?: JsonNullableFilter<"TicketEventLog">
+    createdAt?: DateTimeFilter<"TicketEventLog"> | Date | string
+  }
+
+  export type UserCompanyMembershipCreateWithoutCompanyInput = {
+    id?: string
+    roles?: UserCompanyMembershipCreaterolesInput | $Enums.MembershipRole[]
+    isActive?: boolean
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutMembershipsInput
+  }
+
+  export type UserCompanyMembershipUncheckedCreateWithoutCompanyInput = {
+    id?: string
+    userId: string
+    roles?: UserCompanyMembershipCreaterolesInput | $Enums.MembershipRole[]
+    isActive?: boolean
+    createdAt?: Date | string
+  }
+
+  export type UserCompanyMembershipCreateOrConnectWithoutCompanyInput = {
+    where: UserCompanyMembershipWhereUniqueInput
+    create: XOR<UserCompanyMembershipCreateWithoutCompanyInput, UserCompanyMembershipUncheckedCreateWithoutCompanyInput>
+  }
+
+  export type UserCompanyMembershipCreateManyCompanyInputEnvelope = {
+    data: UserCompanyMembershipCreateManyCompanyInput | UserCompanyMembershipCreateManyCompanyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserCreateWithoutDefaultCompanyInput = {
     id?: string
     email: string
     name: string
     password?: string | null
     role?: $Enums.UserRole
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    memberships?: UserCompanyMembershipCreateNestedManyWithoutUserInput
     importJobs?: ImportJobCreateNestedManyWithoutUserInput
+    ticketEvents?: TicketEventLogCreateNestedManyWithoutActorInput
   }
 
-  export type UserUncheckedCreateWithoutCompanyInput = {
+  export type UserUncheckedCreateWithoutDefaultCompanyInput = {
     id?: string
     email: string
     name: string
     password?: string | null
     role?: $Enums.UserRole
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    memberships?: UserCompanyMembershipUncheckedCreateNestedManyWithoutUserInput
     importJobs?: ImportJobUncheckedCreateNestedManyWithoutUserInput
+    ticketEvents?: TicketEventLogUncheckedCreateNestedManyWithoutActorInput
   }
 
-  export type UserCreateOrConnectWithoutCompanyInput = {
+  export type UserCreateOrConnectWithoutDefaultCompanyInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutCompanyInput, UserUncheckedCreateWithoutCompanyInput>
+    create: XOR<UserCreateWithoutDefaultCompanyInput, UserUncheckedCreateWithoutDefaultCompanyInput>
   }
 
-  export type UserCreateManyCompanyInputEnvelope = {
-    data: UserCreateManyCompanyInput | UserCreateManyCompanyInput[]
+  export type UserCreateManyDefaultCompanyInputEnvelope = {
+    data: UserCreateManyDefaultCompanyInput | UserCreateManyDefaultCompanyInput[]
     skipDuplicates?: boolean
   }
 
@@ -21354,20 +23271,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type UserUpsertWithWhereUniqueWithoutCompanyInput = {
-    where: UserWhereUniqueInput
-    update: XOR<UserUpdateWithoutCompanyInput, UserUncheckedUpdateWithoutCompanyInput>
-    create: XOR<UserCreateWithoutCompanyInput, UserUncheckedCreateWithoutCompanyInput>
+  export type UserCompanyMembershipUpsertWithWhereUniqueWithoutCompanyInput = {
+    where: UserCompanyMembershipWhereUniqueInput
+    update: XOR<UserCompanyMembershipUpdateWithoutCompanyInput, UserCompanyMembershipUncheckedUpdateWithoutCompanyInput>
+    create: XOR<UserCompanyMembershipCreateWithoutCompanyInput, UserCompanyMembershipUncheckedCreateWithoutCompanyInput>
   }
 
-  export type UserUpdateWithWhereUniqueWithoutCompanyInput = {
-    where: UserWhereUniqueInput
-    data: XOR<UserUpdateWithoutCompanyInput, UserUncheckedUpdateWithoutCompanyInput>
+  export type UserCompanyMembershipUpdateWithWhereUniqueWithoutCompanyInput = {
+    where: UserCompanyMembershipWhereUniqueInput
+    data: XOR<UserCompanyMembershipUpdateWithoutCompanyInput, UserCompanyMembershipUncheckedUpdateWithoutCompanyInput>
   }
 
-  export type UserUpdateManyWithWhereWithoutCompanyInput = {
+  export type UserCompanyMembershipUpdateManyWithWhereWithoutCompanyInput = {
+    where: UserCompanyMembershipScalarWhereInput
+    data: XOR<UserCompanyMembershipUpdateManyMutationInput, UserCompanyMembershipUncheckedUpdateManyWithoutCompanyInput>
+  }
+
+  export type UserUpsertWithWhereUniqueWithoutDefaultCompanyInput = {
+    where: UserWhereUniqueInput
+    update: XOR<UserUpdateWithoutDefaultCompanyInput, UserUncheckedUpdateWithoutDefaultCompanyInput>
+    create: XOR<UserCreateWithoutDefaultCompanyInput, UserUncheckedCreateWithoutDefaultCompanyInput>
+  }
+
+  export type UserUpdateWithWhereUniqueWithoutDefaultCompanyInput = {
+    where: UserWhereUniqueInput
+    data: XOR<UserUpdateWithoutDefaultCompanyInput, UserUncheckedUpdateWithoutDefaultCompanyInput>
+  }
+
+  export type UserUpdateManyWithWhereWithoutDefaultCompanyInput = {
     where: UserScalarWhereInput
-    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutCompanyInput>
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutDefaultCompanyInput>
   }
 
   export type UserScalarWhereInput = {
@@ -21378,8 +23311,9 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     name?: StringFilter<"User"> | string
     password?: StringNullableFilter<"User"> | string | null
-    companyId?: StringNullableFilter<"User"> | string | null
+    defaultCompanyId?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
+    isActive?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
   }
@@ -21597,6 +23531,198 @@ export namespace Prisma {
     data: XOR<ImportJobUpdateManyMutationInput, ImportJobUncheckedUpdateManyWithoutCompanyInput>
   }
 
+  export type UserCreateWithoutMembershipsInput = {
+    id?: string
+    email: string
+    name: string
+    password?: string | null
+    role?: $Enums.UserRole
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    defaultCompany?: CompanyCreateNestedOneWithoutDefaultCompanyInput
+    importJobs?: ImportJobCreateNestedManyWithoutUserInput
+    ticketEvents?: TicketEventLogCreateNestedManyWithoutActorInput
+  }
+
+  export type UserUncheckedCreateWithoutMembershipsInput = {
+    id?: string
+    email: string
+    name: string
+    password?: string | null
+    defaultCompanyId?: string | null
+    role?: $Enums.UserRole
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    importJobs?: ImportJobUncheckedCreateNestedManyWithoutUserInput
+    ticketEvents?: TicketEventLogUncheckedCreateNestedManyWithoutActorInput
+  }
+
+  export type UserCreateOrConnectWithoutMembershipsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutMembershipsInput, UserUncheckedCreateWithoutMembershipsInput>
+  }
+
+  export type CompanyCreateWithoutMembershipsInput = {
+    id?: string
+    name: string
+    vatNumber: string
+    email?: string | null
+    phone?: string | null
+    country?: string | null
+    city?: string | null
+    postalCode?: string | null
+    address1?: string | null
+    address2?: string | null
+    roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    DefaultCompany?: UserCreateNestedManyWithoutDefaultCompanyInput
+    deliveryPlants?: DeliveryPlantCreateNestedManyWithoutCompanyInput
+    vehicles?: VehicleCreateNestedManyWithoutTransporterInput
+    suppliedProducts?: ProductCreateNestedManyWithoutSupplierInput
+    sentTickets?: TicketCreateNestedManyWithoutSupplierInput
+    customerTickets?: TicketCreateNestedManyWithoutCustomerInput
+    transporterTickets?: TicketCreateNestedManyWithoutTransporterInput
+    apiKeys?: ApiKeyCreateNestedManyWithoutCompanyInput
+    importJobs?: ImportJobCreateNestedManyWithoutCompanyInput
+  }
+
+  export type CompanyUncheckedCreateWithoutMembershipsInput = {
+    id?: string
+    name: string
+    vatNumber: string
+    email?: string | null
+    phone?: string | null
+    country?: string | null
+    city?: string | null
+    postalCode?: string | null
+    address1?: string | null
+    address2?: string | null
+    roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    DefaultCompany?: UserUncheckedCreateNestedManyWithoutDefaultCompanyInput
+    deliveryPlants?: DeliveryPlantUncheckedCreateNestedManyWithoutCompanyInput
+    vehicles?: VehicleUncheckedCreateNestedManyWithoutTransporterInput
+    suppliedProducts?: ProductUncheckedCreateNestedManyWithoutSupplierInput
+    sentTickets?: TicketUncheckedCreateNestedManyWithoutSupplierInput
+    customerTickets?: TicketUncheckedCreateNestedManyWithoutCustomerInput
+    transporterTickets?: TicketUncheckedCreateNestedManyWithoutTransporterInput
+    apiKeys?: ApiKeyUncheckedCreateNestedManyWithoutCompanyInput
+    importJobs?: ImportJobUncheckedCreateNestedManyWithoutCompanyInput
+  }
+
+  export type CompanyCreateOrConnectWithoutMembershipsInput = {
+    where: CompanyWhereUniqueInput
+    create: XOR<CompanyCreateWithoutMembershipsInput, CompanyUncheckedCreateWithoutMembershipsInput>
+  }
+
+  export type UserUpsertWithoutMembershipsInput = {
+    update: XOR<UserUpdateWithoutMembershipsInput, UserUncheckedUpdateWithoutMembershipsInput>
+    create: XOR<UserCreateWithoutMembershipsInput, UserUncheckedCreateWithoutMembershipsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutMembershipsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutMembershipsInput, UserUncheckedUpdateWithoutMembershipsInput>
+  }
+
+  export type UserUpdateWithoutMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    defaultCompany?: CompanyUpdateOneWithoutDefaultCompanyNestedInput
+    importJobs?: ImportJobUpdateManyWithoutUserNestedInput
+    ticketEvents?: TicketEventLogUpdateManyWithoutActorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    defaultCompanyId?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    importJobs?: ImportJobUncheckedUpdateManyWithoutUserNestedInput
+    ticketEvents?: TicketEventLogUncheckedUpdateManyWithoutActorNestedInput
+  }
+
+  export type CompanyUpsertWithoutMembershipsInput = {
+    update: XOR<CompanyUpdateWithoutMembershipsInput, CompanyUncheckedUpdateWithoutMembershipsInput>
+    create: XOR<CompanyCreateWithoutMembershipsInput, CompanyUncheckedCreateWithoutMembershipsInput>
+    where?: CompanyWhereInput
+  }
+
+  export type CompanyUpdateToOneWithWhereWithoutMembershipsInput = {
+    where?: CompanyWhereInput
+    data: XOR<CompanyUpdateWithoutMembershipsInput, CompanyUncheckedUpdateWithoutMembershipsInput>
+  }
+
+  export type CompanyUpdateWithoutMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    vatNumber?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    address1?: NullableStringFieldUpdateOperationsInput | string | null
+    address2?: NullableStringFieldUpdateOperationsInput | string | null
+    roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DefaultCompany?: UserUpdateManyWithoutDefaultCompanyNestedInput
+    deliveryPlants?: DeliveryPlantUpdateManyWithoutCompanyNestedInput
+    vehicles?: VehicleUpdateManyWithoutTransporterNestedInput
+    suppliedProducts?: ProductUpdateManyWithoutSupplierNestedInput
+    sentTickets?: TicketUpdateManyWithoutSupplierNestedInput
+    customerTickets?: TicketUpdateManyWithoutCustomerNestedInput
+    transporterTickets?: TicketUpdateManyWithoutTransporterNestedInput
+    apiKeys?: ApiKeyUpdateManyWithoutCompanyNestedInput
+    importJobs?: ImportJobUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type CompanyUncheckedUpdateWithoutMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    vatNumber?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    postalCode?: NullableStringFieldUpdateOperationsInput | string | null
+    address1?: NullableStringFieldUpdateOperationsInput | string | null
+    address2?: NullableStringFieldUpdateOperationsInput | string | null
+    roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DefaultCompany?: UserUncheckedUpdateManyWithoutDefaultCompanyNestedInput
+    deliveryPlants?: DeliveryPlantUncheckedUpdateManyWithoutCompanyNestedInput
+    vehicles?: VehicleUncheckedUpdateManyWithoutTransporterNestedInput
+    suppliedProducts?: ProductUncheckedUpdateManyWithoutSupplierNestedInput
+    sentTickets?: TicketUncheckedUpdateManyWithoutSupplierNestedInput
+    customerTickets?: TicketUncheckedUpdateManyWithoutCustomerNestedInput
+    transporterTickets?: TicketUncheckedUpdateManyWithoutTransporterNestedInput
+    apiKeys?: ApiKeyUncheckedUpdateManyWithoutCompanyNestedInput
+    importJobs?: ImportJobUncheckedUpdateManyWithoutCompanyNestedInput
+  }
+
   export type CompanyCreateWithoutDeliveryPlantsInput = {
     id?: string
     name: string
@@ -21609,9 +23735,11 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    users?: UserCreateNestedManyWithoutCompanyInput
+    memberships?: UserCompanyMembershipCreateNestedManyWithoutCompanyInput
+    DefaultCompany?: UserCreateNestedManyWithoutDefaultCompanyInput
     vehicles?: VehicleCreateNestedManyWithoutTransporterInput
     suppliedProducts?: ProductCreateNestedManyWithoutSupplierInput
     sentTickets?: TicketCreateNestedManyWithoutSupplierInput
@@ -21633,9 +23761,11 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    users?: UserUncheckedCreateNestedManyWithoutCompanyInput
+    memberships?: UserCompanyMembershipUncheckedCreateNestedManyWithoutCompanyInput
+    DefaultCompany?: UserUncheckedCreateNestedManyWithoutDefaultCompanyInput
     vehicles?: VehicleUncheckedCreateNestedManyWithoutTransporterInput
     suppliedProducts?: ProductUncheckedCreateNestedManyWithoutSupplierInput
     sentTickets?: TicketUncheckedCreateNestedManyWithoutSupplierInput
@@ -21735,9 +23865,11 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users?: UserUpdateManyWithoutCompanyNestedInput
+    memberships?: UserCompanyMembershipUpdateManyWithoutCompanyNestedInput
+    DefaultCompany?: UserUpdateManyWithoutDefaultCompanyNestedInput
     vehicles?: VehicleUpdateManyWithoutTransporterNestedInput
     suppliedProducts?: ProductUpdateManyWithoutSupplierNestedInput
     sentTickets?: TicketUpdateManyWithoutSupplierNestedInput
@@ -21759,9 +23891,11 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users?: UserUncheckedUpdateManyWithoutCompanyNestedInput
+    memberships?: UserCompanyMembershipUncheckedUpdateManyWithoutCompanyNestedInput
+    DefaultCompany?: UserUncheckedUpdateManyWithoutDefaultCompanyNestedInput
     vehicles?: VehicleUncheckedUpdateManyWithoutTransporterNestedInput
     suppliedProducts?: ProductUncheckedUpdateManyWithoutSupplierNestedInput
     sentTickets?: TicketUncheckedUpdateManyWithoutSupplierNestedInput
@@ -21799,9 +23933,11 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    users?: UserCreateNestedManyWithoutCompanyInput
+    memberships?: UserCompanyMembershipCreateNestedManyWithoutCompanyInput
+    DefaultCompany?: UserCreateNestedManyWithoutDefaultCompanyInput
     deliveryPlants?: DeliveryPlantCreateNestedManyWithoutCompanyInput
     suppliedProducts?: ProductCreateNestedManyWithoutSupplierInput
     sentTickets?: TicketCreateNestedManyWithoutSupplierInput
@@ -21823,9 +23959,11 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    users?: UserUncheckedCreateNestedManyWithoutCompanyInput
+    memberships?: UserCompanyMembershipUncheckedCreateNestedManyWithoutCompanyInput
+    DefaultCompany?: UserUncheckedCreateNestedManyWithoutDefaultCompanyInput
     deliveryPlants?: DeliveryPlantUncheckedCreateNestedManyWithoutCompanyInput
     suppliedProducts?: ProductUncheckedCreateNestedManyWithoutSupplierInput
     sentTickets?: TicketUncheckedCreateNestedManyWithoutSupplierInput
@@ -21925,9 +24063,11 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users?: UserUpdateManyWithoutCompanyNestedInput
+    memberships?: UserCompanyMembershipUpdateManyWithoutCompanyNestedInput
+    DefaultCompany?: UserUpdateManyWithoutDefaultCompanyNestedInput
     deliveryPlants?: DeliveryPlantUpdateManyWithoutCompanyNestedInput
     suppliedProducts?: ProductUpdateManyWithoutSupplierNestedInput
     sentTickets?: TicketUpdateManyWithoutSupplierNestedInput
@@ -21949,9 +24089,11 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users?: UserUncheckedUpdateManyWithoutCompanyNestedInput
+    memberships?: UserCompanyMembershipUncheckedUpdateManyWithoutCompanyNestedInput
+    DefaultCompany?: UserUncheckedUpdateManyWithoutDefaultCompanyNestedInput
     deliveryPlants?: DeliveryPlantUncheckedUpdateManyWithoutCompanyNestedInput
     suppliedProducts?: ProductUncheckedUpdateManyWithoutSupplierNestedInput
     sentTickets?: TicketUncheckedUpdateManyWithoutSupplierNestedInput
@@ -21989,9 +24131,11 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    users?: UserCreateNestedManyWithoutCompanyInput
+    memberships?: UserCompanyMembershipCreateNestedManyWithoutCompanyInput
+    DefaultCompany?: UserCreateNestedManyWithoutDefaultCompanyInput
     deliveryPlants?: DeliveryPlantCreateNestedManyWithoutCompanyInput
     vehicles?: VehicleCreateNestedManyWithoutTransporterInput
     sentTickets?: TicketCreateNestedManyWithoutSupplierInput
@@ -22013,9 +24157,11 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    users?: UserUncheckedCreateNestedManyWithoutCompanyInput
+    memberships?: UserCompanyMembershipUncheckedCreateNestedManyWithoutCompanyInput
+    DefaultCompany?: UserUncheckedCreateNestedManyWithoutDefaultCompanyInput
     deliveryPlants?: DeliveryPlantUncheckedCreateNestedManyWithoutCompanyInput
     vehicles?: VehicleUncheckedCreateNestedManyWithoutTransporterInput
     sentTickets?: TicketUncheckedCreateNestedManyWithoutSupplierInput
@@ -22115,9 +24261,11 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users?: UserUpdateManyWithoutCompanyNestedInput
+    memberships?: UserCompanyMembershipUpdateManyWithoutCompanyNestedInput
+    DefaultCompany?: UserUpdateManyWithoutDefaultCompanyNestedInput
     deliveryPlants?: DeliveryPlantUpdateManyWithoutCompanyNestedInput
     vehicles?: VehicleUpdateManyWithoutTransporterNestedInput
     sentTickets?: TicketUpdateManyWithoutSupplierNestedInput
@@ -22139,9 +24287,11 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users?: UserUncheckedUpdateManyWithoutCompanyNestedInput
+    memberships?: UserCompanyMembershipUncheckedUpdateManyWithoutCompanyNestedInput
+    DefaultCompany?: UserUncheckedUpdateManyWithoutDefaultCompanyNestedInput
     deliveryPlants?: DeliveryPlantUncheckedUpdateManyWithoutCompanyNestedInput
     vehicles?: VehicleUncheckedUpdateManyWithoutTransporterNestedInput
     sentTickets?: TicketUncheckedUpdateManyWithoutSupplierNestedInput
@@ -22179,9 +24329,11 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    users?: UserCreateNestedManyWithoutCompanyInput
+    memberships?: UserCompanyMembershipCreateNestedManyWithoutCompanyInput
+    DefaultCompany?: UserCreateNestedManyWithoutDefaultCompanyInput
     deliveryPlants?: DeliveryPlantCreateNestedManyWithoutCompanyInput
     vehicles?: VehicleCreateNestedManyWithoutTransporterInput
     suppliedProducts?: ProductCreateNestedManyWithoutSupplierInput
@@ -22203,9 +24355,11 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    users?: UserUncheckedCreateNestedManyWithoutCompanyInput
+    memberships?: UserCompanyMembershipUncheckedCreateNestedManyWithoutCompanyInput
+    DefaultCompany?: UserUncheckedCreateNestedManyWithoutDefaultCompanyInput
     deliveryPlants?: DeliveryPlantUncheckedCreateNestedManyWithoutCompanyInput
     vehicles?: VehicleUncheckedCreateNestedManyWithoutTransporterInput
     suppliedProducts?: ProductUncheckedCreateNestedManyWithoutSupplierInput
@@ -22232,9 +24386,11 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    users?: UserCreateNestedManyWithoutCompanyInput
+    memberships?: UserCompanyMembershipCreateNestedManyWithoutCompanyInput
+    DefaultCompany?: UserCreateNestedManyWithoutDefaultCompanyInput
     deliveryPlants?: DeliveryPlantCreateNestedManyWithoutCompanyInput
     vehicles?: VehicleCreateNestedManyWithoutTransporterInput
     suppliedProducts?: ProductCreateNestedManyWithoutSupplierInput
@@ -22256,9 +24412,11 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    users?: UserUncheckedCreateNestedManyWithoutCompanyInput
+    memberships?: UserCompanyMembershipUncheckedCreateNestedManyWithoutCompanyInput
+    DefaultCompany?: UserUncheckedCreateNestedManyWithoutDefaultCompanyInput
     deliveryPlants?: DeliveryPlantUncheckedCreateNestedManyWithoutCompanyInput
     vehicles?: VehicleUncheckedCreateNestedManyWithoutTransporterInput
     suppliedProducts?: ProductUncheckedCreateNestedManyWithoutSupplierInput
@@ -22285,9 +24443,11 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    users?: UserCreateNestedManyWithoutCompanyInput
+    memberships?: UserCompanyMembershipCreateNestedManyWithoutCompanyInput
+    DefaultCompany?: UserCreateNestedManyWithoutDefaultCompanyInput
     deliveryPlants?: DeliveryPlantCreateNestedManyWithoutCompanyInput
     vehicles?: VehicleCreateNestedManyWithoutTransporterInput
     suppliedProducts?: ProductCreateNestedManyWithoutSupplierInput
@@ -22309,9 +24469,11 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    users?: UserUncheckedCreateNestedManyWithoutCompanyInput
+    memberships?: UserCompanyMembershipUncheckedCreateNestedManyWithoutCompanyInput
+    DefaultCompany?: UserUncheckedCreateNestedManyWithoutDefaultCompanyInput
     deliveryPlants?: DeliveryPlantUncheckedCreateNestedManyWithoutCompanyInput
     vehicles?: VehicleUncheckedCreateNestedManyWithoutTransporterInput
     suppliedProducts?: ProductUncheckedCreateNestedManyWithoutSupplierInput
@@ -22437,12 +24599,12 @@ export namespace Prisma {
 
   export type TicketEventLogCreateWithoutTicketInput = {
     id?: string
-    actorId: string
     action: string
     from?: string | null
     to?: string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    actor: UserCreateNestedOneWithoutTicketEventsInput
   }
 
   export type TicketEventLogUncheckedCreateWithoutTicketInput = {
@@ -22488,9 +24650,11 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users?: UserUpdateManyWithoutCompanyNestedInput
+    memberships?: UserCompanyMembershipUpdateManyWithoutCompanyNestedInput
+    DefaultCompany?: UserUpdateManyWithoutDefaultCompanyNestedInput
     deliveryPlants?: DeliveryPlantUpdateManyWithoutCompanyNestedInput
     vehicles?: VehicleUpdateManyWithoutTransporterNestedInput
     suppliedProducts?: ProductUpdateManyWithoutSupplierNestedInput
@@ -22512,9 +24676,11 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users?: UserUncheckedUpdateManyWithoutCompanyNestedInput
+    memberships?: UserCompanyMembershipUncheckedUpdateManyWithoutCompanyNestedInput
+    DefaultCompany?: UserUncheckedUpdateManyWithoutDefaultCompanyNestedInput
     deliveryPlants?: DeliveryPlantUncheckedUpdateManyWithoutCompanyNestedInput
     vehicles?: VehicleUncheckedUpdateManyWithoutTransporterNestedInput
     suppliedProducts?: ProductUncheckedUpdateManyWithoutSupplierNestedInput
@@ -22547,9 +24713,11 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users?: UserUpdateManyWithoutCompanyNestedInput
+    memberships?: UserCompanyMembershipUpdateManyWithoutCompanyNestedInput
+    DefaultCompany?: UserUpdateManyWithoutDefaultCompanyNestedInput
     deliveryPlants?: DeliveryPlantUpdateManyWithoutCompanyNestedInput
     vehicles?: VehicleUpdateManyWithoutTransporterNestedInput
     suppliedProducts?: ProductUpdateManyWithoutSupplierNestedInput
@@ -22571,9 +24739,11 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users?: UserUncheckedUpdateManyWithoutCompanyNestedInput
+    memberships?: UserCompanyMembershipUncheckedUpdateManyWithoutCompanyNestedInput
+    DefaultCompany?: UserUncheckedUpdateManyWithoutDefaultCompanyNestedInput
     deliveryPlants?: DeliveryPlantUncheckedUpdateManyWithoutCompanyNestedInput
     vehicles?: VehicleUncheckedUpdateManyWithoutTransporterNestedInput
     suppliedProducts?: ProductUncheckedUpdateManyWithoutSupplierNestedInput
@@ -22606,9 +24776,11 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users?: UserUpdateManyWithoutCompanyNestedInput
+    memberships?: UserCompanyMembershipUpdateManyWithoutCompanyNestedInput
+    DefaultCompany?: UserUpdateManyWithoutDefaultCompanyNestedInput
     deliveryPlants?: DeliveryPlantUpdateManyWithoutCompanyNestedInput
     vehicles?: VehicleUpdateManyWithoutTransporterNestedInput
     suppliedProducts?: ProductUpdateManyWithoutSupplierNestedInput
@@ -22630,9 +24802,11 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users?: UserUncheckedUpdateManyWithoutCompanyNestedInput
+    memberships?: UserCompanyMembershipUncheckedUpdateManyWithoutCompanyNestedInput
+    DefaultCompany?: UserUncheckedUpdateManyWithoutDefaultCompanyNestedInput
     deliveryPlants?: DeliveryPlantUncheckedUpdateManyWithoutCompanyNestedInput
     vehicles?: VehicleUncheckedUpdateManyWithoutTransporterNestedInput
     suppliedProducts?: ProductUncheckedUpdateManyWithoutSupplierNestedInput
@@ -22786,20 +24960,6 @@ export namespace Prisma {
   export type TicketEventLogUpdateManyWithWhereWithoutTicketInput = {
     where: TicketEventLogScalarWhereInput
     data: XOR<TicketEventLogUpdateManyMutationInput, TicketEventLogUncheckedUpdateManyWithoutTicketInput>
-  }
-
-  export type TicketEventLogScalarWhereInput = {
-    AND?: TicketEventLogScalarWhereInput | TicketEventLogScalarWhereInput[]
-    OR?: TicketEventLogScalarWhereInput[]
-    NOT?: TicketEventLogScalarWhereInput | TicketEventLogScalarWhereInput[]
-    id?: StringFilter<"TicketEventLog"> | string
-    ticketId?: StringFilter<"TicketEventLog"> | string
-    actorId?: StringFilter<"TicketEventLog"> | string
-    action?: StringFilter<"TicketEventLog"> | string
-    from?: StringNullableFilter<"TicketEventLog"> | string | null
-    to?: StringNullableFilter<"TicketEventLog"> | string | null
-    meta?: JsonNullableFilter<"TicketEventLog">
-    createdAt?: DateTimeFilter<"TicketEventLog"> | Date | string
   }
 
   export type TicketCreateWithoutDocumentsInput = {
@@ -22979,6 +25139,39 @@ export namespace Prisma {
     create: XOR<TicketCreateWithoutEventsInput, TicketUncheckedCreateWithoutEventsInput>
   }
 
+  export type UserCreateWithoutTicketEventsInput = {
+    id?: string
+    email: string
+    name: string
+    password?: string | null
+    role?: $Enums.UserRole
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    defaultCompany?: CompanyCreateNestedOneWithoutDefaultCompanyInput
+    memberships?: UserCompanyMembershipCreateNestedManyWithoutUserInput
+    importJobs?: ImportJobCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutTicketEventsInput = {
+    id?: string
+    email: string
+    name: string
+    password?: string | null
+    defaultCompanyId?: string | null
+    role?: $Enums.UserRole
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    memberships?: UserCompanyMembershipUncheckedCreateNestedManyWithoutUserInput
+    importJobs?: ImportJobUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutTicketEventsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTicketEventsInput, UserUncheckedCreateWithoutTicketEventsInput>
+  }
+
   export type TicketUpsertWithoutEventsInput = {
     update: XOR<TicketUpdateWithoutEventsInput, TicketUncheckedUpdateWithoutEventsInput>
     create: XOR<TicketCreateWithoutEventsInput, TicketUncheckedCreateWithoutEventsInput>
@@ -23042,6 +25235,45 @@ export namespace Prisma {
     documents?: TicketDocumentUncheckedUpdateManyWithoutTicketNestedInput
   }
 
+  export type UserUpsertWithoutTicketEventsInput = {
+    update: XOR<UserUpdateWithoutTicketEventsInput, UserUncheckedUpdateWithoutTicketEventsInput>
+    create: XOR<UserCreateWithoutTicketEventsInput, UserUncheckedCreateWithoutTicketEventsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTicketEventsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTicketEventsInput, UserUncheckedUpdateWithoutTicketEventsInput>
+  }
+
+  export type UserUpdateWithoutTicketEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    defaultCompany?: CompanyUpdateOneWithoutDefaultCompanyNestedInput
+    memberships?: UserCompanyMembershipUpdateManyWithoutUserNestedInput
+    importJobs?: ImportJobUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTicketEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    defaultCompanyId?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    memberships?: UserCompanyMembershipUncheckedUpdateManyWithoutUserNestedInput
+    importJobs?: ImportJobUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type CompanyCreateWithoutApiKeysInput = {
     id?: string
     name: string
@@ -23054,9 +25286,11 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    users?: UserCreateNestedManyWithoutCompanyInput
+    memberships?: UserCompanyMembershipCreateNestedManyWithoutCompanyInput
+    DefaultCompany?: UserCreateNestedManyWithoutDefaultCompanyInput
     deliveryPlants?: DeliveryPlantCreateNestedManyWithoutCompanyInput
     vehicles?: VehicleCreateNestedManyWithoutTransporterInput
     suppliedProducts?: ProductCreateNestedManyWithoutSupplierInput
@@ -23078,9 +25312,11 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    users?: UserUncheckedCreateNestedManyWithoutCompanyInput
+    memberships?: UserCompanyMembershipUncheckedCreateNestedManyWithoutCompanyInput
+    DefaultCompany?: UserUncheckedCreateNestedManyWithoutDefaultCompanyInput
     deliveryPlants?: DeliveryPlantUncheckedCreateNestedManyWithoutCompanyInput
     vehicles?: VehicleUncheckedCreateNestedManyWithoutTransporterInput
     suppliedProducts?: ProductUncheckedCreateNestedManyWithoutSupplierInput
@@ -23118,9 +25354,11 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users?: UserUpdateManyWithoutCompanyNestedInput
+    memberships?: UserCompanyMembershipUpdateManyWithoutCompanyNestedInput
+    DefaultCompany?: UserUpdateManyWithoutDefaultCompanyNestedInput
     deliveryPlants?: DeliveryPlantUpdateManyWithoutCompanyNestedInput
     vehicles?: VehicleUpdateManyWithoutTransporterNestedInput
     suppliedProducts?: ProductUpdateManyWithoutSupplierNestedInput
@@ -23142,9 +25380,11 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users?: UserUncheckedUpdateManyWithoutCompanyNestedInput
+    memberships?: UserCompanyMembershipUncheckedUpdateManyWithoutCompanyNestedInput
+    DefaultCompany?: UserUncheckedUpdateManyWithoutDefaultCompanyNestedInput
     deliveryPlants?: DeliveryPlantUncheckedUpdateManyWithoutCompanyNestedInput
     vehicles?: VehicleUncheckedUpdateManyWithoutTransporterNestedInput
     suppliedProducts?: ProductUncheckedUpdateManyWithoutSupplierNestedInput
@@ -23160,9 +25400,12 @@ export namespace Prisma {
     name: string
     password?: string | null
     role?: $Enums.UserRole
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    company?: CompanyCreateNestedOneWithoutUsersInput
+    defaultCompany?: CompanyCreateNestedOneWithoutDefaultCompanyInput
+    memberships?: UserCompanyMembershipCreateNestedManyWithoutUserInput
+    ticketEvents?: TicketEventLogCreateNestedManyWithoutActorInput
   }
 
   export type UserUncheckedCreateWithoutImportJobsInput = {
@@ -23170,10 +25413,13 @@ export namespace Prisma {
     email: string
     name: string
     password?: string | null
-    companyId?: string | null
+    defaultCompanyId?: string | null
     role?: $Enums.UserRole
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    memberships?: UserCompanyMembershipUncheckedCreateNestedManyWithoutUserInput
+    ticketEvents?: TicketEventLogUncheckedCreateNestedManyWithoutActorInput
   }
 
   export type UserCreateOrConnectWithoutImportJobsInput = {
@@ -23193,9 +25439,11 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    users?: UserCreateNestedManyWithoutCompanyInput
+    memberships?: UserCompanyMembershipCreateNestedManyWithoutCompanyInput
+    DefaultCompany?: UserCreateNestedManyWithoutDefaultCompanyInput
     deliveryPlants?: DeliveryPlantCreateNestedManyWithoutCompanyInput
     vehicles?: VehicleCreateNestedManyWithoutTransporterInput
     suppliedProducts?: ProductCreateNestedManyWithoutSupplierInput
@@ -23217,9 +25465,11 @@ export namespace Prisma {
     address1?: string | null
     address2?: string | null
     roles?: CompanyCreaterolesInput | $Enums.CompanyRole[]
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
-    users?: UserUncheckedCreateNestedManyWithoutCompanyInput
+    memberships?: UserCompanyMembershipUncheckedCreateNestedManyWithoutCompanyInput
+    DefaultCompany?: UserUncheckedCreateNestedManyWithoutDefaultCompanyInput
     deliveryPlants?: DeliveryPlantUncheckedCreateNestedManyWithoutCompanyInput
     vehicles?: VehicleUncheckedCreateNestedManyWithoutTransporterInput
     suppliedProducts?: ProductUncheckedCreateNestedManyWithoutSupplierInput
@@ -23251,9 +25501,12 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    company?: CompanyUpdateOneWithoutUsersNestedInput
+    defaultCompany?: CompanyUpdateOneWithoutDefaultCompanyNestedInput
+    memberships?: UserCompanyMembershipUpdateManyWithoutUserNestedInput
+    ticketEvents?: TicketEventLogUpdateManyWithoutActorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutImportJobsInput = {
@@ -23261,10 +25514,13 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
-    companyId?: NullableStringFieldUpdateOperationsInput | string | null
+    defaultCompanyId?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    memberships?: UserCompanyMembershipUncheckedUpdateManyWithoutUserNestedInput
+    ticketEvents?: TicketEventLogUncheckedUpdateManyWithoutActorNestedInput
   }
 
   export type CompanyUpsertWithoutImportJobsInput = {
@@ -23290,9 +25546,11 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users?: UserUpdateManyWithoutCompanyNestedInput
+    memberships?: UserCompanyMembershipUpdateManyWithoutCompanyNestedInput
+    DefaultCompany?: UserUpdateManyWithoutDefaultCompanyNestedInput
     deliveryPlants?: DeliveryPlantUpdateManyWithoutCompanyNestedInput
     vehicles?: VehicleUpdateManyWithoutTransporterNestedInput
     suppliedProducts?: ProductUpdateManyWithoutSupplierNestedInput
@@ -23314,9 +25572,11 @@ export namespace Prisma {
     address1?: NullableStringFieldUpdateOperationsInput | string | null
     address2?: NullableStringFieldUpdateOperationsInput | string | null
     roles?: CompanyUpdaterolesInput | $Enums.CompanyRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    users?: UserUncheckedUpdateManyWithoutCompanyNestedInput
+    memberships?: UserCompanyMembershipUncheckedUpdateManyWithoutCompanyNestedInput
+    DefaultCompany?: UserUncheckedUpdateManyWithoutDefaultCompanyNestedInput
     deliveryPlants?: DeliveryPlantUncheckedUpdateManyWithoutCompanyNestedInput
     vehicles?: VehicleUncheckedUpdateManyWithoutTransporterNestedInput
     suppliedProducts?: ProductUncheckedUpdateManyWithoutSupplierNestedInput
@@ -23324,6 +25584,14 @@ export namespace Prisma {
     customerTickets?: TicketUncheckedUpdateManyWithoutCustomerNestedInput
     transporterTickets?: TicketUncheckedUpdateManyWithoutTransporterNestedInput
     apiKeys?: ApiKeyUncheckedUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type UserCompanyMembershipCreateManyUserInput = {
+    id?: string
+    companyId: string
+    roles?: UserCompanyMembershipCreaterolesInput | $Enums.MembershipRole[]
+    isActive?: boolean
+    createdAt?: Date | string
   }
 
   export type ImportJobCreateManyUserInput = {
@@ -23336,6 +25604,40 @@ export namespace Prisma {
     stats?: NullableJsonNullValueInput | InputJsonValue
     processedAt?: Date | string | null
     createdAt?: Date | string
+  }
+
+  export type TicketEventLogCreateManyActorInput = {
+    id?: string
+    ticketId: string
+    action: string
+    from?: string | null
+    to?: string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type UserCompanyMembershipUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roles?: UserCompanyMembershipUpdaterolesInput | $Enums.MembershipRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    company?: CompanyUpdateOneRequiredWithoutMembershipsNestedInput
+  }
+
+  export type UserCompanyMembershipUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    roles?: UserCompanyMembershipUpdaterolesInput | $Enums.MembershipRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCompanyMembershipUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    companyId?: StringFieldUpdateOperationsInput | string
+    roles?: UserCompanyMembershipUpdaterolesInput | $Enums.MembershipRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ImportJobUpdateWithoutUserInput = {
@@ -23374,12 +25676,51 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserCreateManyCompanyInput = {
+  export type TicketEventLogUpdateWithoutActorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    from?: NullableStringFieldUpdateOperationsInput | string | null
+    to?: NullableStringFieldUpdateOperationsInput | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ticket?: TicketUpdateOneRequiredWithoutEventsNestedInput
+  }
+
+  export type TicketEventLogUncheckedUpdateWithoutActorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ticketId?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    from?: NullableStringFieldUpdateOperationsInput | string | null
+    to?: NullableStringFieldUpdateOperationsInput | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TicketEventLogUncheckedUpdateManyWithoutActorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ticketId?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    from?: NullableStringFieldUpdateOperationsInput | string | null
+    to?: NullableStringFieldUpdateOperationsInput | string | null
+    meta?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCompanyMembershipCreateManyCompanyInput = {
+    id?: string
+    userId: string
+    roles?: UserCompanyMembershipCreaterolesInput | $Enums.MembershipRole[]
+    isActive?: boolean
+    createdAt?: Date | string
+  }
+
+  export type UserCreateManyDefaultCompanyInput = {
     id?: string
     email: string
     name: string
     password?: string | null
     role?: $Enums.UserRole
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string | null
   }
@@ -23509,34 +25850,65 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
-  export type UserUpdateWithoutCompanyInput = {
+  export type UserCompanyMembershipUpdateWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    roles?: UserCompanyMembershipUpdaterolesInput | $Enums.MembershipRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutMembershipsNestedInput
+  }
+
+  export type UserCompanyMembershipUncheckedUpdateWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    roles?: UserCompanyMembershipUpdaterolesInput | $Enums.MembershipRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCompanyMembershipUncheckedUpdateManyWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    roles?: UserCompanyMembershipUpdaterolesInput | $Enums.MembershipRole[]
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUpdateWithoutDefaultCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    memberships?: UserCompanyMembershipUpdateManyWithoutUserNestedInput
     importJobs?: ImportJobUpdateManyWithoutUserNestedInput
+    ticketEvents?: TicketEventLogUpdateManyWithoutActorNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutCompanyInput = {
+  export type UserUncheckedUpdateWithoutDefaultCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    memberships?: UserCompanyMembershipUncheckedUpdateManyWithoutUserNestedInput
     importJobs?: ImportJobUncheckedUpdateManyWithoutUserNestedInput
+    ticketEvents?: TicketEventLogUncheckedUpdateManyWithoutActorNestedInput
   }
 
-  export type UserUncheckedUpdateManyWithoutCompanyInput = {
+  export type UserUncheckedUpdateManyWithoutDefaultCompanyInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -24274,12 +26646,12 @@ export namespace Prisma {
 
   export type TicketEventLogUpdateWithoutTicketInput = {
     id?: StringFieldUpdateOperationsInput | string
-    actorId?: StringFieldUpdateOperationsInput | string
     action?: StringFieldUpdateOperationsInput | string
     from?: NullableStringFieldUpdateOperationsInput | string | null
     to?: NullableStringFieldUpdateOperationsInput | string | null
     meta?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    actor?: UserUpdateOneRequiredWithoutTicketEventsNestedInput
   }
 
   export type TicketEventLogUncheckedUpdateWithoutTicketInput = {

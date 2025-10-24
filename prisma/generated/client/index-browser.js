@@ -125,8 +125,9 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   name: 'name',
   password: 'password',
-  companyId: 'companyId',
+  defaultCompanyId: 'defaultCompanyId',
   role: 'role',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -152,8 +153,18 @@ exports.Prisma.CompanyScalarFieldEnum = {
   address1: 'address1',
   address2: 'address2',
   roles: 'roles',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserCompanyMembershipScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  companyId: 'companyId',
+  roles: 'roles',
+  isActive: 'isActive',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.DeliveryPlantScalarFieldEnum = {
@@ -305,7 +316,16 @@ exports.UserRole = exports.$Enums.UserRole = {
 exports.CompanyRole = exports.$Enums.CompanyRole = {
   SUPPLIER: 'SUPPLIER',
   CUSTOMER: 'CUSTOMER',
-  TRANSPORTER: 'TRANSPORTER'
+  TRANSPORTER: 'TRANSPORTER',
+  VIEWER: 'VIEWER'
+};
+
+exports.MembershipRole = exports.$Enums.MembershipRole = {
+  ADMIN: 'ADMIN',
+  SUPPLIER: 'SUPPLIER',
+  CUSTOMER: 'CUSTOMER',
+  TRANSPORTER: 'TRANSPORTER',
+  VIEWER: 'VIEWER'
 };
 
 exports.TicketDirection = exports.$Enums.TicketDirection = {
@@ -333,6 +353,7 @@ exports.Prisma.ModelName = {
   User: 'User',
   Otp: 'Otp',
   Company: 'Company',
+  UserCompanyMembership: 'UserCompanyMembership',
   DeliveryPlant: 'DeliveryPlant',
   Vehicle: 'Vehicle',
   Product: 'Product',

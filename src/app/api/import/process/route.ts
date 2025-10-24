@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
 	}
 
 	const userId = request.headers.get('x-user-id');
-	const companyId = request.headers.get('x-company-id');
+	const companyId = request.headers.get('x-active-company-id');
 
 	const startAt = new Date();
 

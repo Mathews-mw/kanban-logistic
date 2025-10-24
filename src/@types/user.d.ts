@@ -7,13 +7,18 @@ interface IProfile {
 	id: string;
 	name: string;
 	email: string;
-	companyId: string;
+	defaultCompanyId: string;
 	role: IUserRole;
 	createdAt: string;
-	company: {
+	activeCompany: {
 		id: string;
 		name: string;
 		vatNumber: string;
 		roles: Array<string>;
 	};
+	memberships: Array<{
+		id: string;
+		companyId: string;
+		companyName: string;
+	}>;
 }

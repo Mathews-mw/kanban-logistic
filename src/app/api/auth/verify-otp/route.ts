@@ -1,12 +1,11 @@
 import z from 'zod';
-import jwt from 'jsonwebtoken';
 import { cookies as nextCookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { env } from '@/env';
 import { prisma } from '@/lib/prisma';
-import { hashOtp } from '@/utils/otp-utils';
 import { signAppJwt } from '@/auth/jwt';
+import { hashOtp } from '@/utils/otp-utils';
 
 const bodySchema = z.object({
 	email: z.email().transform((val) => val.toLowerCase().trim()),
@@ -60,7 +59,7 @@ export async function POST(request: NextRequest) {
 
 		const user = await prisma.user.findUnique({
 			where: { email },
-			select: { id: true, email: true, companyId: true },
+			select: { id: true, email: true, defaultCompanyId: true, memberships: true },
 		});
 
 		if (!user) {
@@ -71,9 +70,16 @@ export async function POST(request: NextRequest) {
 		if (otp === '726428') {
 			let roles: string[] | undefined;
 
-			if (user.companyId) {
+			if (user.defaultCompanyId) {
 				const company = await prisma.company.findUnique({
-					where: { id: user.companyId },
+					where: { id: user.defaultCompanyId },
+					select: { roles: true },
+				});
+
+				roles = company?.roles as string[] | undefined;
+			} else {
+				const company = await prisma.company.findUnique({
+					where: { id: user.memberships[0].companyId },
 					select: { roles: true },
 				});
 
@@ -84,7 +90,7 @@ export async function POST(request: NextRequest) {
 				{
 					sub: user.id,
 					email: user.email,
-					companyId: user.companyId ?? undefined,
+					activeCompanyId: user.defaultCompanyId ?? undefined,
 					roles,
 				},
 				'8h'
@@ -124,9 +130,16 @@ export async function POST(request: NextRequest) {
 
 		let roles: string[] | undefined;
 
-		if (user.companyId) {
+		if (user.defaultCompanyId) {
 			const company = await prisma.company.findUnique({
-				where: { id: user.companyId },
+				where: { id: user.defaultCompanyId },
+				select: { roles: true },
+			});
+
+			roles = company?.roles as string[] | undefined;
+		} else {
+			const company = await prisma.company.findUnique({
+				where: { id: user.memberships[0].companyId },
 				select: { roles: true },
 			});
 
@@ -137,7 +150,7 @@ export async function POST(request: NextRequest) {
 			{
 				sub: user.id,
 				email: user.email,
-				companyId: user.companyId ?? undefined,
+				activeCompanyId: user.defaultCompanyId ?? undefined,
 				roles,
 			},
 			'8h'
