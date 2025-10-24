@@ -189,8 +189,8 @@ export default function NewTicketPage() {
 	}, [transporterId, setValue]);
 
 	useEffect(() => {
-		const companyId = userProfile?.companyId;
-		const companyName = userProfile?.company.name;
+		const companyId = userProfile?.defaultCompanyId;
+		const companyName = userProfile?.activeCompany.name;
 
 		if (companyId) {
 			setValue('supplierId', companyId, { shouldValidate: true });

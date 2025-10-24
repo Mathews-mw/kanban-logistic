@@ -82,6 +82,9 @@ export async function GET(request: NextRequest) {
 		const isAdmin = user && user.role === 'ADMIN';
 		const viewAll = isAdmin && scope === 'all';
 
+		console.log('isAdmin: ', isAdmin);
+		console.log('viewAll: ', viewAll);
+
 		let orderByQuery: Prisma.TicketOrderByWithAggregationInput | undefined = { createdAt: 'desc' };
 
 		switch (order_by) {
@@ -132,6 +135,8 @@ export async function GET(request: NextRequest) {
 		}
 
 		const isPerPageNumber = typeof per_page === 'number';
+
+		console.log('where: ', where);
 
 		const [tickets, count] = await prisma.$transaction([
 			prisma.ticket.findMany({
