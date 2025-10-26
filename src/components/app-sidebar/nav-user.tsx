@@ -15,12 +15,16 @@ import {
 	DropdownMenuGroup,
 	DropdownMenuItem,
 	DropdownMenuLabel,
+	DropdownMenuPortal,
 	DropdownMenuSeparator,
+	DropdownMenuSub,
+	DropdownMenuSubContent,
+	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-import { FaUser } from 'react-icons/fa';
 import { IoNotifications } from 'react-icons/io5';
+import { FaBuilding, FaUser } from 'react-icons/fa';
 import { ChevronsUpDown, LogOut } from 'lucide-react';
 
 interface IProps {
@@ -73,9 +77,35 @@ export function NavUser({ user }: IProps) {
 							</DropdownMenuLabel>
 							<DropdownMenuSeparator />
 							<DropdownMenuGroup>
+								<DropdownMenuSub>
+									<DropdownMenuSubTrigger className="space-x-2">
+										<Avatar className="h-6 w-6 rounded-full">
+											{/* {user.avatar_url && <AvatarImage src={user.avatar_url} alt={user.name} className="object-cover" />} */}
+											<AvatarFallback className="rounded-full">
+												{/* {getProfileNameInitials(user.activeCompany.name)} */}
+											</AvatarFallback>
+										</Avatar>
+										<span className="font-medium">{user.activeCompany.name}</span>
+									</DropdownMenuSubTrigger>
+									<DropdownMenuPortal>
+										<DropdownMenuSubContent>
+											<DropdownMenuLabel>Companies</DropdownMenuLabel>
+											{user.memberships.map((membership) => (
+												<DropdownMenuItem key={membership.id}>{membership.companyName}</DropdownMenuItem>
+											))}
+										</DropdownMenuSubContent>
+									</DropdownMenuPortal>
+								</DropdownMenuSub>
+							</DropdownMenuGroup>
+							<DropdownMenuSeparator />
+							<DropdownMenuGroup>
 								<DropdownMenuItem onClick={() => navigate.push('/account')}>
 									<FaUser />
 									Account
+								</DropdownMenuItem>
+								<DropdownMenuItem onClick={() => navigate.push('/company')}>
+									<FaBuilding />
+									My Company
 								</DropdownMenuItem>
 								<DropdownMenuItem>
 									<IoNotifications />

@@ -1,7 +1,6 @@
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 
 import { Button } from './ui/button';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 interface IProps {
 	currentPage: number;
@@ -22,17 +21,13 @@ export function Pagination({
 	disableTotalAmountLabel = false,
 	disablePerPageLabel = false,
 }: IProps) {
-	const isMobile = useIsMobile();
-
 	return (
 		<div className="flex w-full items-center justify-between">
-			{!disableTotalAmountLabel && (
-				<span className="text-muted-foreground text-xs sm:text-sm">Total {totalCount} registers</span>
-			)}
+			<span className="text-muted-foreground text-sm">Total {totalCount} registers</span>
 
-			<div className="flex items-center gap-6 lg:gap-8">
+			<div className="flex items-center gap-4">
 				{!disablePerPageLabel && (
-					<div className="text-xs font-medium sm:text-sm">
+					<div className="text-muted-foreground text-sm font-medium">
 						Page {currentPage} of {totalPages}
 					</div>
 				)}

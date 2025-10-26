@@ -16,6 +16,7 @@ enum UserRole {
 }
 
 enum CompanyRole {
+  ADMIN
   SUPPLIER // Fornecedor (quem envia tickets)
   CUSTOMER // Cliente (quem recebe tickets)
   TRANSPORTER // Transportadora
@@ -67,6 +68,7 @@ model User {
   memberships  UserCompanyMembership[]
   importJobs   ImportJob[]
   ticketEvents TicketEventLog[]
+  invitations  Invitation[]
 
   @@map("users")
 }
@@ -109,6 +111,7 @@ model Company {
   transporterTickets Ticket[]                @relation("TransporterTickets")
   apiKeys            ApiKey[]
   importJobs         ImportJob[]
+  invitations        Invitation[]
 
   @@index([name])
   @@map("companies")
@@ -127,6 +130,26 @@ model UserCompanyMembership {
 
   @@unique([userId, companyId])
   @@map("user_company_memberships")
+}
+
+model Invitation {
+  id          String           @id @default(cuid())
+  companyId   String           @map("company_id")
+  email       String
+  roles       MembershipRole[]
+  tokenHash   String           @map("token_hash") // hash do token enviado por e-mail
+  expiresAt   DateTime         @map("expires_at")
+  acceptedAt  DateTime?        @map("accepted_at")
+  revokedAt   DateTime?        @map("revoked_at")
+  createdById String           @map("created_by_id")
+  createdAt   DateTime         @default(now()) @map("created_at")
+
+  company   Company @relation(fields: [companyId], references: [id])
+  createdBy User    @relation(fields: [createdById], references: [id])
+
+  @@index([companyId])
+  @@index([email])
+  @@map("invitations")
 }
 
 model DeliveryPlant {

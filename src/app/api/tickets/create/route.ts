@@ -5,6 +5,8 @@ import { prisma } from '@/lib/prisma';
 import { CompanyRole } from '@/generated/client';
 import { BadRequestError } from '@/_http/errors/bad-request-errors';
 import { ResourceNotFoundError } from '@/_http/errors/resource-not-found-error';
+import { assertRole } from '@/auth/guard-helpers';
+import { UnauthorizedError } from '@/_http/errors/unauthorized-error';
 
 const bodySchema = z.object({
 	supplierId: z.string().min(1),
@@ -107,10 +109,17 @@ export async function POST(request: NextRequest) {
 
 	try {
 		const actorId = request.headers.get('x-user-id');
+		const companyId = request.headers.get('x-active-company-id');
 
 		if (!actorId) {
-			return Response.json({ code: 'UNAUTHORIZED_ERROR', message: 'Unauthorized.' }, { status: 401 });
+			throw new UnauthorizedError('Unauthorized', 'UNAUTHORIZED_ERROR');
 		}
+
+		if (!companyId) {
+			throw new UnauthorizedError('User has no company context', 'UNAUTHORIZED_ERROR');
+		}
+
+		await assertRole(actorId, companyId, ['SUPPLIER', 'ADMIN']);
 
 		const dataBody = await request.json();
 

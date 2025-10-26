@@ -4,6 +4,7 @@ import { NextRequest } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { Prisma } from '@/generated/client';
 import { TicketStatusPresenter } from '@/presenters/ticket-status-presenter';
+import { assertMembership, scopeTicketsByCompany } from '@/auth/guard-helpers';
 
 const queryParamsSchema = z.object({
 	page: z.optional(z.coerce.number()).default(1),
@@ -60,6 +61,8 @@ export async function GET(request: NextRequest) {
 	const { searchParams } = request.nextUrl;
 
 	try {
+		await assertMembership(userId, companyId);
+
 		const { page, per_page, order_by, q, status, from, to } = queryParamsSchema.parse({
 			page: searchParams.get('page') ?? 1,
 			per_page: searchParams.get('per_page') ?? 10,
@@ -82,9 +85,6 @@ export async function GET(request: NextRequest) {
 		const isAdmin = user && user.role === 'ADMIN';
 		const viewAll = isAdmin && scope === 'all';
 
-		console.log('isAdmin: ', isAdmin);
-		console.log('viewAll: ', viewAll);
-
 		let orderByQuery: Prisma.TicketOrderByWithAggregationInput | undefined = { createdAt: 'desc' };
 
 		switch (order_by) {
@@ -101,19 +101,9 @@ export async function GET(request: NextRequest) {
 		const where: Prisma.TicketWhereInput = {};
 
 		if (!viewAll) {
-			// Escopo por relação + role
-			const canSeeAsSupplier = roles.includes('SUPPLIER');
-			const canSeeAsCustomer = roles.includes('CUSTOMER');
-			const canSeeAsTransporter = roles.includes('TRANSPORTER');
+			const companyScope = scopeTicketsByCompany(companyId).where.OR;
 
-			const visibility = [];
-
-			if (canSeeAsSupplier) visibility.push({ supplierId: companyId });
-			if (canSeeAsCustomer) visibility.push({ customerId: companyId });
-			if (canSeeAsTransporter) visibility.push({ transporterId: companyId });
-
-			// fallback: se não tiver nenhum papel reconhecido, não retorna nada
-			where.OR = visibility.length ? visibility : [{ id: '__never__' }];
+			where.OR = [...companyScope];
 		}
 
 		if (status) {
@@ -135,8 +125,6 @@ export async function GET(request: NextRequest) {
 		}
 
 		const isPerPageNumber = typeof per_page === 'number';
-
-		console.log('where: ', where);
 
 		const [tickets, count] = await prisma.$transaction([
 			prisma.ticket.findMany({

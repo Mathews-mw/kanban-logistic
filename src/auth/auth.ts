@@ -3,6 +3,8 @@ import { cookies as nextCookies, headers } from 'next/headers';
 import { env } from '@/env';
 import { redirect } from 'next/navigation';
 import { getUserProfile } from '@/_http/requests/users/get-user-profile';
+import { NextRequest } from 'next/server';
+import { UnauthorizedError } from '@/_http/errors/unauthorized-error';
 
 export type AuthSession = {
 	userId: string;
@@ -52,6 +54,23 @@ export async function getAuthFromHeaders(): Promise<AuthSession> {
 		.split(',')
 		.map((s) => s.trim())
 		.filter(Boolean);
+
+	return { userId, email, companyId, roles };
+}
+
+export async function verifyAccessToken(request: NextRequest) {
+	const userId = request.headers.get('x-user-id');
+	const email = request.headers.get('x-user-email');
+	const companyId = request.headers.get('x-active-company-id');
+
+	const roles = (request.headers.get('x-user-roles') || '')
+		.split(',')
+		.map((s) => s.trim())
+		.filter(Boolean);
+
+	if (!userId || !email || !companyId) {
+		throw new UnauthorizedError('No credentials present in the header', 'UNAUTHORIZED_ERROR');
+	}
 
 	return { userId, email, companyId, roles };
 }

@@ -7,5 +7,5 @@ export function ErrorMessage({ message }: IErrorMessage) {
 		return null;
 	}
 
-	return <small className="text-rose-500">{message}</small>;
+	return <small className="text-rose-400">{message}</small>;
 }

@@ -167,6 +167,19 @@ exports.Prisma.UserCompanyMembershipScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.InvitationScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  email: 'email',
+  roles: 'roles',
+  tokenHash: 'tokenHash',
+  expiresAt: 'expiresAt',
+  acceptedAt: 'acceptedAt',
+  revokedAt: 'revokedAt',
+  createdById: 'createdById',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.DeliveryPlantScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -314,6 +327,7 @@ exports.UserRole = exports.$Enums.UserRole = {
 };
 
 exports.CompanyRole = exports.$Enums.CompanyRole = {
+  ADMIN: 'ADMIN',
   SUPPLIER: 'SUPPLIER',
   CUSTOMER: 'CUSTOMER',
   TRANSPORTER: 'TRANSPORTER',
@@ -354,6 +368,7 @@ exports.Prisma.ModelName = {
   Otp: 'Otp',
   Company: 'Company',
   UserCompanyMembership: 'UserCompanyMembership',
+  Invitation: 'Invitation',
   DeliveryPlant: 'DeliveryPlant',
   Vehicle: 'Vehicle',
   Product: 'Product',

@@ -1,7 +1,7 @@
 import './globals.css';
 
 import dayjs from 'dayjs';
-import 'dayjs/locale/pt-br';
+// import 'dayjs/locale/pt-br';
 import utc from 'dayjs/plugin/utc';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -16,7 +16,7 @@ import { ThemeProvider } from '@/providers/theme-provider';
 import { UserContextProvider } from '@/context/user-context';
 import { TanstackQueryClientProvider } from '@/providers/tanstack-query-client-provider';
 
-dayjs.locale('pt-br');
+// dayjs.locale('pt-br');
 dayjs.extend(utc);
 dayjs.extend(relativeTime);
 
